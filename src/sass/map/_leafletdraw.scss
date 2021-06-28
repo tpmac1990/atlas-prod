@@ -1,0 +1,16 @@
+
+// hide the leaflet-draw toolbar
+.leaflet-draw {
+    display: none;
+}
+
+
+
+// .leaflet-interactive:last-of-type {
+.edit-rectangle {
+    stroke: #d45c5c;
+    stroke-width: 1;
+    stroke-opacity: 1;
+    fill: #d45c5c;
+    fill-opacity: 0.1;
+}

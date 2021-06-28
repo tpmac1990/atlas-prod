@@ -1,0 +1,82 @@
+@import '../variables';
+
+
+.leaflet-popup {
+    
+    .leaflet-popup-content-wrapper {
+        background-color: $dark-2;
+        border-radius: 8px;
+
+        .leaflet-popup-content{
+            color: $light-3;
+            width: 300px;
+        }
+    }
+
+    .leaflet-popup-tip-container {
+        .leaflet-popup-tip {
+            background-color: $dark-2;
+        }
+    }
+
+}
+
+.polyPopup {
+
+    .popup-header {
+        height: 30px;
+
+        h4 {
+            margin-bottom: 0; 
+            float: left;
+        } 
+    
+        button {
+            float: right;
+            margin-top: 5px;
+            margin-right: 5px;
+            padding: 3px 10px 2px 15px;
+            border-radius: 10px;
+            border: none;
+            color: $light-4;
+            background-color: transparent;
+
+            &:hover {
+                color: $light-3;
+                background-color: $dark-4;
+            }
+        }
+    }
+
+    hr {
+        background-color: $blue-3;
+        margin: 3px 0 6px 0;
+    }
+
+    .popup-body {
+        table {
+            width: 100%;
+            table-layout: fixed;
+
+            tr {
+                td {
+                    vertical-align: top;
+                    text-align: left;
+
+                    &:first-of-type{
+                        width: 30%;
+                    }
+
+                    &:last-of-type{
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// .id-tooltip {
+//     background-color: transparent;
+
+// }

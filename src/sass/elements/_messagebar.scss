@@ -1,0 +1,142 @@
+@import '../variables';
+
+
+.message-bar-c1,
+.warning-edit,
+.success-edit,
+.warning-map,
+.success-map,
+.error-map,
+.error-edit,
+.error-fixed-edit,
+.error-fixed-user,
+.success-fixed-user,
+.warning-fixed-edit,
+.warning-fixed-user {
+    position: absolute;
+    background-color: $dark-5;
+    border-radius: 20px;
+    z-index: 10;
+    width: 400px;
+    height: 40px;
+    box-shadow: 0 1px 3px $dark-3;
+    margin-top: 10px;
+    left: 50%;
+    transform: translate(-50%,0);
+    cursor: default;
+    user-select: none;
+    display: inline-block;
+
+    .msg-bar-icon {
+        position: relative;
+        float: left;
+        width: 40px;
+        height: 100%;
+
+        span {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+    }
+
+    .msg-bar-msg{
+        position: absolute;
+        width: calc(100% - 80px);
+        height: 100%;
+        left: 50%;
+        transform: translate(-50%,0);
+        font-size: 0.9em;
+        text-align: center;
+        color: $light-2;
+        font-weight: 300;
+        line-height: 1em;
+
+        label {
+            position: relative;
+            margin: 0;
+            top: 50%;
+            transform: translate(0,-50%);
+        }
+    }
+
+    .msg-bar-cross {
+        position: relative;
+        float: right;
+        width: 40px;
+        height: 100%;
+
+        div {
+            top: 50%;
+            left: -50%;
+            transform: translate(50%,-50%);
+
+            span {
+                position: absolute;
+                bottom: 2px;
+            }
+        }
+
+    }
+}
+
+.error-fixed-edit,
+.warning-fixed-edit {
+    position: fixed;
+    margin-top: 0;
+}
+
+.error-fixed-user,
+.success-fixed-user,
+.warning-fixed-user {
+    position: fixed;
+    margin-top: 70px;
+}
+
+
+.warning-edit,
+.success-edit,
+.error-edit {
+    top: 105px;
+}
+
+.warning-map,
+.success-map,
+.error-map {
+    top: 70px;
+}
+
+
+.warning-edit,
+.warning-map,
+.warning-fixed-edit,
+.warning-fixed-user {
+    border: 1px solid $warning;
+
+    .msg-bar-icon span{
+        color: $warning;
+    }
+}
+
+.success-edit,
+.success-map,
+.success-fixed-user {
+    border: 1px solid $success;
+
+    .msg-bar-icon span{
+        color: $success;
+    }
+}
+
+.error-edit,
+.error-map,
+.error-fixed-edit,
+.error-fixed-user {
+    border: 1px solid $dangert;
+
+    .msg-bar-icon span{
+        color: $dangert;
+    }
+}
+

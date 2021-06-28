@@ -1,0 +1,133 @@
+@import '../variables';
+
+#navbar {
+    user-select: none;
+    position: relative;
+    height: 60px;
+    z-index: 5;
+    background-color: $dark-3;
+    border-bottom: 1px solid $dark-4;
+    box-shadow: 0 1px 5px $dark-4;
+    font-size: 0.8em;
+
+    .burger {
+        position: absolute;
+        margin-left: 15px;
+        top: 11px;
+
+        span {
+            color: $light-2;
+            padding: 3px 6px;
+            font-size: 2.2em;
+            font-weight: 100;
+            border: 1px solid $dark-7;
+            border-radius: 3px;
+            cursor: pointer;
+            background-color: $dark-7;
+
+            &:hover {
+                border: 1px solid $dark-6;
+                color: $light-1;
+            }
+        }
+    }
+
+    // ## for phone/tablet
+    .ul-mobile {
+        position: absolute;
+        height: auto;
+        width: 100%;
+        background-color: $dark-3;
+        top: 60px;
+        padding: 15px 0;
+        font-size: 1.1em;
+
+        li {
+            a {
+                display: block;
+                padding: 5px 0 5px 30px;
+                color: $light-2;
+                text-decoration: none;
+                width: 100%;
+
+                &:hover {
+                    color: $light-1;
+                    background-color: $dark-7;
+                }
+            }
+        }
+    }
+
+    // ## for desktop
+    .ul-desktop {
+        position: relative;
+        display: inline-block;
+        top: 30px;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        li {
+            display: inline;
+            border: 0;
+            border-bottom: 2px solid $dark-3;
+            padding-bottom: 9px;
+
+            &:hover {
+                border-color: $light-2;
+            }
+
+            a {
+                color: $light-3;
+                padding: 0 12px;
+
+                &:hover {
+                    color: $light-1;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    img {
+        position: absolute;
+        height: 75px;
+        width: 140px;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+}
+
+
+// used in 'detail' and 'contact' pages
+.sub-header-c1 {
+    user-select: none;
+    height: 50px;
+    background-color: $light-1;
+    box-shadow: 0 1px 4px $dark-6;
+    padding: 17px 100px;
+    margin: 0;
+
+    li {
+        display: inline;
+
+        a {
+            padding: 5px 20px 7px 20px;
+            width: 200px;
+            border-bottom: 3px solid $light-1;
+            color: $dark-4;
+            text-decoration: none;
+            font-weight: 500;
+
+            &:hover {
+                border-bottom: 3px solid $blue-12;
+            }
+        }
+    }
+}
+
+
+.sub-header-tip {
+    margin-left: 20px;
+    margin-top: 30px;
+    color: $dark-4;
+}

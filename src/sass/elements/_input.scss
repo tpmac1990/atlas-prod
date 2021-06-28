@@ -1,0 +1,218 @@
+@import '../variables';
+
+
+.no-number-btns {
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
+.success-border {
+    border-color: $success !important;
+}
+
+.fail-border {
+    border-color: $danger !important;
+}
+
+.input-c1 {
+    background-color: $dark-5;
+    border: 0;
+    border-bottom: 1px solid $blue-4;
+    color: $light-2;
+    font-size: 0.8em;
+    padding-left: 32px;
+    width: 40%;
+
+    &:focus {
+        outline: 0;
+        border-color: $blue-5;
+    }
+}
+
+.input-c2,
+.input-c3 {
+    border: 0;
+    border-bottom: 1px solid $light-2;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+
+    &:focus {
+        outline: 0;
+        border-color: $blue-5;
+    }
+}
+
+.input-c3 {
+    border: 0;
+    border-bottom: 1px solid $blue-5;
+    background-color: $blue-6;
+
+    &:focus {
+        background-color: $light-5;
+    }
+}
+
+.input-c4 {
+    border: 1px solid $light-3;
+    border-radius: 4px;
+
+    &:hover,
+    &:focus {
+        border: 1px solid $blue-11;
+        outline: 0;
+    }
+}
+
+
+
+
+.inputGroupC1,
+.input-group-c2,
+.input-group-c3,
+.inputGroupC4 {
+    input {
+        background-color: $dark-5;
+        border: 0;
+        border-bottom: 1px solid $blue-4;
+        color: $light-2;
+        font-size: 0.8em;
+        padding-left: 10px;
+        width: 40%;
+    
+        &:focus {
+            outline: 0;
+            border-color: $blue-5;
+            background-color: $dark-4;
+        }
+    }
+
+    label {
+        user-select: none;
+        color: $light-2;
+        font-style: italic;
+        margin-bottom: 0px;
+        font-size: 0.85em;
+        width: 40%;
+        margin-left: 15px;
+    }
+}
+
+.input-group-c2,
+.inputGroupC4 {
+    margin-top: 10px;
+}
+
+.input-group-c3 {
+    input {
+        width: 50%;
+    }
+
+    label {
+        width: 30%;
+    }
+}
+
+.inputGroupC4 {
+    input {
+        width: 50%;
+
+        &:invalid::-webkit-datetime-edit {
+            color: $light-4;
+        }
+        &::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        }
+    }
+
+    label {
+        width: 30%;
+    }
+}
+
+
+.sub-details-c1 {
+    background-color: $dark-5;
+    color: $light-3;
+    font-size: 0.6em;
+    margin-left: 152px;
+    margin-top: 5px;
+
+    p { 
+        margin-bottom: 0;
+    }
+}
+
+
+
+
+.input-group-c5 {
+
+    .title {
+        user-select: none;
+        color: $light-2;
+        font-style: italic;
+        margin-bottom: 0px;
+        font-size: 0.85em;
+        margin-left: 10px;
+        margin-bottom: 8px;
+        width: 200px;
+    }
+
+    div {
+        position: relative;
+        display: grid;
+        grid-template-columns: 43% 14% 43%;
+        margin-left: 20px;
+        margin-bottom: 25px;
+
+        span {
+            color: $light-2;
+            font-style: italic;
+            margin-bottom: 0px;
+            font-size: 0.85em;
+            padding-left: 20px;
+        }
+
+        input {
+            background-color: $dark-5;
+            border: 0;
+            border-bottom: 1px solid $blue-4;
+            color: $light-2;
+            font-size: 0.8em;
+            padding-left: 10px;
+            width: 100%;
+        
+            &:focus {
+                outline: 0;
+                border-color: $blue-5;
+                background-color: $dark-4;
+            }
+        }
+    }
+}
+
+.input-group-c5 {
+    margin-top: 10px;
+}
+
+.input-group-c5 {
+    input {
+        width: 50%;
+
+        &:invalid::-webkit-datetime-edit {
+            color: $dark-6;
+        }
+        &::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        }
+    }
+
+    label {
+        width: 30%;
+    }
+}
