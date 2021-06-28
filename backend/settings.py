@@ -113,7 +113,7 @@ DATABASES = {
 # Links the Django app to the remote heroku database with the DATABASE_URL config var.
 # comment out the following two lines until heroku has been setup or it will throw an error related to DATABASE setup
 import dj_database_url
-# DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] =  dj_database_url.config()
 # I originally thought this was not needed as it is already stated above, but I was unable to migrate in heroku without it.
 DATABASES['default']['ENGINE'] = "django.contrib.gis.db.backends.postgis"
 
