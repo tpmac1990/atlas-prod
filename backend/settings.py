@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('AT_SECRET_KEY')
 DEBUG = BASE_DIR == 'C:\\Django_Projects\\03_geodjango\\Atlas\\atlas'
 
 # ‘*’ will allow any domain to host the page. Once the app is deployed, only the domains you want to use here should be listed for security reasons.
-ALLOWED_HOSTS = ['*',]
+ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
