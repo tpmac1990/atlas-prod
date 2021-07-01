@@ -5,11 +5,6 @@ from .functions import (validID, filter_data_checkbox_list, filter_data_map, get
                         get_extent, getTableData, is_there_more_data, infinite_filter, setParamsCheckboxList, setParamsMapData,
                         create_instance, copy_and_update_instance, multi_column_create_instance, add_changes_to_change_table,
                         set_instance_and_update, update_title_materials_and_record_changes)
-
-# from .serializers import (SiteSerializer, HolderListSerializer, TitleBriefSerializer, 
-#                             SiteBriefSerializer, SitePlainSerializer, OccNameSerializer, OidSerializer, TitlePlainSerializer,
-#                             OidTitleSerializer, TenHolderPlainSerializer, 
-#                             HolderAndTypeSerializer, KeepPostedSerializer, FeedbackSerializer)
 from .serializer import (TitlePopupSerializer, SitePopupSerializer, serialize_and_combine, 
                         HolderDetailSerializer, ListedHolderSerializer, ParentHolderSerializer,
                         TitleDetailSerializer, SiteDetailSerializer, OccNameSerializer, SiteWriteSerializer, OidSerializer,
@@ -40,14 +35,6 @@ class TestIDViewSet(APIView):
         result = validID(key, datasetName)
         return HttpResponse(result)
 
-
-# class PopupViewSet(APIView):
-
-#     def post(self, request): 
-#         datasetName = request.data['type']
-#         pk = request.data['pk']
-#         serializer = getPopupData(datasetName, pk)
-#         return HttpResponse(serializer)
 
 class PopupViewSet(APIView):
     ''' handles the data for the the popups when the user clicks on with a point or polygon 
@@ -84,8 +71,6 @@ class FilterViewSet(APIView):
         data = getDataList(params,dataset)
         return Response(data)
 
-        # response = getListResponse(params,data)
-        # return HttpResponse(data)
 
 
 class HolderListViewSet(APIView):
@@ -158,15 +143,23 @@ class DataByIndexesViewSet(APIView):
         which the dataset is filtered for. Passing is a list of 'ind' values allows me to create a table from either the 'Holder' detail view
         or from the data displayed on the map.
     ''' 
-
-    def get(self, request, pk=None):
-        datagroup = request.GET.get('datagroup')
+    def post(self, request):
+        datagroup = request.data['datagroup']
         try:
-            objs, has_more = getTableData(request)
+            objs, has_more = getTableData(request.data)
             s = TitleTableSerializer(objs,many=True) if datagroup == 'Tenement' else SiteTableSerializer(objs,many=True)
             return Response({'data': s.data, 'has_more': has_more})
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+    # def get(self, request, pk=None):
+    #     datagroup = request.GET.get('datagroup')
+    #     try:
+    #         objs, has_more = getTableData(request)
+    #         s = TitleTableSerializer(objs,many=True) if datagroup == 'Tenement' else SiteTableSerializer(objs,many=True)
+    #         return Response({'data': s.data, 'has_more': has_more})
+    #     except:
+    #         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class SiteGroupViewSet(APIView):
@@ -206,10 +199,6 @@ class SiteGroupViewSet(APIView):
             objs = infinite_filter(objs,limit,offset)
             lst = objs.values_list(key,label)
             client_dropdown = False
-        # print(time_past(func_start,time.time()))
-        # lst = list(map(list, lst))
-        # lst = [list(ele) for ele in lst]
-        # print(time_past(func_start,time.time()))
         result = { 'data': lst, 'client_dropdown': client_dropdown, 'has_more': has_more }
         # print([lst])
         # print(time_past(func_start,time.time()))

@@ -4,9 +4,7 @@ export { selectItem, unselectItem, setRectangleLatLngs, setLatLngsManually, setF
         clearRectangleLatLngs, setUpdateType, storeSpatialData, storeSpatialRefs, setMap, setMapIsLoading, setMapNotLoading, 
         resetMapDataOffset, toggleFilterPanel, setDataLimit, updateActiveFilters } from './filterSelection/filterSelectionActions'
 export { setFilterDataset, resetFilterControl } from './filterDirection/filterDirectionActions'
-export { storeEditHandlers } from './leafletDraw/leafletDrawActions'
-// export { storeSpatialData, storeSpatialRefs, setMap, toggleFilterPanel } from './spatialData/spatialDataActions'
-// export { controlSelectionError, oversizeDatasetRequest, oversizeListRequest, callDetailIncorrectCountError, callNoDataSelectedError,
+export { storeEditHandlers, toggleMapDrawButton } from './leafletDraw/leafletDrawActions'
 export { setPopupMessage, resetPopupMessage } from './messageHandler/messageHandlerActions'
 export { getHolderData, getSiteData, getTitleData } from './detailSelection/detailSelectionActions'
 export { setFilterValues, triggerElement, setData, isInfinityTable, clearData } from './popupTable/popupTableActions'

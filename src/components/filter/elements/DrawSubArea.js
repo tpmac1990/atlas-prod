@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import LatLngTextbox from './LatLngTextbox'
-import { clearRectangleLatLngs, toggleFilterPanel } from '../../../redux'
+import { clearRectangleLatLngs, toggleFilterPanel, toggleMapDrawButton } from '../../../redux'
 import useViewportStyle from '../../reusable/hooks/useViewportStyle'
 
 
@@ -21,11 +21,17 @@ function DrawSubArea (props) {
 
     // re-open the filter once the rectangle has been selected
     useEffect(() => {
-        is_small && !filteropen && dispatch(toggleFilterPanel())
+        if (is_small && !filteropen){
+            // re-open the filter once the rectangle has been drawn
+            dispatch(toggleFilterPanel())
+            // hide the Map draw button once the rectangle has been drawn
+            dispatch(toggleMapDrawButton(false))
+        } 
     },[rectangle])
 
     function drawRectangleHandler(){
-        editHandlers.draw._modes.rectangle.handler.enable()
+        // if small screen then present the draw button on the map so the user is able to zoom prior to drawing the rectangle
+        is_small ? dispatch(toggleMapDrawButton(true)) : editHandlers.draw._modes.rectangle.handler.enable()
         // hide the filter so the user can draw the rectangle. It will open again on completion of the rectangle
         is_small && dispatch(toggleFilterPanel())
     }
@@ -44,7 +50,6 @@ function DrawSubArea (props) {
     return (
         <div id="draw-sub-area" className={areaStyle}>
             <button className='btn-c4' onClick={drawRectangleHandler}>Select Area on Map</button>
-            {/* <button className='btn-c4' onClick={clearRectangleHandler}>Clear Rectangle</button> */}
             <button className='btn-c4' onClick={clearFieldsHandler}>Clear Selection</button>
             <h3>North East</h3>
             <LatLngTextbox name={'NELat'}/>

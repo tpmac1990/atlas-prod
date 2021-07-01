@@ -33,7 +33,9 @@ export const ServerSideTable = (props) => {
     const handleScroll = (e) => {
         if ( has_more && !loading ) {
             const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
+            console.log(`${scrollHeight - scrollTop} - ${clientHeight + 20}`)
             if ( scrollHeight - scrollTop <= clientHeight + 20 ) {
+                console.log('infinity reload triggered')
                 setLoading(true)
             }
         }

@@ -1,7 +1,8 @@
-import { STORE_EDIT_HANDLER } from './leafletDrawType'
+import { STORE_EDIT_HANDLER, TOGGLE_MAP_DRAW_BUTTON } from './leafletDrawType'
 
 const initialState = {
     editHandlers: null,
+    mdb_active: false
 }
 
 
@@ -12,6 +13,11 @@ const leafletDrawReducer = ( state = initialState, action ) => {
             return {
                 ... state,
                 editHandlers: action.payload
+            }
+        case TOGGLE_MAP_DRAW_BUTTON:
+            return {
+                ... state,
+                mdb_active: action.payload
             }
         default: return state
     }

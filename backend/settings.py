@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('AT_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = BASE_DIR == 'C:\\Django_Projects\\03_geodjango\\Atlas\\atlas'
 
 # ‘*’ will allow any domain to host the page. Once the app is deployed, only the domains you want to use here should be listed for security reasons.
 ALLOWED_HOSTS = ['*',]
@@ -113,9 +113,11 @@ DATABASES = {
 # Links the Django app to the remote heroku database with the DATABASE_URL config var.
 # comment out the following two lines until heroku has been setup or it will throw an error related to DATABASE setup
 import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
-# I originally thought this was not needed as it is already stated above, but I was unable to migrate in heroku without it.
-DATABASES['default']['ENGINE'] = "django.contrib.gis.db.backends.postgis"
+if not DEBUG:
+    # the following line will cause an error if active when running locally
+    DATABASES['default'] =  dj_database_url.config() 
+    # I originally thought this was not needed as it is already stated above, but I was unable to migrate in heroku without it.
+    DATABASES['default']['ENGINE'] = "django.contrib.gis.db.backends.postgis"
 
 
 # Password validation
@@ -169,9 +171,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"), 
-    # os.path.join(BASE_DIR, "gp", "static"),
 )
-# os.path.join(BASE_DIR, "map/templates/map"),
 
 # Responsible for serving static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

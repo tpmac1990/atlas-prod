@@ -78,18 +78,16 @@ def getDataList(p,datasets):
     return data
 
 
-def getTableData(request):
+def getTableData(data):
     ''' get the data for the table. This manages the global filter, column filters, sorting and the infinity scroll '''
-
-    ind_lst = request.GET.get('ind_lst').split(',')
-    datagroup = request.GET.get('datagroup')
-    offset = request.GET.get('offset')
-    limit = request.GET.get('limit')
-    globalfilter = request.GET.get('globalfilter')
-    colfilters = json.loads(request.GET.get('colfilters'))
-
-    sortfield = request.GET.get('field')
-    asc = True if request.GET.get('asc') == 'true' else False
+    ind_lst = data['ind_lst']
+    datagroup = data['datagroup']
+    offset = data['offset']
+    limit = data['limit']
+    globalfilter = data['globalfilter']
+    colfilters = data['colfiltersdict']
+    sortfield = data['sortdict']['field']
+    asc = data['sortdict']['asc']
 
     # query strings used for the global filter
     searchable_fields = {
@@ -123,7 +121,7 @@ def getTableData(request):
 
     has_more = is_there_more_data(objs,int(limit))
     objs = infinite_filter(objs,limit,offset)
-
+    
     return (objs, has_more)
 
 

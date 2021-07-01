@@ -2,6 +2,7 @@ import { TOGGLE_FULL_SCREEN_INACTIVE } from './inactiveCoverType'
 
 const initialState = {
     is_active: false,
+    count: 0,
 }
 
 // Reducer function
@@ -10,8 +11,8 @@ const inactiveCoverReducer = ( state = initialState, action ) => {
         case TOGGLE_FULL_SCREEN_INACTIVE: 
             return {
                 ... state,  
-                is_active: action.payload
-                // is_active: !state.is_active
+                is_active: action.payload ? true : state.count === 1 ? false : true,
+                count: action.payload ? state.count + 1 : state.count - 1
             }
         default: return state
     }

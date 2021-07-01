@@ -5,11 +5,14 @@
 @import 'filter/filterpanel_mq';
 @import 'variables';
 @import 'elements/buttons';
+@import 'elements/buttons_mq';
 @import 'elements/messagebar';
 @import 'elements/messagebar_mq';
 @import 'elements/checkboxes';
+@import 'elements/checkboxes_mq';
 @import 'map/leafletdraw';
 @import 'elements/radioButtons';
+@import 'elements/radioButtons_mq';
 @import 'elements/input';
 @import 'header/header';
 @import 'header/header_mq';
@@ -28,7 +31,7 @@
 @import 'elements/infiniteselect';
 @import 'edit/edit';
 @import 'edit/edit_mq';
-@import 'map/dataaddbuttons';
+@import 'map/mapbuttons';
 @import 'elements/containers';
 @import 'userinput/userinput';
 @import 'userinput/userinput_mq';
@@ -39,6 +42,7 @@
 
 body {
     font-size: 1em;
+    font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", Arial, "Helvetica", sans-serif !important;
 }
 
 .no-overflow {

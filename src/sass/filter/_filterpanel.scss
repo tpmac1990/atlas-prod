@@ -59,11 +59,6 @@
                     position: absolute;
                     top: 2px;
                 }
-    
-                &:hover {
-                    color: $light-2;
-                    border: 1px solid $dark-6;
-                }
             }
     
             .header-icons {
@@ -83,11 +78,6 @@
                         padding: 3px;
                         border: 1px solid $dark-7;
                         border-radius: 3px;
-                        
-                        &:hover {
-                            color: $light-2;
-                            border: 1px solid $dark-6;
-                        }
                     }
     
                     div {
@@ -138,10 +128,6 @@
         
                 div {
                     margin: 10px 0;
-        
-                    label {
-                        background-color: $dark-3;
-                    }
                 }
             }
         

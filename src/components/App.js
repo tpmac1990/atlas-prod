@@ -15,6 +15,7 @@ import { CoverInactive } from './popups/CoverInactive';
 // const MapContent = lazy(() => import('./map/MapContent'));
 const Attribution = lazy(() => import('./attributions/Attribution'));
 const HomeDetail = lazy (() => import('./detail/HomeDetail'))
+const Page400 = lazy (() => import('./errors/Page400'))
 const Page404 = lazy (() => import('./errors/Page404'))
 const Page503 = lazy (() => import('./errors/Page503'))
 const ContactHome = lazy (() => import('./contact/ContactHome'))
@@ -36,6 +37,7 @@ const SubApp = () => {
                     <Route exact path="/attribution" component={Attribution} />
                     <Route path="/detail" component={HomeDetail} />
                     <Route path="/contact" component={ContactHome} />
+                    <Route path="/400" component={Page400} />
                     <Route path="/404" component={Page404} />
                     <Route path="/503" component={Page503} />
                 </Switch>

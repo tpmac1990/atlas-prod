@@ -15,8 +15,10 @@ const checkRequests = Wrapped => {
                         history.push('/503') //we will redirect user into 503 page 
                         break
                     case 404 :
-                        console.log('this is the 404 push')
                         history.push('/404') 
+                        break
+                    case 400 :
+                        history.push('/400') 
                         break
                     default :
                         break

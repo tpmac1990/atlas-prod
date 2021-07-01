@@ -12,8 +12,9 @@ function GroupButton(props) {
     const { category, open, display, btnStyle } = useSelector(state => state.filterGroup.groups[name])
 
     // const style = category == 'a' ? 'filterGroupBtn btn-c2 ' + btnStyle : 'filterGroupBtn btn-c3 ' + btnStyle
-    const style = category == 'a' ? `filter-grp-btn-pri btn-c2 ${btnStyle}` : `filter-grp-btn-sec btn-c3 ${btnStyle}`
-
+    let style = category == 'a' ? `filter-grp-btn-pri btn-c2 ${btnStyle}` : `filter-grp-btn-sec btn-c3 ${btnStyle}`
+    // add extra styling if the buttons sub area is open
+    style = open ? `${style} btn-act-c1` : style
     const symbol = open === true ? '-' : '+' 
 
 

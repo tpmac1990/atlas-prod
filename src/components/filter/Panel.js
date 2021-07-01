@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 
 import { closeAllGroups, storeSpatialData, 
@@ -11,7 +10,6 @@ import { closeAllGroups, storeSpatialData,
 
 import { updateFilterList } from './filterLists'
 import useViewportStyle from '../reusable/hooks/useViewportStyle'
-// import { formatForCheckboxList } from './functions/formatFilterSelection'
 import Control from './Control'
 import RelatedData from './RelatedData'
 import FilterGroups from './FilterGroups'
@@ -80,17 +78,13 @@ const FilterToggle = () => {
 function Panel () {
 
     const { filterSelection, leafletDraw } = useSelector(state => state)
-    // const { filterDataset, filterDirection } = useSelector(state => state.filterDirection)
     const { filterDataset } = useSelector(state => state.filterDirection)
-    // const { includeRelated, relatedOpen, filteropen, occs, tens } = filterSelection
     const { map_data, related, input, map_infinity, last_group_changed, active_filters } = filterSelection
     const { primary: pri_filters, related: rel_filters } = active_filters
     const { offset, limit, loading } = map_infinity
     const { filteropen, occs, tens } = map_data
     const { include, is_open } = related
-    // const { filteropen, occs, tens } = spatialData
     const { editHandlers } = leafletDraw
-    // const { titles, sites } = useSelector(state => state.popupTable)
 
     const relBtnStyle = include ? 'btn-c1 showEle' : 'btn-c1 hideEle'
     const panelStyle = filteropen ? 'showPanel' : 'hidePanel'
@@ -209,6 +203,10 @@ function Panel () {
         dispatch(resetFilterGroupState())
         // clear the filter selections and the filter arrays
         dispatch(resetFilterSelection())
+        // clear the drawn rectangle if it exists
+        try {
+            editHandlers.edit._modes.remove.handler.removeAllLayers()
+        } catch(err){}
     }
 
     // Handles the events for dealing with listing the map results in a table
@@ -244,9 +242,6 @@ function Panel () {
     }
 
 
-    const list_msg = 'Display the map data in table form'
-    const clear_msg = 'Clear the filter'
-
     return (
         <div id='panel' className={panelStyle}>
             <div id='panel-subarea'>
@@ -256,15 +251,15 @@ function Panel () {
                         <h1>Data Control</h1>
                     </div>
                     <div className='header-icons'>
-                        <IconBtn clickHandler={listHandler} iconStyle='list' tooltip={list_msg} />
-                        <IconBtn clickHandler={clearHandler} iconStyle='delete_sweep' tooltip={clear_msg} />
+                        <IconBtn clickHandler={listHandler} iconStyle='list' tooltip='Display the map data in table form' />
+                        <IconBtn clickHandler={clearHandler} iconStyle='delete_sweep' tooltip='Clear the filter' />
                     </div>
                 </div>
                 { tableSelect
                 ? <div className='list-dropdown'>
                         <button className='close-c4' onClick={() => {setTableSelect(false);dispatch(toggleFullScreenInactive(false))}}><span>x</span></button>
-                        <button className='btn-c5 lst-dd-btn-1' onClick={() => dispatch(triggerElement('sites'))}>Sites Table</button>
-                        <button className='btn-c5 lst-dd-btn-2' onClick={() => dispatch(triggerElement('titles'))}>Titles Table</button>
+                        <button className='btn-c5 lst-dd-btn-1' onClick={() => {dispatch(triggerElement('sites'));dispatch(toggleFullScreenInactive(true))}}>Sites Table</button>
+                        <button className='btn-c5 lst-dd-btn-2' onClick={() => {dispatch(triggerElement('titles'));dispatch(toggleFullScreenInactive(true))}}>Titles Table</button>
                 </div>
                 : null}
                 <hr/>
