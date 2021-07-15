@@ -132,6 +132,8 @@ else:
         }
     }
 
+# if 'RDS_DB_NAME' in os.environ:
+#     GDAL_LIBRARY_PATH = '/usr/local/gdal/lib/libgdal.so'
 
 # # Links the Django app to the remote heroku database with the DATABASE_URL config var.
 # # comment out the following two lines until heroku has been setup or it will throw an error related to DATABASE setup
