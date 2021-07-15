@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 # automatically configures Django app to work on heroku including reading the database configurations from the config vars and making the static files work. Make sure ‘django_heroku.settings(local())’ function below is before the database configurations as it is here (especially for postgis db’s) otherwise this function will override the postgis ENGINE back to just a postgres.
-import django_heroku
+# import django_heroku
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('AT_SECRET_KEY')
+# SECRET_KEY = os.environ.get('AT_SECRET_KEY')
+SECRET_KEY = "fzrty2*jnt^ciw-e!&8=io1g^sx!n(+hl*&55(ey1_$u9+#jjr"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = BASE_DIR == 'C:\\Django_Projects\\03_geodjango\\Atlas\\atlas'
@@ -91,33 +92,55 @@ WEBPACK_LOADER = {
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-# As written above, this command is responsible for passing the database and static file configurations to heroku. The heroku database url is postgres by default and can’t be changed. This command will tell heroku that the database is just postgres, but this will be overridden below with the 'DATABASE[‘default’][‘ENGINE’] = “Django.contrib.gis.db.backends.postgis”’ command.
-django_heroku.settings(locals())
+# # As written above, this command is responsible for passing the database and static file configurations to heroku. The heroku database url is postgres by default and can’t be changed. This command will tell heroku that the database is just postgres, but this will be overridden below with the 'DATABASE[‘default’][‘ENGINE’] = “Django.contrib.gis.db.backends.postgis”’ command.
+# django_heroku.settings(locals())
 
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': os.environ.get('AT_DB_NAME'),
-        'USER' : os.environ.get('AT_DB_USER'),
-        'PASSWORD' : os.environ.get('AT_DB_PASSWORD'),
-        'HOST' : 'localhost',
-        'PORT' : '5432'
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': os.environ.get('AT_DB_NAME'),
+#         'USER' : os.environ.get('AT_DB_USER'),
+#         'PASSWORD' : os.environ.get('AT_DB_PASSWORD'),
+#         'HOST' : 'localhost',
+#         'PORT' : '5432'
+#     }
+# }
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': os.environ.get('AT_DB_NAME'),
+            'USER' : os.environ.get('AT_DB_USER'),
+            'PASSWORD' : os.environ.get('AT_DB_PASSWORD'),
+            'HOST' : 'localhost',
+            'PORT' : '5432'
+        }
+    }
 
 
-# Links the Django app to the remote heroku database with the DATABASE_URL config var.
-# comment out the following two lines until heroku has been setup or it will throw an error related to DATABASE setup
-import dj_database_url
-if not DEBUG:
-    # the following line will cause an error if active when running locally
-    DATABASES['default'] =  dj_database_url.config() 
-    # I originally thought this was not needed as it is already stated above, but I was unable to migrate in heroku without it.
-    DATABASES['default']['ENGINE'] = "django.contrib.gis.db.backends.postgis"
+# # Links the Django app to the remote heroku database with the DATABASE_URL config var.
+# # comment out the following two lines until heroku has been setup or it will throw an error related to DATABASE setup
+# import dj_database_url
+# if not DEBUG:
+#     # the following line will cause an error if active when running locally
+#     DATABASES['default'] =  dj_database_url.config() 
+#     # I originally thought this was not needed as it is already stated above, but I was unable to migrate in heroku without it.
+#     DATABASES['default']['ENGINE'] = "django.contrib.gis.db.backends.postgis"
 
 
 # Password validation

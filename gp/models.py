@@ -239,7 +239,7 @@ class Holder(models.Model):
     name = models.CharField(max_length=150, blank=False, null=False)
     typ = models.ForeignKey(HolderType, on_delete=models.SET_NULL, related_name="typ_holder", blank=True, null=True)
     listed = models.ManyToManyField(Listed, related_name="listed_holder", blank=True)
-    children = models.ManyToManyField('self', related_name="children_holder", through='Parent', blank=True)
+    children = models.ManyToManyField('self', related_name="children_holder", through='Parent', blank=True, symmetrical=False)
     user_name = models.CharField(max_length=20, blank=False, null=False)
     valid_relations = models.BooleanField(default=False)
     valid_instance = models.BooleanField(default=False)
