@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Link } from "react-router-dom"
 import useViewportStyle from '../reusable/hooks/useViewportStyle'
-import logo from '../../assets/images/logo/compasswhite.png'
+import logo from '../../assets/images/logo/logo_2.png'
 import MessageBar from '../message/MessageBar'
 
 function header() {

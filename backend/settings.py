@@ -99,58 +99,29 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': os.environ.get('AT_DB_NAME'),
-#         'USER' : os.environ.get('AT_DB_USER'),
-#         'PASSWORD' : os.environ.get('AT_DB_PASSWORD'),
-#         'HOST' : 'localhost',
-#         'PORT' : '5432'
-#     }
-# }
-
-# if 'RDS_DB_NAME' in os.environ:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#             'NAME': os.environ['RDS_DB_NAME'],
-#             'USER': os.environ['RDS_USERNAME'],
-#             'PASSWORD': os.environ['RDS_PASSWORD'],
-#             'HOST': os.environ['RDS_HOSTNAME'],
-#             'PORT': os.environ['RDS_PORT'],
-#         }
-#     }
-# else:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#             'NAME': os.environ.get('AT_DB_NAME'),
-#             'USER' : os.environ.get('AT_DB_USER'),
-#             'PASSWORD' : os.environ.get('AT_DB_PASSWORD'),
-#             'HOST' : 'localhost',
-#             'PORT' : '5432'
-#         }
-#     }
-
-# if 'RDS_DB_NAME' in os.environ:
-#     GDAL_LIBRARY_PATH = '/usr/local/gdal/lib/libgdal.so'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'postgres',
-        'USER': 'atlas',
-        'PASSWORD': 'tpm22sra2156!',
-        'HOST': os.environ['RDS_HOSTNAME'],
-        'PORT': '5432',
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': os.environ.get('AT_DB_NAME'),
+            'USER' : os.environ.get('AT_DB_USER'),
+            'PASSWORD' : os.environ.get('AT_DB_PASSWORD'),
+            'HOST' : 'localhost',
+            'PORT' : '5432'
+        }
+    }
 
-# 'aa15mqo7nq7zqvd.cmc0euug93bf.ap-southeast-2.rds.amazonaws.com'
-
-GEOS_LIBRARY_PATH = '/usr/local/gdal/lib/libgeos_c.so'
-GDAL_LIBRARY_PATH = '/usr/local/gdal/lib/libgdal.so'
 
 # # Links the Django app to the remote heroku database with the DATABASE_URL config var.
 # # comment out the following two lines until heroku has been setup or it will throw an error related to DATABASE setup
