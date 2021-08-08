@@ -34,12 +34,12 @@ class Material(models.Model):
 class LocalGovernment(models.Model):
     _id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=70, blank=False, null=False)
-    # state = models.CharField(max_length=10, blank=False, null=False)
+    # state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name="state_localgov", blank=False, null=False)
 
 class GovernmentRegion(models.Model):
     _id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100, blank=False, null=False)
-    # state = models.CharField(max_length=10, blank=False, null=False)
+    # state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name="state_govreg", blank=False, null=False)
 
 class GeologicalProvince(models.Model):
     _id = models.IntegerField(primary_key=True)
@@ -409,3 +409,7 @@ class KeepPosted(models.Model):
     email = models.EmailField(max_length=254, blank=False, null=False)
     submitted_date = models.DateField(auto_now=False, auto_now_add=True)
 
+
+class UserLogOn(models.Model):
+    ip = models.CharField(max_length=100, blank=False, null=False)
+    open_time = models.DateTimeField(auto_now=False, auto_now_add=True)

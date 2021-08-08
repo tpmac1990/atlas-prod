@@ -59,13 +59,12 @@
     position: absolute;
     width: 70px;
     height: 40px;
-    z-index: 1000;
+    z-index: 100;
     top: 85px;
     margin-left: 10px;
     background-color: $light-1;
-    padding: 7px;
 
-    &:hover {
+    &:active {
         background-color: $light-5;
     }
 }

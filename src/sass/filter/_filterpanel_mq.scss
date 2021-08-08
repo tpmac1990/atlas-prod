@@ -37,6 +37,14 @@
 
 }
 
+// narrows the draw buttons so they don't drop onto two rows
+@media only screen and (max-width: 400px) {
+    #panel #panel-subarea #filter-area #filter-groups .filter-group-area #draw-sub-area button {
+        width: 135px;
+        padding: 3px 7px;
+    }
+}
+
 // places the 'combine related data' and both buttons at the base of the filter on one line
 //      to leave more room for the filter options
 @media only screen and (max-width: 850px) and (max-height: 450px) {

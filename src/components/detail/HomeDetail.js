@@ -1,4 +1,4 @@
-import React, { lazy, Fragment } from 'react'
+import React, { lazy, Fragment, useState } from 'react'
 import { Route, Link, useRouteMatch } from "react-router-dom";
 
 
@@ -8,20 +8,26 @@ const HolderDetail = lazy(() => import('./HolderDetail'));
 
 const SubHomeDetail = () => {
     return (
-        <h6 className='sub-header-tip'>Select one of the above groups to begin a detailed search ...</h6>
+        <h6 className='sub-header-tip'>Select one of the above options to begin a detailed search ...</h6>
     )
 }
 
 function HomeDetail() {
 
     let { path, url } = useRouteMatch();
+
+    const [ active, setActive ] = useState(null)
+
+    const clickHandler = e => {
+        setActive(e.target.name)
+    }
     
     return (
         <Fragment>
             <ul className="sub-header-c1">
-                <li><Link to={`${url}/title`} name="title" >Title</Link></li>
-                <li><Link to={`${url}/site`} name="site" >Site</Link></li>
-                <li><Link to={`${url}/holder`} name="holder" >Holder</Link></li>
+                <li onClick={clickHandler} className={ active === 'title' ? 'active-sub-field' : '' }><Link to={`${url}/title`} name="title" >Title</Link></li>
+                <li onClick={clickHandler} className={ active === 'site' ? 'active-sub-field' : '' }><Link to={`${url}/site`} name="site" >Site</Link></li>
+                <li onClick={clickHandler} className={ active === 'holder' ? 'active-sub-field' : '' }><Link to={`${url}/holder`} name="holder" >Holder</Link></li>
             </ul>   
             <div id="detail-groups">
                 <Route path={`${path}/home`} component={SubHomeDetail} />

@@ -3,10 +3,18 @@
 
 @media only screen and (max-width: 850px) {
 
-    #navbar .burger span {
-        &:active {
-            color: $light-2;
-            box-shadow: inset 0 0 4px $light-1;
+    #navbar {
+        .burger span {
+            &:active {
+                color: $light-2;
+                box-shadow: inset 0 0 4px $light-1;
+            }
+        }
+
+        img {
+            height: 50px;
+            width: 135px;
+            margin-top: 5px;
         }
     }
     

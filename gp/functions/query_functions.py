@@ -31,6 +31,7 @@ def run_filter_query(dataname,filtertype,dataset,dic,filterSelectionDic):
                 count += 1
                 queryString = dic[val]['query']
                 dataset = dataset.filter(**{queryString: queryValue})
+
     # if dataset.count() > 0:
     #     dataset = dataset.order_by('ind')
     return {'data': dataset, 'count': count}
@@ -166,7 +167,7 @@ def filter_data_map(p):
 
     # filters the primary dataset for all options selected in the filter. 
     priDataset = run_filter_query(p['priDatasetName'],'primary',p['priDataset'],configs,filterSelectionDic)
-    # print(priDataset)
+
     # slice the data to limit the data returned. only for the spatial query.
     total_count = priDataset['data'].count()
     priDataset['data'] = infinite_filter(priDataset['data'],p['limit'],p['offset'])

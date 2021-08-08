@@ -118,6 +118,11 @@
             }
         }
     }
+
+    // underlines the active field
+    .active-sub-field a {
+        border-bottom: 3px solid $blue-12;
+    }
 }
 
 

@@ -11,7 +11,7 @@ from .serializer import (TitlePopupSerializer, SitePopupSerializer, serialize_an
                         OccurrenceChangeSerializer, TitleTableSerializer, SiteTableSerializer,
                         OidTitleSerializer, TitleUpdateSerializer, TenHolderWriteSerializer, ParentWriteSerializer, ChildWriteSerializer,
                         TenementChangeSerializer, OccurrenceChangeSerializer, HolderChangeSerializer, HolderAndTypeSerializer,
-                        OidWriteSerializer, OccNameWriteSerializer, OidWriteTitleSerializer)
+                        OidWriteSerializer, OccNameWriteSerializer, OidWriteTitleSerializer, UserLogOnSerializer)
 from rest_framework import status  
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -350,3 +350,16 @@ class CreateKeepPostedViewSet(APIView):
         if s.is_valid():
             s.save()
         return Response('Add to email list')
+
+
+class SaveIPViewSet(APIView):
+    # ip = x_forwarded_for.split(',')[-1].strip()
+
+    def post(self, request, pk=None):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        ip = x_forwarded_for.split(',')[0] if x_forwarded_for else request.META.get('REMOTE_ADDR')
+        s = UserLogOnSerializer(data={'ip':ip})
+        if s.is_valid():
+            s.save()
+
+        return Response(ip)

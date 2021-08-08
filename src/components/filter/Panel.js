@@ -143,6 +143,7 @@ function Panel () {
         }
     }
 
+
     useEffect(() => {
         // when offset is 0 and loading is true then fetch the geospatial data. This will replace all existing data.
         if ( offset === 0 && loading ){
@@ -177,7 +178,7 @@ function Panel () {
 
     function RelationHandler() {
         if ( pri_filters.length === 0 ){
-            dispatch(setPopupMessage({message: "Filter the primary data before trying to filter its related data", type: 'error', style: 'error-map'}))
+            dispatch(setPopupMessage({message: "Filter the primary data before attempting to filter its related data", type: 'error', style: 'error-map'}))
         } else {
             dispatch(closeAllGroups())
             dispatch(toggleRelatedFilter())
@@ -228,7 +229,7 @@ function Panel () {
         const bsites = dict.sites
         if ( !btitle && !bsites ){
             // popup error message when no data has been selected
-            dispatch(setPopupMessage({message: "Your search has return no data to display", type: 'warning', style: 'warning-map'}))
+            dispatch(setPopupMessage({message: "Your search has returned no data to display", type: 'warning', style: 'warning-map'}))
         } else if ( btitle && bsites ){
             // makes page inactive before activating the table select popup
             dispatch(toggleFullScreenInactive(true))

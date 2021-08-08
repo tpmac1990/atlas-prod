@@ -77,9 +77,9 @@ function MapContent() {
             <Draw />
             <CoordinatesControl position="bottomleft" />
             <MapDataAdd />
-            { mdb_active ? <MobileDraw /> : null }
           </Map>  
         </div>
+        { mdb_active ? <MobileDraw /> : null }
         { filteropen
         ? null
         : (

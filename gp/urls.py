@@ -68,4 +68,6 @@ urlpatterns = [
 
     path('create-feedback/',CreateFeedbackViewSet.as_view()),
     path('create-keep-posted/',CreateKeepPostedViewSet.as_view()),   
+
+    path('save-ip/',SaveIPViewSet.as_view())
 ]

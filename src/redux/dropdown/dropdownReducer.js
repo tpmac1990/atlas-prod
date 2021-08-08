@@ -67,7 +67,9 @@ const dropdownReducer = ( state = initialState, action ) => {
             return {
                 ...state,
                     [name]: { ...state[name],
-                        selected: selection,
+                        selected: { ... selection,
+                            label: selection.label.replace('&amp;','&')
+                        },
                         search: '',
                         visible: false,
                         // change_toggle: !state[name].change_toggle

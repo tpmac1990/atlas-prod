@@ -132,7 +132,9 @@ const filterSelectionReducer = ( state = initialState, action ) => {
                         SWLng: coordinates._southWest.lng,
                     }
                 },
-                map_infinity: initialState.map_infinity
+                map_infinity: { ...initialState.map_infinity,
+                    limit: state.map_infinity.limit,
+                }
             }
         case CLEAR_RECTANGLE_LATLNGS:
             return {
