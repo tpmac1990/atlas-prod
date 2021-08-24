@@ -1,7 +1,9 @@
 import { ITEM_SELECTED, ITEM_UNSELECTED, SET_RECTANGLE_LATLNGS, MANUAL_LATLNGS_CHANGE, SET_DATE_CHANGE, 
         SET_BUFFER_ID, SET_BUFFER_DISTANCE, INCLUDE_RELATED_DATA, TOGGLE_RELATED_FILTER, RESET_FILTER_SELECTION, 
         VALID_BUFFER_ID, CLEAR_RECTANGLE_LATLNGS, SET_ID_CENTROID, SET_UPDATE_TYPE, SET_SPATIAL_DATA, SPATIAL_DATA_REF, 
-        SET_MAP, TOGGLE_FILTER_PANEL, SET_MAP_LOADING, RESET_MAP_DATA_OFFSET, SET_MAP_NOT_LOADING, SET_DATA_LIMIT, SET_ACTIVE_FILTERS } from './filterSelectionType'
+        SET_MAP, TOGGLE_FILTER_PANEL, SET_MAP_LOADING, RESET_MAP_DATA_OFFSET, SET_MAP_NOT_LOADING, SET_DATA_LIMIT, 
+        SET_ACTIVE_FILTERS, SET_MAP_BOUNDS, TOGGLE_BOUNDS, PREVENT_BOUNDS_UPDATE, SET_INITIAL_BOUNDS,
+        SET_FILTER_BOUNDS } from './filterSelectionType'
 import { SET_POPUP_MESSAGE } from '../messageHandler/messageHandlerType'
 import axios from 'axios'
 
@@ -223,6 +225,56 @@ export const toggleFilterPanel = () => {
         type: TOGGLE_FILTER_PANEL
     }
 }
+
+// sets the bounds of the map
+export const setMapBounds = bounds => {
+    return {
+        type: SET_MAP_BOUNDS,
+        payload: bounds
+    }
+}
+
+
+// prevents the update of the bounds for the next data update
+export const preventBoundsUpdate = value => {
+    return {
+        type: PREVENT_BOUNDS_UPDATE,
+        payload: value
+    }
+}
+
+// when true the map will re-fit to the bounds stored. 
+export const toggleBounds = value => {
+    return {
+        type: TOGGLE_BOUNDS,
+        payload: value
+    }
+}
+
+
+export const setInitialBounds = bounds => {
+    return {
+        type: SET_INITIAL_BOUNDS,
+        payload: bounds
+    }
+}
+
+// used to backup the bounds for when closing the filter, redirecting to another page and then redirecting back
+// this is used to re-establish the previous bounds
+export const setFilterBounds = bounds => {
+    return {
+        type: SET_FILTER_BOUNDS,
+        payload: bounds
+    }
+}
+
+// // update the coordinates of the moved site
+// export const updateSiteCoordinates = values => {
+//     return {
+//         type: UPDATE_SITE_COORDINATES,
+//         payload: values
+//     }
+// }
 
 
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import LocationGroup from './groups/LocationGroup'
 import TypeGroup from './groups/TypeGroup'
 import StatusGroup from './groups/StatusGroup'
@@ -11,7 +11,7 @@ import ChangeUpdateGroup from './groups/ChangeUpdateGroup'
 
 function OccurrenceFilter () {
     return (
-        <div className='full'>
+        <Fragment>
             <LocationGroup />
             <TypeGroup groupList={['typesimple','typedetail']} name={'type'} />
             <StatusGroup groupList={['statussimple','statusdetail']} name={'status'} />
@@ -20,7 +20,7 @@ function OccurrenceFilter () {
             <IDGroup />
             <UpdateGroup name='addition' title='Site Additions Dates' />
             <ChangeUpdateGroup />
-        </div>
+        </Fragment>
     )
 }
 

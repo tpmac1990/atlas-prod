@@ -2,6 +2,11 @@
 
 @media only screen and (max-width: 850px) {
 
+    // hides the draw tooltips as they can't follow the mouse
+    .leaflet-draw-tooltip{
+        display: none;
+    }
+
     #map-wrapper {
         .mapWithFilter {
             width: 0;

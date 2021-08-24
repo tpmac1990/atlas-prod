@@ -1,0 +1,62 @@
+@import '../variables';
+
+
+.instruction-group {
+    margin: 20px 160px;
+    padding-bottom: 50px;
+
+    .div-link {
+        margin-left: 40px;
+        cursor: pointer;
+        color: $blue-14;
+
+        &:hover {
+            color: $blue-12;
+            text-decoration: underline;
+        }
+    }
+
+    h1 {
+        font-size: 2.0em;
+    }
+
+    h1, h2, p {
+        margin-left: 40px;
+    }
+
+    p {
+        margin-right: 80px;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+
+    h3 {
+        margin-left: 60px;
+        font-size: 1.5em;
+        margin-top: 30px;
+    }
+
+    .instruction-p2 {
+        margin-left: 60px;
+    }
+
+    ul.index {
+        margin-top: 30px;
+        margin-left: 20px;
+        width: 200px;
+        // list-style-type: none;
+
+        li {
+            cursor: pointer;
+            color: $blue-14;
+            padding-left: 10px;
+
+            &:hover {
+                color: $blue-12;
+                text-decoration: underline;
+            }
+        }
+    }
+}

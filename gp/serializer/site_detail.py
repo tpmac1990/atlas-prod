@@ -129,7 +129,6 @@ class SiteDetailSerializer(serializers.ModelSerializer):
         # fields = ["ind"]
 
 
-
 # ##############################################################################################
 # Writting to db
 # ##############################################################################################
@@ -175,3 +174,18 @@ class OccNameWriteSerializer(serializers.ModelSerializer):
     #     validated_data['user_name'] = 'unknown user'
     #     instance = OccName.objects.create(**validated_data)
     #     return instance
+
+
+# save the in app created site
+class SiteGeomSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Occurrence
+        fields = ["ind","geom","state","localgov","govregion","geoprovince","occurrence_tenement","status","size"]
+
+
+class SiteMoveSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Occurrence
+        fields = ["ind","geom","state","localgov","govregion","geoprovince","occurrence_tenement"]

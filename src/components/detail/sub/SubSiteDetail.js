@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getSiteData, triggerElement, setFilterValues } from '../../../redux';
+import { getSiteData, triggerElement, setFilterValues, toggleFullScreenInactive } from '../../../redux';
 
 import DetailTableC1 from './DetailTableC1';
 import SingleColumnTableC1 from './SingleColumnTableC1';
@@ -28,6 +28,12 @@ function SubSiteDetail({ match }){
         value && dispatch(setFilterValues({ind_lst: value.tenements.map(x => x.ind), datagroup: 'titles'}))
     }, [value])
 
+    // call the related titles table
+    const tableHandler = () => {
+        dispatch(toggleFullScreenInactive(true))
+        dispatch(triggerElement('titles'))
+    }
+
 
     if (value == null){
         return <Loading />
@@ -36,7 +42,7 @@ function SubSiteDetail({ match }){
             <div className="detail-info-c1">
                 <TitleComponent group='site' title={value.ind} index={value.ind} />
                 <div className='list-table-btn-lng'>
-                    <button className='btn-c5' onClick={() => dispatch(triggerElement('titles'))} >Related Titles Table</button>
+                    <button className='btn-c5' onClick={tableHandler} >Related Titles Table</button>
                 </div>
                 <SingleColumnTableC1 dict={NameDict} value={value} />
                 <SingleColumnTableC1 dict={TypeDict} value={value} />

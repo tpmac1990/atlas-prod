@@ -6,6 +6,7 @@
     background-color: #ffffff70 !important;
 }
 
+
 #map-wrapper {
     height: calc(100vh - 60px);
     width: 100%;
@@ -43,8 +44,10 @@
             height: 50px;
             width: 50px;
             background-color: $dark-5;
+            border: 1px solid $light-2;
+            border-left: none;
             position: absolute;
-            z-index: 2;
+            z-index: 400;
             top: 140px;
             border-top-right-radius: 50%;
             border-bottom-right-radius: 50%;
@@ -56,11 +59,11 @@
                 font-weight: 100;
                 position: absolute;
                 top: 50%;
-                left: 50%;
+                left: 48%;
                 transform: translate(-50%, -50%);
 
                 &:hover {
-                    color: $light-1;
+                    color: $light-2;
                 }
             }
         }

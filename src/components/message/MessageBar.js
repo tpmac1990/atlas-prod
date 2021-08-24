@@ -31,7 +31,8 @@ export default function MessageBar() {
     const dic = {
         error: 'close',
         success: 'check',
-        warning: 'warning_amber'
+        warning: 'warning_amber',
+        info: 'info_outline'
     }
 
     return (

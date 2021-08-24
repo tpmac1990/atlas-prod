@@ -1,7 +1,8 @@
 import time
 from datetime import datetime
 from copy import deepcopy
-from gp.models import Material, Tenement
+from gp.models import Material, Tenement, StateSpatial, LocalGovernmentSpatial, GovernmentRegionSpatial, GeologicalProvinceSpatial, OccStatus
+from django.contrib.gis.geos import Point
 
 def create_update_id(ind,model):
     ''' create the id for the updated ind for Occurrence or Tenement instances '''
@@ -414,4 +415,23 @@ def update_title_materials_and_record_changes(pk,data):
                             #   in the tenement minmat field, so no need to delete something that isn't there
                             if min_lst.count(mat) == 1 and maj_lst.count(mat) == 0:
                                 getattr(ten_obj, 'minmat').remove(mat)
+
+
+
+def get_sites_locations(latlng):
+    '''  converts the latlng to a geos point and then uses the interset query to find the spatially related locations using the spatial models.
+        The spatial models are only used to find the location, as their use in the filter to query results is too slow.
+    '''
+    pnt = Point(latlng['lng'],latlng['lat'])
+    data = {
+        'occurrence_tenement': list(Tenement.objects.filter(geom__intersects=pnt).values_list('pk',flat=True)),
+        'state': StateSpatial.objects.filter(geom__intersects=pnt).values_list('pk',flat=True)[0],
+        'localgov': LocalGovernmentSpatial.objects.filter(geom__intersects=pnt).values_list('pk',flat=True)[0],
+        'govregion': GovernmentRegionSpatial.objects.filter(geom__intersects=pnt).values_list('pk',flat=True)[0],
+        'geoprovince': list(GeologicalProvinceSpatial.objects.filter(geom__intersects=pnt).values_list('pk',flat=True)),
+        'geom':  'SRID=4202;POINT(%s %s)'%(latlng['lng'],latlng['lat']),
+        'status': OccStatus.objects.get(original='Unknown')._id,
+        'size': 'uk'
+    }
+    return data
                      

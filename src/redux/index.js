@@ -2,7 +2,8 @@ export { openPrimary, openSecondary, closePrimary, closeSecondary, resetFilterGr
 export { selectItem, unselectItem, setRectangleLatLngs, setLatLngsManually, setFilterDates, setBufferID, 
         setBufferDistance, includeRelatedData, toggleRelatedFilter, resetFilterSelection, getBufferIDCentroid, invalidBufferID,
         clearRectangleLatLngs, setUpdateType, storeSpatialData, storeSpatialRefs, setMap, setMapIsLoading, setMapNotLoading, 
-        resetMapDataOffset, toggleFilterPanel, setDataLimit, updateActiveFilters } from './filterSelection/filterSelectionActions'
+        resetMapDataOffset, toggleFilterPanel, setDataLimit, updateActiveFilters, setMapBounds, toggleBounds, 
+        preventBoundsUpdate, setInitialBounds, setFilterBounds } from './filterSelection/filterSelectionActions'
 export { setFilterDataset, resetFilterControl } from './filterDirection/filterDirectionActions'
 export { storeEditHandlers, toggleMapDrawButton } from './leafletDraw/leafletDrawActions'
 export { setPopupMessage, resetPopupMessage } from './messageHandler/messageHandlerActions'
@@ -17,3 +18,6 @@ export { setEditData, addEditData, removeEditData, addEditDictKey, postSiteUpdat
 export { getFilterCheckboxData, setCheckBoxListIsLoading, setCheckboxSearch, filterCheckBoxListClientSide, resetCheckBoxListOffset } from './checkBoxList/checkBoxListActions'
 export { getPopupData, setPopupTarget } from './mapPopup/mapPopupActions'
 export { saveUserEmail, saveUserFeedback } from './userData/userDataActions'
+export { ActivateConfirmPopup, DeactivateConfirmPopup, isConfirmed, resetConfirmed } from './confirmPopup/confirmPopupActions'
+export { setMarkerLatLngs, createSite, moveSite, resetCreatePntState, triggerPntMove, toggleOffSiteMove, setCreateSite } from './editPoint/editPointActions'
+export { setScreenSize } from './sizeControl/sizeControlActions'

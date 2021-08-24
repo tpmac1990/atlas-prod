@@ -7,6 +7,7 @@
 .warning-map,
 .success-map,
 .error-map,
+.info-map,
 .error-edit,
 .error-fixed-edit,
 .error-fixed-user,
@@ -103,7 +104,8 @@
 
 .warning-map,
 .success-map,
-.error-map {
+.error-map,
+.info-map {
     top: 70px;
 }
 
@@ -137,6 +139,14 @@
 
     .msg-bar-icon span{
         color: $dangert;
+    }
+}
+
+.info-map {
+    border: 1px solid $blue-14;
+
+    .msg-bar-icon span{
+        color: $blue-14;
     }
 }
 

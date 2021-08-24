@@ -2,15 +2,17 @@
 
 
 .add-data-area {
-    width: 300px;
-    z-index: 1000;
+    z-index: 400;
     position: relative;
     left: 55px;
     margin-top: 10px;
+    height: 48px;
+    width: 48px;
+    float: left;
 
     div {
-        height: 40px;
-        width: 70px;
+        height: 100%;
+        width: 100%;
         display: inline-block;
         position: relative;
 
@@ -18,53 +20,116 @@
             height: 100%;
             width: 100%;
             position: absolute;
-        }
-    
-        .add-data-tooltip {
-            top: 44px;
-            background-color: transparent;
-            width: 200px;
-            z-index: 1001;
-            position: absolute;
-    
-            div {
-                &:first-of-type{
-                    height: 0px;
-                    width: 0px;
-                    border-bottom: 10px solid $light-5;
-                    border-right: 10px solid transparent;
-                    border-left: 10px solid transparent;
-                    margin-left: 15px;
-                    position: absolute;
-                    z-index: 1002;
-                }
-                &:last-of-type{
-                    height: auto;
-                    width: 100%;
-                    margin-top: 10px;
-                    background-color: $light-5;
-                    position: absolute;
-                    border-radius: 3px;
-                    box-shadow: 0 1px 2px $dark-6;
-                    padding: 7px;
-                }
+            color: $light-4;
+
+            &:hover {
+                color: $light-6;
             }
         }
     }
-
 }
 
 
-#mobile-draw {
-    position: absolute;
-    width: 70px;
-    height: 40px;
-    z-index: 100;
-    top: 85px;
-    margin-left: 10px;
-    background-color: $light-1;
 
-    &:active {
-        background-color: $light-5;
+// styles the add/move site map button
+#create-site,
+#mobile-draw {
+
+    #create-site-btn,
+    #mobile-draw-btn {
+        height: 48px;
+        width: 48px;
+        z-index: 400;
+        position: relative;
+        float: right;
+        right: 70px;
+        top: 10px;
+        color: $light-4;
+        border-radius: 5px;
+    
+        &:hover {
+            color: $light-6;
+        }
+    }
+}
+
+#mobile-draw {
+    #mobile-draw-btn {
+        float: none;
+        right: 38px;
+        top: 82px;
+    }
+}
+
+
+.map-btn-icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 2.6em;
+}
+
+
+// styles the tooltips of the map buttons.
+// .add-data-tooltip {
+//     background-color: transparent;
+//     z-index: 1001;
+
+//     div {
+//         &:first-of-type{
+//             height: 0px;
+//             width: 0px;
+//             border-bottom: 10px solid $light-5;
+//             border-right: 10px solid transparent;
+//             border-left: 10px solid transparent;
+//             position: absolute;
+//             z-index: 1002;
+//         }
+//         &:last-of-type{
+//             height: auto;
+//             width: 100%;
+//             margin-top: 10px;
+//             background-color: $light-5;
+//             position: absolute;
+//             border-radius: 3px;
+//             box-shadow: 0 1px 2px $dark-6;
+//             padding: 7px;
+//         }
+//     }
+// }
+
+
+.confirm-c1 {
+    width: 250px;
+    background-color: red;
+    z-index: 400;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: $dark-4;
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0 1px 2px $dark-4;
+    font-size: 0.8em;
+
+    div {
+        position: relative;
+        padding-bottom: 5px;
+
+        p {
+            color: $light-2;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100px;
+            height: 30px;
+
+            &:first-of-type {
+                margin-right: 20px;
+            }
+        }
     }
 }

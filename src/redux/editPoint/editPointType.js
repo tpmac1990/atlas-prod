@@ -1,0 +1,5 @@
+export const SET_MARKER_LATLNGS = 'SET_MARKER_LATLNGS'
+export const SET_SITE_IND_VALUE = 'SET_SITE_IND_VALUE'
+export const RESET_STATE = 'RESET_STATE'
+export const TOGGLE_OFF = 'TOGGLE_OFF'
+export const IS_CREATE_SITE = 'IS_CREATE_SITE'

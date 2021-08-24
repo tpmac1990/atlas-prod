@@ -11,9 +11,22 @@
 
         .basic-form-area {
             .email-drop-area,
-            .feedback-area,
+            .feedback-area {
+                width: calc(100% - 10px);
+            }
+
+            // required to keep the email address in the box. this could be cleaner
             .contact-info-area {
-                width: calc(100% - 20px);
+                width: calc(100% - 10px);
+                padding: 30px 0;
+
+                h1, h2 {
+                    padding: 0 40px;
+                }
+                hr {
+                    margin-left: 20px;
+                    margin-right: 20px;
+                }
             }
         }
     }
@@ -32,6 +45,16 @@
     }
 
 }
+
+
+// #contact-groups {
+//     .basic-form-area {
+//         .contact-info-area {
+//             padding: 30px 40px;
+//         }
+//     }
+// }
+
 
 
 // @media only screen and (max-width: 850px) and (max-height: 450px) {

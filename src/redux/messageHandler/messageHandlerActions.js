@@ -40,10 +40,10 @@ export const setPopupMessage = dict => {
     }
 }
 
+
 export const resetPopupMessage = () => {
     return {
         type: RESET_POPUP_MESSAGE,
     }
 }
-
 

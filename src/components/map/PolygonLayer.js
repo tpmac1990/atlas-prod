@@ -4,18 +4,19 @@ import { GeoJSON, Marker } from 'react-leaflet';
 import { useSelector, useDispatch } from 'react-redux'
 import { formatDate } from '../formatting/formatting'
 
-import useViewportStyle from '../reusable/hooks/useViewportStyle'
+// import useViewportStyle from '../reusable/hooks/useViewportStyle'
 
 function PolygonLayer () {
 
     const dispatch = useDispatch()
 
-    const { viewportStyle } = useViewportStyle();
-    const is_large = ['tv','desktop','laptop'].includes(viewportStyle);
+    // const { viewportStyle } = useViewportStyle();
+    // const is_large = ['tv','desktop','laptop'].includes(viewportStyle);
 
-    const { filterSelection, mapPopup } = useSelector(state => state)
+    const { filterSelection, mapPopup, sizeControl } = useSelector(state => state)
     const { data, target, dataset } = mapPopup
     const { tens } = filterSelection.map_data
+    const { is_large } = sizeControl
 
     // ref to the tenements layer
     const tenRef = useRef(); 
@@ -41,7 +42,6 @@ function PolygonLayer () {
         dispatch(getPopupData({pk: e.target.feature.properties.pk, dataset: 'Tenement'}))
     }
 
-
     useEffect(() => {
         if ( !firstRender && dataset === 'Tenement' ){
             const { typ, status, lodgedate, startdate, enddate, oid, holder, majmat, ind } = data
@@ -49,7 +49,8 @@ function PolygonLayer () {
                 `<div class='polyPopup'>
                     <div class='popup-header'>
                         <h4>${ind}</h4>
-                        <button id='popup-click-event' value='title/${ind}' class=''>More Detail >></button>
+                        <button id='edit-data-btn' value='title/edit/${ind}' class='material-icons btn-c7'>edit_note</button>
+                        <button id='more-data-btn' value='title/${ind}' class='material-icons btn-c7'>read_more</button>
                     </div>
                     <hr/>
                     <div class='popup-body'>

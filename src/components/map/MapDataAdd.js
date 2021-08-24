@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { storeSpatialData, setMapIsLoading } from '../../redux'
+import ToolTip from '../reusable/tooltips/ToolTip'
 
 
 const ButtonWithToolTip = () => {
@@ -13,6 +14,8 @@ const ButtonWithToolTip = () => {
     const { filterSelection, filterDirection } = useSelector(state => state)
     const { filterDataset } = filterDirection
     const { map_data, related, input, map_infinity } = filterSelection
+    const values = map_infinity
+    const { total_count, limit, offset } = values
 
     const ClickHandler = e => {
         const { offset, limit, loading } = map_infinity
@@ -22,19 +25,6 @@ const ButtonWithToolTip = () => {
             dispatch(storeSpatialData({name: name, dataset: filterDataset, input: input, related: related, 
                                         offset: offset, limit: limit, current_extent: map_data.extent}))
         }
-    }
-
-    const ToolTip = () => {
-
-        const values = map_infinity
-        const { total_count, limit, offset } = values
-
-        return (
-            <div className='add-data-tooltip'>
-                <div></div>
-                <div>{`Currently showing ${offset} of ${total_count}. Click to add another ${limit}.`}</div>
-            </div>
-        )
     }
 
     const handleMouseEnter = () => {
@@ -52,8 +42,10 @@ const ButtonWithToolTip = () => {
 
     return (
         <div>
-            <button className='btn-c6' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={ClickHandler}>Add More</button>
-            { show ? <ToolTip /> : null }
+            <button className='btn-c6' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={ClickHandler}>
+                <span className="material-icons map-btn-icons">add_circle</span>
+            </button>
+            { show ? <ToolTip text={`Showing ${offset} of ${total_count}. Click to add another ${limit}.`} style='add-data-tooltip' /> : null }
         </div>
     )
 }

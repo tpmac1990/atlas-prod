@@ -1,8 +1,9 @@
-import { ITEM_SELECTED, ITEM_UNSELECTED, SET_RECTANGLE_LATLNGS, MANUAL_LATLNGS_CHANGE, SET_DATE_CHANGE, 
+import { ITEM_SELECTED, ITEM_UNSELECTED, SET_RECTANGLE_LATLNGS, SET_MARKER_LATLNGS, MANUAL_LATLNGS_CHANGE, SET_DATE_CHANGE, 
     SET_BUFFER_ID, SET_BUFFER_DISTANCE, INCLUDE_RELATED_DATA, TOGGLE_RELATED_FILTER, RESET_FILTER_SELECTION, 
     VALID_BUFFER_ID, CLEAR_RECTANGLE_LATLNGS, SET_ID_CENTROID, IS_BUFFER_RADIUS_VALID, SET_UPDATE_TYPE,
     SET_SPATIAL_DATA, SET_MAP_NOT_LOADING, SPATIAL_DATA_REF, SET_MAP, TOGGLE_FILTER_PANEL, SET_MAP_LOADING, 
-    RESET_MAP_DATA_OFFSET, SET_DATA_LIMIT, SET_ACTIVE_FILTERS } from './filterSelectionType'
+    RESET_MAP_DATA_OFFSET, SET_DATA_LIMIT, SET_ACTIVE_FILTERS, SET_MAP_BOUNDS, UPDATE_SITE_COORDINATES, TOGGLE_BOUNDS, 
+    PREVENT_BOUNDS_UPDATE, SET_INITIAL_BOUNDS, SET_FILTER_BOUNDS } from './filterSelectionType'
 
 const initialState = {
     last_group_changed: '', // determines whether to reload a checkbox list on open.
@@ -68,7 +69,13 @@ const initialState = {
         tensref: null,
         map: {},
         filteropen: true,
-        extent: null,
+        extent: null, // this is passed from django. It is converted to bounds below
+        bounds: null, // these are the bounds the map will be set to when bounds toggle is activated
+        tog_bounds: false,
+        keep_bounds: false, // will not update bounds when true
+        init_bounds: null, // {_southWest: {lat: -46.370 , lng: 96.328}, _northEast: {lat: -3.338, lng: 173.672}} // the initial bounds when the map is set so they can be reverted back to
+        data_bounds: null, // saved latlng of last dataset request
+        filter_bounds: null // saved when the filter is opened in mobile view so it can be re-instated if necessary after map.invalidatesize
     }
 }
 
@@ -283,6 +290,27 @@ const filterSelectionReducer = ( state = initialState, action ) => {
                     loading: false                 
                 }
             }
+        // moves the site to its new position after using the move tool
+        case UPDATE_SITE_COORDINATES:
+            var { latlng, ind } = action.payload
+            return {
+                ... state,
+                map_data: { ...state.map_data,
+                    occs: { ...state.map_data.occs,
+                        features: state.map_data.occs.features.map(row => {
+                            return (
+                                row.properties.pk != ind
+                                ? row
+                                : { ...row,
+                                    geometry: { ...row.geometry,
+                                        coordinates: [ latlng.lng, latlng.lat ]
+                                    }    
+                                }
+                            )
+                        })
+                    }
+                }
+            }
         case SPATIAL_DATA_REF: 
             var { name, ref } = action.payload
             return {
@@ -291,6 +319,13 @@ const filterSelectionReducer = ( state = initialState, action ) => {
                     [name]: ref
                 }
                 // [name]: ref
+            }
+        case SET_MAP_BOUNDS:
+            return {
+                ... state,  
+                map_data: { ...state.map_data,
+                    bounds: action.payload
+                }
             }
         case SET_MAP: 
             return {
@@ -334,6 +369,34 @@ const filterSelectionReducer = ( state = initialState, action ) => {
                 ...state,
                 map_infinity: { ...state.map_infinity,
                     limit: action.payload
+                }
+            }
+        case PREVENT_BOUNDS_UPDATE:
+            return {
+                ...state,
+                map_data: { ...state.map_data,
+                    keep_bounds: action.payload
+                }
+            }
+        case TOGGLE_BOUNDS:
+            return {
+                ...state,
+                map_data: { ...state.map_data,
+                    tog_bounds: action.payload
+                }
+            }
+        case SET_INITIAL_BOUNDS:
+            return {
+                ...state,
+                map_data: { ...state.map_data,
+                    init_bounds: action.payload
+                }
+            }
+        case SET_FILTER_BOUNDS:
+            return {
+                ...state,
+                map_data: { ...state.map_data,
+                    filter_bounds: action.payload
                 }
             }
         default: return state

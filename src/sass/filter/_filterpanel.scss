@@ -80,32 +80,9 @@
                         border-radius: 3px;
                     }
     
+                    // required to position the tooltip
                     div {
                         position: absolute;
-                        width: 150px;
-                        top: 36px;
-                        left: 5px;
-                        z-index: 10;
-    
-                        div:first-of-type {
-                            height: 0;
-                            width: 0;
-                            margin-left: 5px;
-                            border: 10px solid $light-2;
-                            border-top: none;
-                            border-left-color: transparent;
-                            border-right-color: transparent;
-                            top: 0;
-                        }
-    
-                        div:last-of-type {
-                            top: 10px;
-                            width: auto;
-                            background-color: $light-2;
-                            border-radius: 3px;
-                            padding: 5px 10px;
-                            font-size: 0.8em;
-                        }
                     }
                 }
             }

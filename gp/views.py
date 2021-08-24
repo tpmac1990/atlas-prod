@@ -4,14 +4,15 @@ from django.http import HttpResponse
 from .functions import (validID, filter_data_checkbox_list, filter_data_map, getDataList, 
                         get_extent, getTableData, is_there_more_data, infinite_filter, setParamsCheckboxList, setParamsMapData,
                         create_instance, copy_and_update_instance, multi_column_create_instance, add_changes_to_change_table,
-                        set_instance_and_update, update_title_materials_and_record_changes)
+                        set_instance_and_update, update_title_materials_and_record_changes, get_sites_locations)
 from .serializer import (TitlePopupSerializer, SitePopupSerializer, serialize_and_combine, 
                         HolderDetailSerializer, ListedHolderSerializer, ParentHolderSerializer,
                         TitleDetailSerializer, SiteDetailSerializer, OccNameSerializer, SiteWriteSerializer, OidSerializer,
                         OccurrenceChangeSerializer, TitleTableSerializer, SiteTableSerializer,
                         OidTitleSerializer, TitleUpdateSerializer, TenHolderWriteSerializer, ParentWriteSerializer, ChildWriteSerializer,
                         TenementChangeSerializer, OccurrenceChangeSerializer, HolderChangeSerializer, HolderAndTypeSerializer,
-                        OidWriteSerializer, OccNameWriteSerializer, OidWriteTitleSerializer, UserLogOnSerializer)
+                        OidWriteSerializer, OccNameWriteSerializer, OidWriteTitleSerializer, UserLogOnSerializer, SiteGeomSerializer,
+                        SiteMoveSerializer)
 from rest_framework import status  
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -363,3 +364,44 @@ class SaveIPViewSet(APIView):
             s.save()
 
         return Response(ip)
+
+
+class CreateSiteViewSet(APIView):
+    ''' creates a new site/Occurrence using the point created on the frontend and then find the spatially related locations including the geoprovince, state, 
+        local government, government region and tenements. The ind value is created by adding one to the latest occurrence ind value.   
+    '''
+
+    def post(self, request, pk=None):
+        latlng = request.data
+        data = get_sites_locations(latlng)
+        data['ind'] = str(int(Occurrence.objects.latest('ind').ind) + 1)
+
+        s = SiteGeomSerializer(data=data)
+        if s.is_valid():
+            new_entry = s.save()
+        else:
+            print(s.errors)
+        
+        return Response(new_entry.ind)
+
+
+class MoveSiteViewSet(APIView):
+    ''' Move an existing site/Occurrence by clicking on the edit point btn in the map feature popup. The move will maintain the same ind value and update the 
+        locaion fields, but The occurrence_tenement and geoprovince fields may need to be updated when the rest of the data is updated to account for user changes.   
+    '''
+
+    def post(self, request, pk=None):
+        latlng = request.data['latlng']
+        data = get_sites_locations(latlng)
+        pk = request.data['ind']
+
+        single_fields = { x:data[x] for x in data if x in ['state','localgov','govregion','geom'] }
+
+        instance = Occurrence.objects.filter(pk=pk)
+        instance.update(**single_fields)
+
+        instance = instance.get(pk=pk)
+        for x in ['occurrence_tenement','geoprovince']:
+            getattr(instance, x).set(data[x])
+        
+        return Response(pk)

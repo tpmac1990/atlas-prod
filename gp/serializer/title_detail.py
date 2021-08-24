@@ -75,11 +75,13 @@ class TitleTypeSerializer(serializers.ModelSerializer):
         return obj.simple.name
 
     def get_act(self,obj):
-        return obj.act.name
+        # it could be blank, this prevents the error, but needs to be update to 'Unknown' in the database
+        return obj.act.name if obj.act != None else ''
 
     class Meta:
         model = TenType
         fields = ["_id","fname","original","act","simple"]
+
 
 class TitleStatusSerializer(serializers.ModelSerializer):
     simple = serializers.SerializerMethodField()
@@ -143,7 +145,8 @@ class TitleDetailSerializer(serializers.ModelSerializer):
         model = Tenement
         fields = ["ind","lodgedate","startdate","enddate","typ","status","state","shore","localgov","govregion","geoprovince","holder","parents","oid","occurrence","majmat","minmat"]
 
-
+# 1014859
+# http://127.0.0.1:8000/detail/title/1014859/
 
 # ##############################################################################################
 # Updating db

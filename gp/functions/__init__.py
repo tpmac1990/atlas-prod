@@ -4,5 +4,5 @@ from .query_functions import (run_filter_query, createBuffer, getQueryValue, fil
 from .query_parameters import setParamsCheckboxList, setParamsMapData
 from .file_management import getJSON
 from .model_update import (create_instance, copy_and_update_instance, multi_column_create_instance, create_update_id, add_changes_to_change_table, 
-                            set_instance_and_update, update_title_materials_and_record_changes)
+                            set_instance_and_update, update_title_materials_and_record_changes, get_sites_locations)
 

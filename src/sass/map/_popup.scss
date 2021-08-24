@@ -33,17 +33,14 @@
     
         button {
             float: right;
-            margin-top: 5px;
-            margin-right: 5px;
-            padding: 3px 10px 2px 15px;
-            border-radius: 10px;
-            border: none;
-            color: $light-4;
-            background-color: transparent;
+            margin-left: 6px;
+            margin-bottom: 5px;
+            padding: 2px 3px;
+            border-radius: 3px;
+            font-size: 1.6em;
 
-            &:hover {
-                color: $light-3;
-                background-color: $dark-4;
+            &:first-of-type {
+                margin-right: 10px;
             }
         }
     }

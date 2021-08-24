@@ -1,0 +1,47 @@
+@import '../variables';
+
+@media only screen and (max-width: 850px) {
+
+    .instruction-group {
+        margin: 20px 10px;
+    
+        .div-link {
+            margin-left: 10px;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+        
+        h1, h2, p {
+            margin-left: 10px;
+        }
+    
+        p {
+            margin-right: 10px;
+        }
+        
+        h3 {
+            margin-left: 20px;
+        }
+    
+        .instruction-p2 {
+            margin-left: 20px;
+        }
+    
+        ul.index {
+            margin-left: 10px;
+            width: 200px;
+
+            li {
+                margin: 5px 0;
+                font-size: 1.2em;
+                
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+}

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getHolderData, setFilterValues, triggerElement } from '../../../redux';
+import { getHolderData, setFilterValues, triggerElement, toggleFullScreenInactive } from '../../../redux';
 
 import DetailTableC1 from './DetailTableC1';
 import SingleColumnTableC1 from './SingleColumnTableC1';
@@ -31,6 +31,12 @@ function SubHolderDetail({ match }){
         }
     }, [value])
 
+    // call the related sites table
+    const tableHandler = item => {
+        dispatch(toggleFullScreenInactive(true))
+        dispatch(triggerElement(item))
+    }
+
 
     if (value == null){
         return <Loading />
@@ -39,7 +45,7 @@ function SubHolderDetail({ match }){
             <div className="detail-info-c1">
                 <TitleComponent group='holder' title={value.holder_name} index={id} />
                 <div className='list-table-btn-group'>{['titles','sites'].map(item => {
-                    return <button key={item} className='btn-c5' onClick={() => dispatch(triggerElement(item))} >{item.charAt(0).toUpperCase() + item.slice(1)} List Table</button>
+                    return <button key={item} className='btn-c5' onClick={() => tableHandler(item)} >{item.charAt(0).toUpperCase() + item.slice(1)} List Table</button>
                 })}</div>
                 <SingleColumnTableC1 dict={BasicDict} value={value} />
                 <DetailTableC1 dict={TickerDict} value={value} />

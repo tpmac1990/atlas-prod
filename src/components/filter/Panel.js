@@ -6,31 +6,21 @@ import { closeAllGroups, storeSpatialData,
     resetFilterSelection, resetFilterGroupState, setFilterValues, 
     triggerElement, toggleFullScreenInactive, 
     resetMapDataOffset, setMapIsLoading, toggleFilterPanel, setPopupMessage, setMapNotLoading, setDataLimit,
-    updateActiveFilters } from '../../redux'
+    updateActiveFilters, setMapBounds, toggleBounds } from '../../redux'
 
 import { updateFilterList } from './filterLists'
-import useViewportStyle from '../reusable/hooks/useViewportStyle'
+// import useViewportStyle from '../reusable/hooks/useViewportStyle'
 import Control from './Control'
 import RelatedData from './RelatedData'
 import FilterGroups from './FilterGroups'
+import TooTip from '../reusable/tooltips/ToolTip'
 
 
-const TooltipC1 = props => {
-     return (
-        <div>
-            <div></div>
-            <div>{props.msg}</div>
-        </div>
-     )
-}
 
 // The 'clear filter' & 'display data in table form' icon buttons at the top of the panel and their tooltips
 const IconBtn = props => {
 
-    const { clickHandler, iconStyle, tooltip } = props
-
-    const { viewportStyle } = useViewportStyle();
-    const is_large = ['tv','desktop','laptop'].includes(viewportStyle)
+    const { clickHandler, iconStyle, tooltip } = props    
 
     const [ show, setShow ] = useState(false)
     const [ delayHandler, setDelayHandler ] = useState(null)
@@ -50,9 +40,7 @@ const IconBtn = props => {
     return (
         <div>
             <span className="material-icons" onClick={clickHandler} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >{iconStyle}</span>
-            {( show && is_large )
-            ? <TooltipC1 msg={tooltip} />
-            : null }
+            { show ? <TooTip text={tooltip} style='filter-header-tt' /> : null}
         </div>
     )
 }
@@ -77,20 +65,16 @@ const FilterToggle = () => {
 
 function Panel () {
 
-    const { filterSelection, leafletDraw } = useSelector(state => state)
+    const { filterSelection, leafletDraw, sizeControl } = useSelector(state => state)
     const { filterDataset } = useSelector(state => state.filterDirection)
     const { map_data, related, input, map_infinity, last_group_changed, active_filters } = filterSelection
     const { primary: pri_filters, related: rel_filters } = active_filters
     const { offset, limit, loading } = map_infinity
-    const { filteropen, occs, tens } = map_data
+    const { filteropen, occs, tens, init_bounds } = map_data
     const { include, is_open } = related
     const { editHandlers } = leafletDraw
+    const { is_large } = sizeControl
 
-    const relBtnStyle = include ? 'btn-c1 showEle' : 'btn-c1 hideEle'
-    const panelStyle = filteropen ? 'showPanel' : 'hidePanel'
-
-    const { viewportStyle } = useViewportStyle();
-    const is_small = ['tablet','mobile'].includes(viewportStyle)
 
     const [tableSelect, setTableSelect] = useState(false)
 
@@ -108,7 +92,7 @@ function Panel () {
                             ? 250
                             : 100
         } else {
-            new_limit = include ? 400 : 600 
+            new_limit = include ? 400 : 500 
         }
         dispatch(setDataLimit(new_limit))
     },[filterDataset,include,rel_filters])
@@ -135,7 +119,7 @@ function Panel () {
                 // set loading which will trigger the useEffect below that will fetch the geospatial data
                 dispatch(setMapIsLoading())
                 // if the screen is small then hide the filter to reveal the map
-                is_small && dispatch(toggleFilterPanel())
+                !is_large && dispatch(toggleFilterPanel())
             } else {
                 // dispatch(controlSelectionError())
                 dispatch(setPopupMessage({message: "Select 'Titles' or 'Sites' to begin filtering", type: 'warning', style: 'warning-map'}))
@@ -204,10 +188,15 @@ function Panel () {
         dispatch(resetFilterGroupState())
         // clear the filter selections and the filter arrays
         dispatch(resetFilterSelection())
+        // reset the bounds back to the initial values
+        dispatch(setMapBounds(init_bounds))
+        // update bounds unless they have been set to be kept
+        dispatch(toggleBounds(true))
         // clear the drawn rectangle if it exists
         try {
             editHandlers.edit._modes.remove.handler.removeAllLayers()
-        } catch(err){}
+        } catch(err){
+        }
     }
 
     // Handles the events for dealing with listing the map results in a table
@@ -244,7 +233,7 @@ function Panel () {
 
 
     return (
-        <div id='panel' className={panelStyle}>
+        <div id='panel' className={filteropen ? 'showPanel' : 'hidePanel'}>
             <div id='panel-subarea'>
                 <div id='panel-header'>
                     <FilterToggle />
@@ -253,7 +242,7 @@ function Panel () {
                     </div>
                     <div className='header-icons'>
                         <IconBtn clickHandler={listHandler} iconStyle='list' tooltip='Display the map data in table form' />
-                        <IconBtn clickHandler={clearHandler} iconStyle='delete_sweep' tooltip='Clear the filter' />
+                        <IconBtn clickHandler={clearHandler} iconStyle='delete_sweep' tooltip='Reset Data Control' />
                     </div>
                 </div>
                 { tableSelect
@@ -277,7 +266,7 @@ function Panel () {
                         <label htmlFor='selectRelatedData'>Combine Related Data</label><br/>
                     </div>
                     <div id='footer-btns'>
-                        <button className={relBtnStyle} onClick={RelationHandler}>Relations</button>
+                        <button className={include ? 'btn-c1 showEle' : 'btn-c1 hideEle'} onClick={RelationHandler}>Relations</button>
                         <button id='filter-submit-btn' className='btn-c1' onClick={submitHandler}>Submit</button>
                     </div>
                 </div>

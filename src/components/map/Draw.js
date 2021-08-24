@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FeatureGroup, Rectangle, Circle } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 import { useDispatch } from 'react-redux'
-import { storeEditHandlers, setRectangleLatLngs } from '../../redux'
+import { divIcon } from 'leaflet'
+import { storeEditHandlers, setRectangleLatLngs, setMarkerLatLngs } from '../../redux'
 import 'leaflet-draw';
 
 const Draw = () => {
@@ -12,13 +13,15 @@ const Draw = () => {
 
     const dispatch = useDispatch()
 
+    const siteIcon = divIcon({
+        className: '',
+        html: "<div class=yellowmarker></div>"
+    });
+
     // This will automatically clear the existing square when the new one is drawn
     const onCreated = e => {
         var drawType = e.layerType;
-        if ( drawType == 'marker' ) {
-        } else {
-            dispatch(setRectangleLatLngs(e.layer._bounds))
-        }
+        drawType == 'marker' ? dispatch(setMarkerLatLngs(e.layer._latlng)) : dispatch(setRectangleLatLngs(e.layer._bounds))
 
         const drawnItems = editableFG.leafletElement._layers;
         Object.keys(drawnItems).length > 1 &&
@@ -54,6 +57,9 @@ const Draw = () => {
                     circle: false,
                     polygon: false,
                     circlemarker: false,
+                    marker: {
+                        icon: siteIcon
+                    },
                     rectangle: {
                         shapeOptions: { 
                             className: 'edit-rectangle'
