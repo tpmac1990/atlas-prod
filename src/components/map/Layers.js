@@ -73,25 +73,25 @@ const Layers = () => {
                 <BaseLayer name="Google Street Map">
                     <TileLayer
                     attribution='Copyright Google Maps'
-                    url="http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}"
+                    url="https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}"
                     />
                 </BaseLayer>
                 <BaseLayer name="Google Terrain Map">
                     <TileLayer
                     attribution='Copyright Google Maps'
-                    url="http://mt0.google.com/vt/lyrs=p&hl=en&x={x}&y={y}&z={z}"
+                    url="https://mt0.google.com/vt/lyrs=p&hl=en&x={x}&y={y}&z={z}"
                     />
                 </BaseLayer>
                 <BaseLayer name="Google Hybrid Map">
                     <TileLayer
                     attribution='Copyright Google Maps'
-                    url="http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}"
+                    url="https://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}"
                     />
                 </BaseLayer>
-                <Overlay checked name="Occurrences">
+                <Overlay checked name="Sites">
                     <PointsLayer />
                 </Overlay>
-                <Overlay checked name="Tenements">
+                <Overlay checked name="Titles">
                     <PolygonLayer />
                 </Overlay>
             </LayersControl>
