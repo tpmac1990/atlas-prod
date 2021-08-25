@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 
 const Documentation = () => {
 
+    const whatIsRef = useRef()
     const docsRef = useRef()
     const datasetsRef = useRef()
     const locationRef = useRef()
@@ -23,6 +24,7 @@ const Documentation = () => {
         <div className='instruction-group'>
             <h1 ref={docsRef}>Documentation</h1>
             <ul className='index'>
+                <li onClick={() => handleClick(whatIsRef)}>About Gplore</li>
                 <li onClick={() => handleClick(datasetsRef)}>Datasets</li>
                 <li onClick={() => handleClick(locationRef)}>Location</li>
                 <li onClick={() => handleClick(typeRef)}>Type</li>
@@ -35,6 +37,12 @@ const Documentation = () => {
                 <li onClick={() => handleClick(additionUpdateRef)}>Addition Update</li>
                 <li onClick={() => handleClick(changeUpdateRef)}>Change Update</li>
             </ul>
+            <hr/>
+            <br/>
+            <h2 ref={whatIsRef}>About Gplore</h2>
+            <p>What is Gplore… the name is a play on “geological exploration” and it is an application designed to organise the vast amount of data of the resource industry. Australia is arguably the most resource rich and resource diverse country on the planet. It is generally managed independently by the state governments, usually by multiple departments within them, for instance, a department for petroleum and a department for minerals. This makes exploring the Australian resource industry as a whole a very tedious task. This is what Gplore strives to solve, an intuitive application that does the hard work for you.</p>
+            <p>The application is composed of two datasets, titles and sites, which are themselves related. For a description on the two datasets, go to the ‘Datasets’ section below. In the application, the user is able to select one of these datasets and filter for the data they desire. This could be by location, type, status or any of the other filter groups specified further down the page. On top of this, the user is able to filter the other dataset for related data. For example, a user could filter for all the mining titles in a specific region and then filter for all the active mines that lie within these titles. The resulting data can be viewed in map or table form, while more detailed data of an individual title or site is also easily accessible. Along with viewing data, Gplore also allows users to edit and even create data. Specific fields are editable in both the titles and sites datasets if the need arises, while the user also has the ability to move a site in the map interface or create a new site when they see fit.</p>
+            <p>The potential of Gplore is endless with future developments aimed at improving the quality of the data, expanding and adding new fields to the current datasets, adding new datasets, such as significant drill hole intercepts, and improving the overall performance of the application.</p>
             <hr/>
             <br/>
             <h2 ref={datasetsRef}>Datasets</h2>
