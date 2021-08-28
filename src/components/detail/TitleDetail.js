@@ -15,7 +15,7 @@ function TitleDetail(){
 
     const { dropdown } = useSelector(state => state)
 
-    let { path, url } = useRouteMatch();
+    const { path, url } = useRouteMatch();
 
     // will direct to the detail page when the selection is changed in the holder seleciton
     useEffect(() => {

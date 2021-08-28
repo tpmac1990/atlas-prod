@@ -8,7 +8,7 @@ export { setFilterDataset, resetFilterControl } from './filterDirection/filterDi
 export { storeEditHandlers, toggleMapDrawButton } from './leafletDraw/leafletDrawActions'
 export { setPopupMessage, resetPopupMessage } from './messageHandler/messageHandlerActions'
 export { getHolderData, getSiteData, getTitleData } from './detailSelection/detailSelectionActions'
-export { setFilterValues, triggerElement, setData, isInfinityTable, clearData } from './popupTable/popupTableActions'
+export { setFilterValues, triggerElement, setData, isInfinityTable, clearData, resetPopupTable } from './popupTable/popupTableActions'
 export { toggleFullScreenInactive } from './inactiveCover/inactiveCoverActions'
 export { getInfinityDropdownData, setLoading, setSearch, setState, setSelection, resetOffset, 
         setDropdownVisibility, incrementCreatedId, hideAllDropdowns, setUniqueDropdownGroup, 
@@ -21,3 +21,4 @@ export { saveUserEmail, saveUserFeedback } from './userData/userDataActions'
 export { ActivateConfirmPopup, DeactivateConfirmPopup, isConfirmed, resetConfirmed } from './confirmPopup/confirmPopupActions'
 export { setMarkerLatLngs, createSite, moveSite, resetCreatePntState, triggerPntMove, toggleOffSiteMove, setCreateSite } from './editPoint/editPointActions'
 export { setScreenSize } from './sizeControl/sizeControlActions'
+export { setNewPathname } from './pathChange/pathChangeActions'

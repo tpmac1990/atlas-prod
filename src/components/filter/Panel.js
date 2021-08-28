@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from "react-router-dom";
 
 import { closeAllGroups, storeSpatialData, 
     toggleRelatedFilter, includeRelatedData, resetFilterControl, 
@@ -14,7 +15,6 @@ import Control from './Control'
 import RelatedData from './RelatedData'
 import FilterGroups from './FilterGroups'
 import TooTip from '../reusable/tooltips/ToolTip'
-
 
 
 // The 'clear filter' & 'display data in table form' icon buttons at the top of the panel and their tooltips
@@ -79,6 +79,8 @@ function Panel () {
     const [tableSelect, setTableSelect] = useState(false)
 
     const dispatch = useDispatch()
+
+    const history = useHistory();
 
     // calculate and set the data limit by determining the dataset and if related data is included
     // include: true if related data is also part of the search
@@ -226,52 +228,72 @@ function Panel () {
         } else {
             // if only one datagroup is on the map, then activate the incative page layer and show table
             const datagroup = btitle ? 'titles' : 'sites'
-            dispatch(toggleFullScreenInactive(true))
             dispatch(triggerElement(datagroup))
+            history.push('/table/')
         }
     }
 
+    // The popup that displays when there is both title and site data on the map which gives you the choice of which dataset to show
+    const TableSelectPopup = () => {
+
+        const tableClickHandler = e => {
+            // turn off inactive cover when the table choice box is clicked, also turn off if it is closed below
+            dispatch(toggleFullScreenInactive(false))
+            dispatch(triggerElement(e.target.name))
+            history.push('/table/')
+        }
+
+        return (
+            <div className='popup-c1'>
+                <div className='close-c2' onClick={() => {setTableSelect(false);dispatch(toggleFullScreenInactive(false))}}><span>x</span></div>
+                <div>
+                    <p>Select the dataset to display in the table</p>
+                    <button className='btn-c5' name='titles' onClick={tableClickHandler}>Titles</button>
+                    <button className='btn-c5' name='sites' onClick={tableClickHandler}>Sites</button>
+                </div>
+            </div>
+        )
+    }
 
     return (
-        <div id='panel' className={filteropen ? 'showPanel' : 'hidePanel'}>
-            <div id='panel-subarea'>
-                <div id='panel-header'>
-                    <FilterToggle />
-                    <div className='panel-title'>
-                        <h1>Data Control</h1>
+        filteropen
+        ? (
+            <div id='panel'>
+                <div id='panel-subarea'>
+                    <div id='panel-header'>
+                        <FilterToggle />
+                        <div className='panel-title'>
+                            <h1>Data Control</h1>
+                        </div>
+                        <div className='header-icons'>
+                            <IconBtn clickHandler={listHandler} iconStyle='list' tooltip='Display the map data in table form' />
+                            <IconBtn clickHandler={clearHandler} iconStyle='delete_sweep' tooltip='Reset Data Control' />
+                        </div>
                     </div>
-                    <div className='header-icons'>
-                        <IconBtn clickHandler={listHandler} iconStyle='list' tooltip='Display the map data in table form' />
-                        <IconBtn clickHandler={clearHandler} iconStyle='delete_sweep' tooltip='Reset Data Control' />
+                    { tableSelect
+                    ? <TableSelectPopup />
+                    : null}
+                    <hr/>
+                    <div id="filter-area">
+                        <RelatedData />
+                        <Control />
+                        <div id='filter-groups' className='scrollbar-c1'>
+                            <FilterGroups />
+                        </div>
                     </div>
-                </div>
-                { tableSelect
-                ? <div className='list-dropdown'>
-                        <button className='close-c4' onClick={() => {setTableSelect(false);dispatch(toggleFullScreenInactive(false))}}><span>x</span></button>
-                        <button className='btn-c5 lst-dd-btn-1' onClick={() => {dispatch(triggerElement('sites'));dispatch(toggleFullScreenInactive(true))}}>Sites Table</button>
-                        <button className='btn-c5 lst-dd-btn-2' onClick={() => {dispatch(triggerElement('titles'));dispatch(toggleFullScreenInactive(true))}}>Titles Table</button>
-                </div>
-                : null}
-                <hr/>
-                <div id="filter-area">
-                    <RelatedData />
-                    <Control />
-                    <div id='filter-groups' className='scrollbar-c1'>
-                        <FilterGroups />
-                    </div>
-                </div>
-                <div id='panel-footer'>
-                    <div id='related-data-toggle' className='checkbox-c4'>
-                        <input checked={include} type='checkbox' id='selectRelatedData' onChange={AddRelatedHandler} />
-                        <label htmlFor='selectRelatedData'>Combine Related Data</label><br/>
-                    </div>
-                    <div id='footer-btns'>
-                        <button className={include ? 'btn-c1 showEle' : 'btn-c1 hideEle'} onClick={RelationHandler}>Relations</button>
-                        <button id='filter-submit-btn' className='btn-c1' onClick={submitHandler}>Submit</button>
+                    <div id='panel-footer'>
+                        <div id='related-data-toggle' className='checkbox-c4'>
+                            <input checked={include} type='checkbox' id='selectRelatedData' onChange={AddRelatedHandler} />
+                            <label htmlFor='selectRelatedData'>Combine Related Data</label><br/>
+                        </div>
+                        <div id='footer-btns'>
+                            <button className={include ? 'btn-c1 showEle' : 'btn-c1 hideEle'} onClick={RelationHandler}>Relations</button>
+                            <button id='filter-submit-btn' className='btn-c1' onClick={submitHandler}>Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        ) : null
     )
 }
 

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getHolderData, setFilterValues, triggerElement, toggleFullScreenInactive } from '../../../redux';
+import { useHistory } from "react-router-dom";
 
+import { getHolderData, setFilterValues, triggerElement } from '../../../redux';
 import DetailTableC1 from './DetailTableC1';
 import SingleColumnTableC1 from './SingleColumnTableC1';
 import Loading from '../../loading/Loading';
@@ -15,6 +16,7 @@ function SubHolderDetail({ match }){
     const { id } = match.params
 
     const dispatch = useDispatch()
+    const history = useHistory();
 
     const { holder: value } = useSelector(state => state.detailSelection)
 
@@ -33,8 +35,8 @@ function SubHolderDetail({ match }){
 
     // call the related sites table
     const tableHandler = item => {
-        dispatch(toggleFullScreenInactive(true))
         dispatch(triggerElement(item))
+        history.push('/table/')
     }
 
 
@@ -57,45 +59,3 @@ function SubHolderDetail({ match }){
 }
 
 export default SubHolderDetail
-
-
-// const SubsidiariesDict = {
-//     value: value,
-//     styles: "detail-sub-info-c1",
-//     lookup: "subsidiaries",
-//     header: "Subsidiaries",
-//     table_headers: ["Name","Percent Owned","Type","Listed"],
-//     table_data: [["name"],["percown"],["typ"],["listed"]]
-// };
-
-// const OwnersDict = {
-//     value: value,
-//     styles: "detail-sub-info-c1",
-//     lookup: "parent_company",
-//     header: "Parent Companies",
-//     table_headers: ["Name","Percent Owned","Type","Listed"],
-//     table_data: [["name"],["percown"],["typ"],["listed"]]
-// };
-
-// const TickerDict = {
-//     value: value,
-//     styles: "detail-sub-info-c1",
-//     lookup: "listed",
-//     header: "Listed Locations",
-//     table_headers: ["Ticker","Exchange Code","Exchange Name"],
-//     table_data: [["ticker"],["exchange","code"],["exchange","name"]]
-// };
-
-// const BasicDict = {
-//     value: value,
-//     header: "General Info",
-//     table_data: [
-//         {th: "Holder/Company Type", td: ["company_type","original"], multi: null, format: null},
-//         {th: "Is Listed", td: ["listed"], multi: null, format: 'length_boolean'},
-//         {th: "Number of Owners", td: ["parent_company"], multi: null, format: 'length'},
-//         {th: "Number of Subsidiaries", td: ["subsidiaries"], multi: null, format: 'length'},
-//         {th: "Number of Titles", td: ["title_count"], multi: null, format: 'length'},
-//         {th: "Number of Sites", td: ["site_count"], multi: null, format: 'length'},
-//         {th: "States Holding Titles", td: ["states"], multi: '', format: null},
-//     ]
-// }

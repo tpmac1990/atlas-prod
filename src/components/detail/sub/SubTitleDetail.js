@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getTitleData, setFilterValues, triggerElement, toggleFullScreenInactive } from '../../../redux';
+import { useHistory } from "react-router-dom";
 
+import { getTitleData, setFilterValues, triggerElement } from '../../../redux';
 import DetailTableC1 from './DetailTableC1';
 import SingleColumnTableC1 from './SingleColumnTableC1';
 import Loading from '../../loading/Loading';
 import { TitleComponent } from './TitleComponent';
-
 import { title_objs } from './detailConfigs'
 
 
@@ -15,6 +15,7 @@ function SubTitleDetail({ match }){
     const { id } = match.params
 
     const dispatch = useDispatch()
+    const history = useHistory();
 
     const { title: value } = useSelector(state => state.detailSelection)
 
@@ -30,9 +31,9 @@ function SubTitleDetail({ match }){
     }, [value])
 
     // call the related sites table
-    const tableHandler = () => {
-        dispatch(toggleFullScreenInactive(true))
-        dispatch(triggerElement('sites'))
+    const tableHandler = e => {
+        dispatch(triggerElement(e.target.name))
+        history.push('/table/')
     }
 
 
@@ -43,7 +44,7 @@ function SubTitleDetail({ match }){
             <div className="detail-info-c1">
                 <TitleComponent group='title' title={value.ind} index={value.ind} />
                 <div className='list-table-btn-lng'>
-                    <button className='btn-c5' onClick={tableHandler} >Related Sites Table</button>
+                    <button className='btn-c5' name='sites' onClick={tableHandler} >Related Sites Table</button>
                 </div>
                 <SingleColumnTableC1 dict={DateDict} value={value} />
                 <SingleColumnTableC1 dict={LocationDict} value={value} />

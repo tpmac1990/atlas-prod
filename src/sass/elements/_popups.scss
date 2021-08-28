@@ -1,0 +1,128 @@
+@import '../variables';
+
+
+.confirm-c1 {
+    width: 250px;
+    z-index: 400;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: $dark-4;
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0 1px 2px $dark-4;
+    font-size: 0.8em;
+
+    div {
+        position: relative;
+        padding-bottom: 5px;
+
+        p {
+            color: $light-2;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100px;
+            height: 30px;
+
+            &:first-of-type {
+                margin-right: 20px;
+            }
+        }
+    }
+}
+
+
+// title/sites table select popup
+.popup-c1 {
+    width: 250px;
+    z-index: 10;
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translate(-50%,0);
+    background-color: $dark-4;
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0 1px 2px $dark-4;
+    font-size: 0.8em;
+
+    div:first-of-type {
+        left: 10px;
+        bottom: 5px;
+        
+        span {
+            color: $light-4;
+            bottom: 1px;
+
+            &:hover {
+                color: $light-3;
+            }
+        }
+    }
+
+    div:last-of-type {
+        p {
+            color: $light-2;
+        }
+
+        button {
+            width: 100px;
+            height: 30px;
+
+            &:first-of-type {
+                margin-right: 20px;
+            }
+        }
+    }
+    // height: 80px;
+    // width: 300px;
+    // background-color: $dark-4;
+    // position: absolute;
+    // left: 50%;
+    // transform: translate(-50%,0);
+    // top: 45px;
+    // border-radius: 4px;
+    // border: 1px solid $blue-3;
+    // z-index: 10;
+
+    // .lst-dd-btn-1,
+    // .lst-dd-btn-2 {
+    //     margin-top: 40px;
+    //     width: 120px;
+    //     font-size: 0.9em;
+    // }
+
+    // .lst-dd-btn-1 {
+    //     margin: 0 13px;
+    // }
+}
+
+
+
+// the list table popup to choose which dataset you want to display the table for.
+// .list-dropdown {
+//     height: 80px;
+//     width: 300px;
+//     background-color: $dark-4;
+//     position: absolute;
+//     left: 50%;
+//     transform: translate(-50%,0);
+//     top: 45px;
+//     border-radius: 4px;
+//     border: 1px solid $blue-3;
+//     z-index: 10;
+
+//     .lst-dd-btn-1,
+//     .lst-dd-btn-2 {
+//         margin-top: 40px;
+//         width: 120px;
+//         font-size: 0.9em;
+//     }
+
+//     .lst-dd-btn-1 {
+//         margin: 0 13px;
+//     }
+// }

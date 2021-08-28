@@ -1,4 +1,4 @@
-import { SET_FILTER_VALUES, TRIGGER_ELEMENT, SET_DATA, IS_INFINITY_TABLE, CLEAR_DATA } from './popupTableType'
+import { SET_FILTER_VALUES, TRIGGER_ELEMENT, SET_DATA, IS_INFINITY_TABLE, CLEAR_DATA, RESET_POPUP_TABLE } from './popupTableType'
 import { TOGGLE_FULL_SCREEN_INACTIVE } from '../inactiveCover/inactiveCoverType'
 import axios from 'axios';
 
@@ -28,6 +28,12 @@ export const isInfinityTable = dict => {
     return {
         type: IS_INFINITY_TABLE,
         payload: dict
+    }
+}
+
+export const resetPopupTable = () => {
+    return {
+        type: RESET_POPUP_TABLE
     }
 }
 

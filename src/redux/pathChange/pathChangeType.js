@@ -1,0 +1,1 @@
+export const SET_NEW_PATH = 'SET_NEW_PATH'

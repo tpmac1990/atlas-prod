@@ -71,3 +71,4 @@ class TitleTableSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tenement
         fields = ["ind","lodgedate","startdate","enddate","typ","status","state","shore","govregion","geoprovince","holder","parent","oid","majmat","minmat"]
+        # fields = ["ind","lodgedate","startdate","enddate","typ","status","shore","govregion","geoprovince","holder","parent","oid","majmat","minmat"]

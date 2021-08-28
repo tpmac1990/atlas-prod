@@ -34,11 +34,14 @@
         background-color: $light-2;
     }
 
-    // input:checked + label {
-    //     background-color: $blue-9;
-    // }
-
 }
+
+.checkbox-c1 {
+    input:checked + label {
+        background-color: $blue-9;
+    }
+}
+
 
 .checkbox-c2,
 .checkbox-c3 {

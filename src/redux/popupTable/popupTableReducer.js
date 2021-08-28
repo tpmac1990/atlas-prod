@@ -1,41 +1,82 @@
-import { SET_FILTER_VALUES, TRIGGER_ELEMENT, SET_DATA, IS_INFINITY_TABLE, CLEAR_DATA } from './popupTableType'
+import { SET_FILTER_VALUES, TRIGGER_ELEMENT, SET_DATA, IS_INFINITY_TABLE, CLEAR_DATA, RESET_POPUP_TABLE } from './popupTableType'
 
+const tableState = {
+    ind_lst: null,
+    data: null,
+    has_more: false,
+    loading: false,
+    offset: 0,
+    limit: 20,
+    is_infinite: false
+}
 
+// independent state for titles and sites is required
 const initialState = {
-    active_group: 'sites',
-    is_active: false,
-    // ind_lst: null,
-    // data: null,
-    // page: 1,
-    // loading: false,
-    // offset: 0,
-    // limit: 20,
-    titles: {
-        ind_lst: null,
-        is_visible: false,
-        data: null,
-        has_more: false,
-        // page: 1,
-        loading: false,
-        offset: 0,
-        limit: 20,
-        is_infinite: false
-    },
-    sites: {
-        ind_lst: null,
-        is_visible: false,
-        data: null,
-        has_more: false,
-        // page: 1,
-        loading: false,
-        offset: 0,
-        limit: 20,
-        is_infinite: false
-    },
+    active_group: 'sites', // can't be blank
+    titles: tableState,
+    sites: tableState
+    // active_group: 'sites',
+    // is_active: false,
+    // titles: {
+    //     ind_lst: null,
+    //     // is_visible: false,
+    //     data: null,
+    //     has_more: false,
+    //     loading: false,
+    //     offset: 0,
+    //     limit: 20,
+    //     is_infinite: false
+    // },
+    // sites: {
+    //     ind_lst: null,
+    //     // is_visible: false,
+    //     data: null,
+    //     has_more: false,
+    //     loading: false,
+    //     offset: 0,
+    //     limit: 20,
+    //     is_infinite: false
+    // },
 }
 
 const popupTableReducer = ( state = initialState, action ) => {
     switch(action.type) {
+        // case SET_FILTER_VALUES: 
+        //     var { datagroup, ind_lst } = action.payload
+        //     return {
+        //         ...state,
+        //         ind_lst: ind_lst
+        //     }
+        // case TRIGGER_ELEMENT:
+        //     var datagroup = action.payload
+        //     return {
+        //         ...state,
+        //         active_group: datagroup,
+        //     }
+        // case IS_INFINITY_TABLE:
+        //     var { datagroup, is_infinite } = action.payload
+        //     return {
+        //         ...state,
+        //         is_infinite: is_infinite,
+        //     }
+        // case CLEAR_DATA:
+        //     var datagroup = action.payload
+        //     return {
+        //         ...state,
+        //         data: null
+        //     }
+        // case SET_DATA:
+        //     var { datagroup, offset } = action.payload
+        //     var datagroup = datagroup === 'Tenement' ? 'titles' : 'sites'
+        //     return {
+        //         ...state,
+        //         data: (state.data == null || offset === 0) ? action.payload['data'] : [...state.data,...action.payload['data']],
+        //         has_more: action.payload['has_more'],
+        //     }
+        // case RESET_POPUP_TABLE:
+        //     return initialState
+            //
+
         case SET_FILTER_VALUES: 
             var { datagroup, ind_lst } = action.payload
             return {
@@ -50,11 +91,6 @@ const popupTableReducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 active_group: datagroup,
-                is_active: !state[datagroup].is_visible,
-                [datagroup]: {
-                    ...state[datagroup],
-                    is_visible: !state[datagroup].is_visible
-                }
             }
         case IS_INFINITY_TABLE:
             var { datagroup, is_infinite } = action.payload
@@ -90,6 +126,8 @@ const popupTableReducer = ( state = initialState, action ) => {
                     // loading: false,
                 }
             }
+        case RESET_POPUP_TABLE:
+            return initialState
         // case RESET_OFFSET:
         //     var datagroup = action.payload
         //     return {

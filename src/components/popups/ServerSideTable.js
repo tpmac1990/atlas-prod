@@ -31,6 +31,7 @@ export const ServerSideTable = (props) => {
 
 
     const handleScroll = (e) => {
+        console.log('scroll')
         if ( has_more && !loading ) {
             const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
             console.log(`${scrollHeight - scrollTop} - ${clientHeight + 20}`)

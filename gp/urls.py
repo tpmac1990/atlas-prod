@@ -24,6 +24,9 @@ urlpatterns = [
     path('instruction/home/', TemplateView.as_view(template_name="index.html")),
     path('instruction/demos/', TemplateView.as_view(template_name="index.html")),
     path('instruction/docs/', TemplateView.as_view(template_name="index.html")),
+    path('table/', TemplateView.as_view(template_name="index.html")),
+    # re_path(r'^table/[^\/]+/$', TemplateView.as_view(template_name="index.html")),
+
     # path('detail/holder/9389', TemplateView.as_view(template_name="index.html")),
     re_path(r'^detail/holder/(?P<id>\d+)/$', TemplateView.as_view(template_name="index.html")),
     # re_path(r'^detail/holder/[^\/]+$', TemplateView.as_view(template_name="index.html")),

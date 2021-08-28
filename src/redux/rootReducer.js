@@ -15,6 +15,7 @@ import checkBoxListReducer from './checkBoxList/checkBoxListReducer'
 import mapPopupReducer from './mapPopup/mapPopupReducer'
 import userDataReducer from './userData/userDataReducer'
 import sizeControlReducer from './sizeControl/sizeControlReducer'
+import pathChangeReducer from './pathChange/pathChangeReducer'
 
 const rootReducer = combineReducers({
     filterGroup: filterGroupReducer,
@@ -32,7 +33,8 @@ const rootReducer = combineReducers({
     checkBoxList: checkBoxListReducer,
     mapPopup: mapPopupReducer,
     userData: userDataReducer,
-    sizeControl: sizeControlReducer
+    sizeControl: sizeControlReducer,
+    pathChange: pathChangeReducer
 })
 
 export default rootReducer
