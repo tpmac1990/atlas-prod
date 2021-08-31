@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { addEditData, setEditData, removeEditData, addEditDictKey, addEditDataHolder, 
-        getDropdownData, setPopupMessage, setUniqueDropdownGroup, addUniqueGroupValues } from '../../../redux'
+        getDropdownData, setPopupMessage, setUniqueDropdownGroup, addUniqueGroupValues,
+        removeUniqueGroupValue } from '../../../redux'
 import InfinitySelect from '../../reusable/infinitySelect/InfinitySelect'
 import InfinityInput from '../../reusable/infinityInput/InfinityInput'
 import EditTableManualEditCell from './EditTableManualEditCell'
@@ -40,7 +41,6 @@ const ValidItemsManyDropdownAddMulti = props => {
     // if an error is recorded from the infinity-select or infintiy-input then this will hide the dropdown and trigger an error mesaage informing the user
     //      that an already existent value in the unique group has attempted to be added again. e.g. gold in both maj and min materials
     useEffect(() => {
-        // console.log(dropdown)
         if ( error.name === name ){
             setAddVisible(false)
             dispatch(setPopupMessage({message: `Values need to be unique across all ${names[name]} groups `, type: 'error', style: 'error-fixed-edit'}))
@@ -51,11 +51,15 @@ const ValidItemsManyDropdownAddMulti = props => {
     useEffect(() => {
         if (firstRender.current) {
             firstRender.current = false;
-            // Finds if this dropdown ia part of a group of dropdowns that require unique values across all of them. If so, this builds the state for it
+            // Finds if this dropdown is part of a group of dropdowns that require unique values across all of them. If so, this builds the state for it
             unique_grp && dispatch(setUniqueDropdownGroup({name: name, group: unique_grp}))
         } else {
-            // add all the values to the combined group
-            unique_grp && dispatch(addUniqueGroupValues({group: unique_grp, values: Object.keys(data).map(row => data[row].label)}))
+            // add all the values to the combined group list. If a value has been removed then it will not be included in the list
+            const lst = []
+            Object.keys(data).forEach(row => {
+                !data[row].remove && lst.push(data[row].label)
+            })
+            unique_grp && lst.length > 0 && dispatch(addUniqueGroupValues({group: unique_grp, values: lst}))
         }
     },[data])
     
@@ -66,7 +70,6 @@ const ValidItemsManyDropdownAddMulti = props => {
             const { selected } = dropdown[name]
             if ( selected !== undefined && selected.key !== '' ) {
                 const { key, label } = selected
-                // console.log(label)
                 if ( !(key in data) ){
                     var temp = {name: name, datagroup: datagroup, key: key, label: label}
                     columns.forEach((line,index) => {
@@ -85,9 +88,9 @@ const ValidItemsManyDropdownAddMulti = props => {
                 } else {
                     console.log('ItemsManyDropdownAddMulti component. uncaught')
                 }
-            } 
+            }
         }
-    },[dropdown])
+    },[dropdown[name]])
 
     // Build the initial state
     // current: original value
@@ -96,15 +99,12 @@ const ValidItemsManyDropdownAddMulti = props => {
     useEffect(() => {
         const dict = {}
         const { key, label } = dropdown_dict
-        // console.log(values)
         values.forEach(row => {
             var temp = {id: row[key], label: row[label], current: true, remove: false, add: false}
             columns.forEach((line,index) => {
                 if ( index !== 0 ) temp[line.label] = row[line.label]
             })
             dict[row[key]] = temp
-            // console.log(dict)
-            // dict[row[key]] = {id: row[key], label: row[label], percown: row.percown, position: row.position, current: true, remove: false, add: false}
         })
         dispatch(setEditData({ data: dict, name: name, datagroup: datagroup }))
     }, [])
@@ -121,15 +121,11 @@ const ValidItemsManyDropdownAddMulti = props => {
     // the dropdown data is stored under its model name.
     const removeHandler = e => {
         const key = e.target.id
+        // remove the value from the table
         dispatch(removeEditData({ name: name, datagroup: datagroup, key: key }))
+        // remove the value from the unique_group list. If this is not done then an error will occur when attempting to re-add the same value
+        dispatch(removeUniqueGroupValue({ group: name, name: data[key].label }))
     }
-
-    // const openAddHandler = () => {
-    //     // console.log('hello')
-    //     setAddVisible(prevState => !prevState)
-    // }
-
-    // {`${is_large ? lg_style : sm_style} ${edit_type === 'select' ? 'wide-td' : ''}`}
 
     return (
         <>

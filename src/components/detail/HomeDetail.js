@@ -1,5 +1,5 @@
-import React, { lazy, Fragment, useState } from 'react'
-import { Route, Link, useRouteMatch } from "react-router-dom";
+import React, { lazy, Fragment } from 'react'
+import { Route, Link, useRouteMatch, useLocation } from "react-router-dom";
 
 
 const TitleDetail = lazy(() => import('./TitleDetail'));
@@ -14,20 +14,16 @@ const SubHomeDetail = () => {
 
 function HomeDetail() {
 
-    let { path, url } = useRouteMatch();
+    const { path, url } = useRouteMatch();
+    const { pathname } = useLocation();
 
-    const [ active, setActive ] = useState(null)
-
-    const clickHandler = e => {
-        setActive(e.target.name)
-    }
-    
+    // use the pathname to determine which sub-group to underline
     return (
         <Fragment>
             <ul className="sub-header-c1">
-                <li onClick={clickHandler} className={ active === 'title' ? 'active-sub-field' : '' }><Link to={`${url}/title`} name="title" >Title</Link></li>
-                <li onClick={clickHandler} className={ active === 'site' ? 'active-sub-field' : '' }><Link to={`${url}/site`} name="site" >Site</Link></li>
-                <li onClick={clickHandler} className={ active === 'holder' ? 'active-sub-field' : '' }><Link to={`${url}/holder`} name="holder" >Holder</Link></li>
+                <li className={ pathname.includes('title') ? 'active-sub-field' : '' }><Link to={`${url}/title`} name="title" >Title</Link></li>
+                <li className={ pathname.includes('site') ? 'active-sub-field' : '' }><Link to={`${url}/site`} name="site" >Site</Link></li>
+                <li className={ pathname.includes('holder') ? 'active-sub-field' : '' }><Link to={`${url}/holder`} name="holder" >Holder</Link></li>
             </ul>   
             <div id="detail-groups">
                 <Route path={`${path}/home`} component={SubHomeDetail} />

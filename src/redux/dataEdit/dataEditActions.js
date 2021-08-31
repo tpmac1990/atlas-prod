@@ -62,7 +62,6 @@ export const resetApiOutcome = group => {
 }
 
 
-
 export const postSiteUpdates = values => dispatch => {
     const { id, dict, endpoint } = values
     axios

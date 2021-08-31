@@ -12,7 +12,7 @@ export { setFilterValues, triggerElement, setData, isInfinityTable, clearData, r
 export { toggleFullScreenInactive } from './inactiveCover/inactiveCoverActions'
 export { getInfinityDropdownData, setLoading, setSearch, setState, setSelection, resetOffset, 
         setDropdownVisibility, incrementCreatedId, hideAllDropdowns, setUniqueDropdownGroup, 
-        addUniqueGroupValues, setUniqueMultiGroupError } from './dropdown/dropdownActions'
+        addUniqueGroupValues, setUniqueMultiGroupError, removeUniqueGroupValue } from './dropdown/dropdownActions'
 export { setEditData, addEditData, removeEditData, addEditDictKey, postSiteUpdates, addEditDataHolder, updateEditCell, getDropdownData, 
         createNewHolder, resetApiOutcome, resetEditData } from './dataEdit/dataEditActions'
 export { getFilterCheckboxData, setCheckBoxListIsLoading, setCheckboxSearch, filterCheckBoxListClientSide, resetCheckBoxListOffset } from './checkBoxList/checkBoxListActions'

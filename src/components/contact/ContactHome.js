@@ -1,5 +1,5 @@
-import React, { lazy, Fragment, useState } from 'react'
-import { Route, Link, useRouteMatch } from "react-router-dom";
+import React, { lazy, Fragment } from 'react'
+import { Route, Link, useRouteMatch, useLocation } from "react-router-dom";
 
 
 const Feedback = lazy(() => import('./Feedback'));
@@ -14,20 +14,15 @@ const SubContactHome = () => {
 
 function ContactHome() {
 
-    let { path, url } = useRouteMatch();
+    const { path, url } = useRouteMatch();
+    const { pathname } = useLocation();
 
-    const [ active, setActive ] = useState(null)
-
-    const clickHandler = e => {
-        setActive(e.target.name)
-    }
-    
     return (
         <Fragment>
             <ul className="sub-header-c1">
-                <li onClick={clickHandler} className={ active === 'feedback' ? 'active-sub-field' : '' }><Link to={`${url}/feedback`} name="feedback" >Feedback</Link></li>
-                <li onClick={clickHandler} className={ active === 'maillist' ? 'active-sub-field' : '' }><Link to={`${url}/join-mail-list`} name="maillist" >Join Mail List</Link></li>
-                <li onClick={clickHandler} className={ active === 'contactinfo' ? 'active-sub-field' : '' }><Link to={`${url}/contact-info`} name="contactinfo" >Contact Info</Link></li>
+                <li className={ pathname.includes('feedback') ? 'active-sub-field' : '' }><Link to={`${url}/feedback`} name="feedback" >Feedback</Link></li>
+                <li className={ pathname.includes('join-mail-list') ? 'active-sub-field' : '' }><Link to={`${url}/join-mail-list`} name="maillist" >Join Mail List</Link></li>
+                <li className={ pathname.includes('contact-info') ? 'active-sub-field' : '' }><Link to={`${url}/contact-info`} name="contactinfo" >Contact Info</Link></li>
             </ul>   
             <div id="contact-groups">
                 <Route path={`${path}/home`} component={SubContactHome} />

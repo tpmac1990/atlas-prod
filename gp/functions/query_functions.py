@@ -340,11 +340,11 @@ def get_extent(params,datasets):
     #     extent = ce
     # else:
 
-    # this will prevent an error if there is no data to get the extent of
-    extent = {} if ce == None else ce
+    # this will prevent an error if there is no data to get the extent from
+    # extent = {} if ce == None else ce
+    extent = {}
     if datasets['priDataset'].count() != 0:
         extent['NELng'], extent['NELat'], extent['SWLng'], extent['SWLat'] = datasets['priDataset'].aggregate(Extent('geom'))['geom__extent']
-
 
     # if adding to existing data then the extent need to account for the existing data.
     if ce:

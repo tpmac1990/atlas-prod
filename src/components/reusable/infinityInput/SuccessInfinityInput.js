@@ -30,8 +30,9 @@ const SuccessInfinityInput = props => {
         // inputRef.current.focus()
     }
 
+    // make dropdown visible when the user clicks in the input box
     const ClickHandler = e => {
-        !e.target.tagName === 'BUTTON' && !visible && dispatch(setDropdownVisibility({name: name, visible: true}))
+        e.target.tagName !== 'BUTTON' && !visible && dispatch(setDropdownVisibility({name: name, visible: true}))
     }
 
     const handleClickOutside = (event) => {
@@ -50,10 +51,9 @@ const SuccessInfinityInput = props => {
         dispatch(incrementCreatedId({name: name}))
     },[])
 
+    // set the name and an empty search value for the input box
     useEffect(() => {
-        if ( !visible ) {
-            dispatch(setSearch({value: '', name: name}))
-        }
+        !visible && dispatch(setSearch({value: '', name: name}))
     },[visible])
 
     const AddHandler = e => {

@@ -62,7 +62,6 @@ function MapContent() {
   const have_init_bounds = useRef(false)
   useEffect(() => {
     if ( bounds && !have_init_bounds.current && !init_bounds ){
-      // console.log(1)
       dispatch(setInitialBounds(bounds))
       have_init_bounds.current = true
     }
@@ -93,7 +92,6 @@ function MapContent() {
     // In mobile view when the filter is displayed then map is 0 so the bounds are tiny. The if statement solves this
     if ( is_large || !filteropen){
       const timer = setTimeout(() => {
-        // console.log('move')
         dispatch(setMapBounds(e.target.zoomControl._map.getBounds()))
       }, 1000);
   

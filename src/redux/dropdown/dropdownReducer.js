@@ -1,7 +1,8 @@
 import { SET_SITE_GROUP_DATA, LOADING_TOGGLE, SET_SEARCH, SET_STATE, SET_SELECTION, 
         RESET_OFFSET, SET_DROPDOWN_VISIBILITY, INCREMENT_CREATED_ID, HIDE_ALL_DROPDOWNS, 
-        SET_UNIQUE_GROUP, ADD_UNIQUE_GROUP_VALUES, SET_UNIQUE_GROUP_ERROR } from './dropdownType'
+        SET_UNIQUE_GROUP, ADD_UNIQUE_GROUP_VALUES, SET_UNIQUE_GROUP_ERROR, REMOVE_UNIQUE_GROUP_VALUE } from './dropdownType'
 
+// a lot of the state is created when the component containing the dropdown is loaded using 'SET_STATE'
 const initialState = {
     active_dropdown: null,
     unique_multi_groups: {
@@ -136,6 +137,19 @@ const dropdownReducer = ( state = initialState, action ) => {
                     },
                     values: { ...state.unique_multi_groups.values,
                         [group]: []
+                    }
+                }
+            }
+        case REMOVE_UNIQUE_GROUP_VALUE:
+            // a value removed by a user will be dropped from the unique value list
+            var { name, group } = action.payload
+            const subgroup = state.unique_multi_groups.names[group]
+            const lst = state.unique_multi_groups.values[subgroup].filter(item => item != name)
+            return {
+                ...state,
+                unique_multi_groups: { ...state.unique_multi_groups,
+                    values: { ...state.unique_multi_groups.values,
+                        [subgroup]: lst
                     }
                 }
             }

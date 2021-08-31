@@ -10,13 +10,9 @@ import ToolTip from '../reusable/tooltips/ToolTip'
 const AddSite = () => {
 
     const dispatch = useDispatch()
-
-    const firstRender = useRef(true);
-
     const history = useHistory();
 
-    // const { viewportStyle } = useViewportStyle();
-    // const is_large = ['tv','desktop','laptop'].includes(viewportStyle)
+    const firstRender = useRef(true);
     
     const { leafletDraw, editPoint, confirmPopup, sizeControl } = useSelector(state => state)
     const { visible, name, confirmed } = confirmPopup

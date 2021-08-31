@@ -1,5 +1,5 @@
-import React, { lazy, Fragment, useState } from 'react'
-import { Route, Link, useRouteMatch } from "react-router-dom";
+import React, { lazy, Fragment } from 'react'
+import { Route, Link, useRouteMatch, useLocation } from "react-router-dom";
 
 
 const Documentation = lazy(() => import('./Documentation'));
@@ -13,19 +13,14 @@ const SubHomeInstruction = () => {
 
 function HomeInstruction() {
 
-    let { path, url } = useRouteMatch();
+    const { path, url } = useRouteMatch();
+    const { pathname } = useLocation();
 
-    const [ active, setActive ] = useState(null)
-
-    const clickHandler = e => {
-        setActive(e.target.name)
-    }
-    
     return (
         <Fragment>
             <ul className="sub-header-c1">
-                <li onClick={clickHandler} className={ active === 'docs' ? 'active-sub-field' : '' }><Link to={`${url}/docs`} name="docs" >Documentation</Link></li>
-                <li onClick={clickHandler} className={ active === 'demos' ? 'active-sub-field' : '' }><Link to={`${url}/demos`} name="demos" >Demonstrations</Link></li>
+                <li  className={ pathname.includes('docs') ? 'active-sub-field' : '' }><Link to={`${url}/docs`} name="docs" >Documentation</Link></li>
+                <li  className={ pathname.includes('demos') ? 'active-sub-field' : '' }><Link to={`${url}/demos`} name="demos" >Demonstrations</Link></li>
             </ul>   
             <div id="contact-groups">
                 <Route path={`${path}/home`} component={SubHomeInstruction} />

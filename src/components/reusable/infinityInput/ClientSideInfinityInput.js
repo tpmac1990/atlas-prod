@@ -10,6 +10,8 @@ const ClientSideInfinityInput = props => {
 
     const { name } = props
 
+    // console.log(name)
+
     const { model, key, label, search, data, limit, loading: redux_loading, clientmax, endpoint } = useSelector(state => state.dropdown[name])
 
     const [ hasMore, setHasMore ] = useState(data.length > limit)

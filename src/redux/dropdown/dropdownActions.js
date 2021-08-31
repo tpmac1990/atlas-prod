@@ -1,6 +1,6 @@
 import { SET_SITE_GROUP_DATA, LOADING_TOGGLE, SET_SEARCH, SET_STATE, SET_SELECTION, 
         RESET_OFFSET, SET_DROPDOWN_VISIBILITY, INCREMENT_CREATED_ID, HIDE_ALL_DROPDOWNS, 
-        SET_UNIQUE_GROUP, ADD_UNIQUE_GROUP_VALUES, SET_UNIQUE_GROUP_ERROR } from './dropdownType'
+        SET_UNIQUE_GROUP, ADD_UNIQUE_GROUP_VALUES, SET_UNIQUE_GROUP_ERROR, REMOVE_UNIQUE_GROUP_VALUE } from './dropdownType'
 // import { DETAIL_INCORRECT_COUNT } from '../messageHandler/messageHandlerType'
 import axios from 'axios';
 
@@ -108,6 +108,14 @@ export const setUniqueDropdownGroup = dict => {
 export const addUniqueGroupValues = dict => {
     return {
         type: ADD_UNIQUE_GROUP_VALUES,
+        payload: dict
+    }
+}
+
+// a value removed by a user will be dropped from the unique value list
+export const removeUniqueGroupValue = dict => {
+    return {
+        type: REMOVE_UNIQUE_GROUP_VALUE,
         payload: dict
     }
 }

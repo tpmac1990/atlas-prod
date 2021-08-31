@@ -22,6 +22,7 @@ const ButtonWithToolTip = () => {
         if ( !loading ){
             const name = filterDataset === 'Tenement' ? 'tens' : 'occs'
             dispatch(setMapIsLoading())
+            // fetch the next lot of data to add to the map. pass in the current extent so the map bounds adjusts to the current & new data
             dispatch(storeSpatialData({name: name, dataset: filterDataset, input: input, related: related, 
                                         offset: offset, limit: limit, current_extent: map_data.extent}))
         }
