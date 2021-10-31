@@ -9,3 +9,4 @@ from .titles_table import TitleTableSerializer
 from .sites_table import SiteTableSerializer
 from .changes import TenementChangeSerializer, OccurrenceChangeSerializer, HolderChangeSerializer
 from .user_details import UserLogOnSerializer
+from .user_account import *

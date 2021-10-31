@@ -1,7 +1,7 @@
 from django.contrib.gis.db import models
 
 class StateSpatial(models.Model):
-    code = models.CharField(max_length=5, primary_key=True)
+    _id = models.CharField(max_length=5, primary_key=True)
     name = models.CharField(max_length=40, blank=False, null=False)
     geom = models.MultiPolygonField(srid=4202)
 

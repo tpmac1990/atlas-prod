@@ -40,9 +40,11 @@
     border-bottom-width: 2px;
 }
 
+// fb = facebook button
+// goog = google button
 .btn-c5 {
-    border: 1px solid #3ab4ff;
-    background-color: #3ab4ff;
+    border: 1px solid $blue-11;
+    background-color: $blue-11;
     color: white;
     border-radius: 4px;
 
@@ -104,7 +106,8 @@
 .close-c1,
 .close-c2,
 .close-c3,
-.close-c4 {
+.close-c4,
+.close-c5 {
     user-select: none;
     cursor: pointer;
     position: relative;
@@ -168,5 +171,18 @@
 
     span {
         bottom: -1px;
+    }
+}
+
+// map popup box close button
+.close-c5 {
+    color: $light-3;
+
+    &:hover {
+        color: $light-1;
+    }
+
+    span {
+        bottom: 1px;
     }
 }

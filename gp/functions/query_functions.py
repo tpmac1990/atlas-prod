@@ -1,17 +1,19 @@
 from django.contrib.gis.geos import Polygon, Point, MultiPolygon
 from django.contrib.gis.db.models import Extent, Union
-from .load_functions import getJSON
-# from gp.serializers import TitleBriefSerializer, SiteBriefSerializer ??? circular import. needs fix
-# from .get_popup_data import getSerializedCoreData
 import functools 
 from django.db.models import Q
 import json
 import datetime
 import os
 from django.apps import apps
-from gp.models import OccStatus, OccType, OccSize, GeologicalProvince, Material, TenStatus, TenType, Holder
-# OccOriginalID, TenOriginalID, OccName
 import time
+
+# from .load_functions import get_json
+# from gp.serializers import TitleBriefSerializer, SiteBriefSerializer ??? circular import. needs fix
+# from .get_popup_data import getSerializedCoreData
+# from gp.models import Tenement, Occurrence
+# from gp.models import OccStatus, OccType, OccSize, GeologicalProvince, Material, TenStatus, TenType, Holder
+
 
 def time_past(start,end):
     hours, rem = divmod(end-start, 3600)
@@ -26,7 +28,7 @@ def run_filter_query(dataname,filtertype,dataset,dic,filterSelectionDic):
     count = 0
     for val in filterSelectionDic:
         if val in dic.keys() and dataname in dic[val]['dataset'] and filtertype in dic[val]['use']:
-            queryValue = getQueryValue(val, filterSelectionDic)
+            queryValue = get_query_value(val, filterSelectionDic)
             if queryValue != None:
                 count += 1
                 queryString = dic[val]['query']
@@ -38,10 +40,10 @@ def run_filter_query(dataname,filtertype,dataset,dic,filterSelectionDic):
 
 
 # Queries the db and returns a list of all the remaining options. Generally used for the checkbox options in the filter
-def getDataList(p,datasets):
+def get_data_list(p,datasets):
 
-    # configs = getJSON(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"configs","model_query_configs.json"))
-    configs = getJSON("gp/configs/model_query_configs.json")
+    # configs = get_json(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"configs","model_query_configs.json"))
+    configs = get_json("gp/configs/model_query_configs.json")
 
     qs = datasets['relDataset'] if p['relatedFilterOpen'] else datasets['priDataset']
     
@@ -59,14 +61,16 @@ def getDataList(p,datasets):
     values = tuple(query_group['values'])
     order_by = query_group['order_by']
 
-    # get the list of values which will be displayed as checkboxes in the filter on the frontend.
-    # objs = model.objects.filter(**{query: qs}).distinct().order_by(order_by)
-
     objs = model.objects.filter(**{query: qs})
 
-    objs = objs.filter(**{'%s__icontains'%(order_by): p['filter']})
+    # no point filtering if the filter value is blank
+    if p['filter'] != '':
+        objs = objs.filter(**{'%s__icontains'%(order_by): p['filter']})
 
-    objs = objs.distinct().order_by(order_by)
+    # objs = objs.distinct().order_by(order_by) # old and much slower way
+    # rather than use the costly 'distinct' & 'order_by' inbuilt methods, join the filtered object with the object to return. This will return distinct values and use the order in the returned object table.
+    #   the object is evaluated multiple times, so this increases performance by between 4-5 times
+    objs = apps.get_model('gp', query_group['model']).objects.filter(pk__in=objs)
     has_more = is_there_more_data(objs,p['limit'])
     objs = infinite_filter(objs,p['limit'],p['offset'])
     vals = list(objs.values_list(*values))
@@ -75,11 +79,10 @@ def getDataList(p,datasets):
         vals = [[x[0],x[0]] for x in vals]
 
     data = { 'data': vals, 'has_more': has_more }
-
     return data
 
 
-def getTableData(data):
+def get_table_data(data):
     ''' get the data for the table. This manages the global filter, column filters, sorting and the infinity scroll '''
     ind_lst = data['ind_lst']
     datagroup = data['datagroup']
@@ -130,17 +133,19 @@ def getTableData(data):
 def infinite_filter(objs,limit,offset):
     return objs[int(offset): int(offset) + int(limit)]
 
+
 def is_there_more_data(objs,offset):
-    if offset > objs[0:offset].count():
+    ''' find if there is more data available for infinity scroll. values().count() is faster than just .count(). indexing is also slower '''
+    if offset > objs.values('pk').count():
         return False
     return True
 
 
-def createBuffer(lat,lng,radius):
+def create_buffer(lat,lng,radius):
     return Point(lng, lat).buffer(int(radius) / 40000 * 360)
 
 
-def getQueryValue(val, filterSelectionDic):
+def get_query_value(val, filterSelectionDic):
     fsdv = filterSelectionDic[val]
     if val == 'rectangle':
         if fsdv['NELng'] != '':
@@ -148,7 +153,7 @@ def getQueryValue(val, filterSelectionDic):
             return Polygon.from_bbox((coords['SWLng'], coords['SWLat'], coords['NELng'], coords['NELat']))
     elif val == 'buffer':
         if fsdv['valid']:
-            return createBuffer(fsdv['Lat'],fsdv['Lng'],fsdv['radius'])
+            return create_buffer(fsdv['Lat'],fsdv['Lng'],fsdv['radius'])
     elif val in ['lodgefromdate', 'lodgetodate', 'startfromdate', 'starttodate', 'endfromdate', 'endtodate']:
         if fsdv != '':
             ds = fsdv.split('-')
@@ -159,57 +164,28 @@ def getQueryValue(val, filterSelectionDic):
     return None
 
 
-def filter_data_map(p):
-    ''' Filters the selected dataset, either 'Tenement' or 'Occurrence' for the options selected in the frontend filter '''
 
-    configs = getJSON(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"configs","dataset_query_configs.json"))
+def filter_data_map(p):
+    ''' Filters the selected dataset, either 'Tenement' or 'Occurrence' for the geometry to display on the map '''
+
+    configs = get_json(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"configs","dataset_query_configs.json"))
     filterSelectionDic = p['filterSelectionDic']
 
     # filters the primary dataset for all options selected in the filter. 
-    priDataset = run_filter_query(p['priDatasetName'],'primary',p['priDataset'],configs,filterSelectionDic)
+    priDataset = apps.get_model('gp', p['priDatasetName']).objects.all()
+    priDataset = run_filter_query(p['priDatasetName'],'primary',priDataset,configs,filterSelectionDic)
 
     # slice the data to limit the data returned. only for the spatial query.
     total_count = priDataset['data'].count()
     priDataset['data'] = infinite_filter(priDataset['data'],p['limit'],p['offset'])
     has_more = is_there_more_data(priDataset['data'],p['limit'])
 
-    # if p['append_to'] == 'related':
-    #     # print(p['prioffset'])
-    #     priDataset['data'] = priDataset['data'][0: int(p['prioffset'])]
-    #     pri_has_more = True
-    # else:
-    #     priDataset['data'] = infinite_filter(priDataset['data'],p['prilimit'],p['prioffset'])
-    #     pri_has_more = is_there_more_data(priDataset['data'],p['prilimit'])
-
-    # print(priDataset['data'])
-    # p['isSpatialQuery']: if true then the aim is to return the spatial model to plot of the map
-    # priDataset['count']: counts the number of features(rows) in the primary dataset. Not used here as even if there are 0 filters applied in the primary
-    #       dataset, I still want to show the related data if selected 
-    # p['relatedFilterOpen']): true if the related filter is open in the filter.
-    # p['includeRelatedData']: has the box been checked in the filter to include the related data in the search.
-    # p['append_to'] != 'related': only looking to add the next offset to the primary dataset or looking for all the data.
-    # if (((p['isSpatialQuery'] and priDataset['count']>0) or p['relatedFilterOpen']) and p['includeRelatedData']):
-    if ((p['isSpatialQuery'] or p['relatedFilterOpen']) and p['includeRelatedData']):
-        # relDataset = p['relDataset'].filter(functools.reduce(lambda x, y: x | y, [Q(**{p['geomQuery']: getattr(geom, p['geomField'])}) for geom in priDataset['data']]))
-        relDataset = p['relDataset'].filter(**{p['geomQuery']: priDataset['data']}).distinct()        
+    # get the related data if selected
+    if p['includeRelatedData']:
+        relDataset = apps.get_model('gp', p['relDatasetName']).objects.filter(**{p['geomQuery']: priDataset['data']}) # .distinct()
         relDataset = run_filter_query(p['relDatasetName'],'related',relDataset,configs,filterSelectionDic)
-        # rel_total_count = relDataset['data'].count()
-
-        # relDataset['data'] = infinite_filter(relDataset['data'],p['rellimit'],p['reloffset'])
-        # rel_has_more = is_there_more_data(relDataset['data'],p['rellimit'])
     else:
-        # if priDataset['count'] == 0: # dropped this as it resulted in an error when nothing except the datagroup were filtered for
-        #     priDataset = {'data': {}}
-        #     total_count = 0
-        #     has_more = False
         relDataset = {'data': {}}
-        # rel_total_count = 0
-
-    # # clear the data that isn't required for adding data
-    # if p['append_to'] == 'related':
-    #     priDataset['data'] = {}
-    # elif p['append_to'] == 'primary':
-    #     relDataset['data'] = {}
 
     # not all the related point data is being accessed. it could be something to do with the related offset changing when it isn't supposed to.
     data = {
@@ -223,63 +199,262 @@ def filter_data_map(p):
 
 
 def filter_data_checkbox_list(p):
+    ''' Filters the selected dataset, either 'Tenement' or 'Occurrence' for the options to display in the selected filter group '''
 
-    configs = getJSON(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"configs","dataset_query_configs.json"))
+    configs = get_json(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"configs","dataset_query_configs.json"))
     filterSelectionDic = p['filterSelectionDic']
 
-    if not p['isSpatialQuery']:
-        del filterSelectionDic[p['name']] # delete the key value pair. 
+    # delete the key value pair.
+    del filterSelectionDic[p['name']]  
 
     # filters the primary dataset for all options selected in the filter. 
-    priDataset = run_filter_query(p['priDatasetName'],'primary',p['priDataset'],configs,filterSelectionDic)
+    priDataset = apps.get_model('gp', p['priDatasetName']).objects.all()
+    priDataset = run_filter_query(p['priDatasetName'],'primary',priDataset,configs,filterSelectionDic)
 
-    # slice the data to limit the data returned. only for the spatial query.
-    if p['isSpatialQuery']:
-        pri_total_count = priDataset['data'].count()
-        pri_has_more = is_there_more_data(priDataset['data'],p['limit'])
-        priDataset['data'] = infinite_filter(priDataset['data'],p['limit'],p['offset'])
-
-    # p['isSpatialQuery']: if true then the aim is to return the spatial model to plot of the map
-    # priDataset['count']: counts the number of features(rows) in the preimary dataset. There is no point continuing if there is no data.
-    # p['relatedFilterOpen']): true if the related filter is open in the filter.
-    # p['includeRelatedData']: has the box been checked in the filter to include the related data in the search.
-    if ((p['isSpatialQuery'] and priDataset['count']>0) or p['relatedFilterOpen']) and p['includeRelatedData']:
-        # relDataset = p['relDataset'].filter(functools.reduce(lambda x, y: x | y, [Q(**{p['geomQuery']: getattr(geom, p['geomField'])}) for geom in priDataset['data']]))
-        # relDataset = run_filter_query(p['relDatasetName'],'related',relDataset,configs,filterSelectionDic)
-        relDataset = p['relDataset'].filter(**{p['geomQuery']: priDataset['data']}).distinct()        
+    # if the related filter is open then we need to filter the related dataset
+    if p['relatedFilterOpen']:
+        # no need for distinct() as duplicates will be removed regardless. this saves 10ms
+        relDataset = apps.get_model('gp', p['relDatasetName']).objects.filter(**{p['geomQuery']: priDataset['data']}) # .distinct()
         relDataset = run_filter_query(p['relDatasetName'],'related',relDataset,configs,filterSelectionDic)
-        if p['isSpatialQuery']:
-            rel_total_count = relDataset['data'].count()
-            rel_has_more = is_there_more_data(relDataset['data'],p['limit'])
-            relDataset['data'] = infinite_filter(relDataset['data'],p['limit'],p['offset'])
     else:
-        if p['isSpatialQuery'] and priDataset['count'] == 0:
-            priDataset = {'data': {}}
-            if p['isSpatialQuery']:
-                pri_total_count = 0
-                pri_has_more = False
         relDataset = {'data': {}}
-        if p['isSpatialQuery']:
-            rel_total_count = 0
-            rel_has_more = False
             
     data = {
         'priDataset': priDataset['data'], 
         'relDataset': relDataset['data'],
         }
-    
-    if p['isSpatialQuery']:
-        data['priTotalCount'] = pri_total_count
-        data['priHasMore'] = pri_has_more
-        data['relTotalCount'] = rel_total_count
-        data['relHasMore'] = rel_has_more
 
     return data
 
 
+
+# Get the extent of the primary dataset. This will allow me to zoom on submit.
+# Much easier to do it here than in leaflet.
+def get_extent(params,datasets):
+    # Union('geom'): causes an error if the dataset has been previously sliced
+    ce = params['current_extent']
+
+    # if params['append_to'] == 'related': # extent only changes when creating new data or appending to the primary dataset
+    #     extent = ce
+    # else:
+
+    # this will prevent an error if there is no data to get the extent from
+    # extent = {} if ce == None else ce
+    extent = {}
+    if datasets['priDataset'].count() != 0:
+        extent['NELng'], extent['NELat'], extent['SWLng'], extent['SWLat'] = datasets['priDataset'].aggregate(Extent('geom'))['geom__extent']
+
+    # if adding to existing data then the extent need to account for the existing data.
+    if ce:
+        poly_1 = Polygon(((extent['NELng'],extent['NELat']),(extent['NELng'],extent['SWLat']),(extent['SWLng'],extent['SWLat']),(extent['SWLng'],extent['NELat']),(extent['NELng'],extent['NELat'])))
+        poly_2 = Polygon(((ce['NELng'],ce['NELat']),(ce['NELng'],ce['SWLat']),(ce['SWLng'],ce['SWLat']),(ce['SWLng'],ce['NELat']),(ce['NELng'],ce['NELat'])))
+        extent['NELng'], extent['NELat'], extent['SWLng'], extent['SWLat'] = MultiPolygon(poly_1,poly_2).extent
+
+    return extent
+
+
+# get the data for the Title, site of company request. Firstly, check if the values are valid
+def get_detail_data(data):
+    datagroup = data['datagroup']
+    value = data['value']
+
+    if not datagroup in ["Site ID", "Title ID", "Company Name"]:
+        msg = "NO_DATAGROUP"
+        data = []
+    else:
+        if datagroup in ["Site ID","Title ID"]:
+            if len(value) != 7:
+                msg = "INVALID_VALUE_LENGTH"
+                data = []
+            else:
+                dataset = "Occurrence" if datagroup == "Site ID" else "Tenement"
+                result = getSerializedCoreData(dataset,"ind",value)
+
+        elif datagroup == "Company Name":
+            result = getDataByCompany(value)
+
+    return datagroup
+
+
+
+
+# tests if the gplore id entered on the frontend is a valid id from either the Tenement or Occurrence dataset.
+def is_id_valid(key,datasetName):
+    # dataset = Tenement if datasetName == 'Tenement' else Occurrence
+    try:
+        # ds = dataset.objects.get(**{'ind': key})
+        ds = apps.get_model('gp', datasetName).objects.get(**{'ind': key})
+        center = ds.geom.centroid
+        result = {"success":True,"lat":center.y,"lng":center.x}
+    except:
+        result = {"success":False,"lat":None,"lng":None}
+
+    return json.dumps(result)
+
+
+
+def get_json(path):
+    ''' open json file '''
+    with open(path) as json_file:
+        return json.load(json_file)
+
+
+
+# def sites_dropdown_data():
+
+# def getDataByCompany(name):
+#     try:
+#         holder = Holder.objects.get(name=name)
+#         success = True
+#     except:
+#         success = False
+
+#     if success:
+#         # lst = []
+#         # for x in holder.name_tenholder.all():
+#         #     for y in x.holder_tenement.all()[0].occurrence.all():
+#         #         lst.append(y.ind)
+#         # print(len(lst))
+#         titles = holder.name_tenholder.holder_tenement.all()
+#         print(titles)
+        
+#         dic = {
+#             "name": name,
+#             "parents": [{"name": x.name.name, "percown": x.percown} for x in holder.child_holderrelation.all()],
+#             "subsidiaries": [{"name": x.child.name, "percown": x.percown} for x in holder.name_holderrelation.all()],
+#             "listed": [{"ticker": x.ticker, "exchange": x.exchange.code, "country": x.exchange.country} for x in holder.listed.all()],
+#             "companytype": holder.typ.original,
+#             "titlescount": len(holder.name_tenholder.all()),
+#         }
+#         print(dic)
+
+#     return "fail"
+
+
+
+
+
+# def filter_data_map(p):
+#     ''' Filters the selected dataset, either 'Tenement' or 'Occurrence' for the options selected in the frontend filter '''
+
+#     configs = get_json(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"configs","dataset_query_configs.json"))
+#     filterSelectionDic = p['filterSelectionDic']
+
+#     # filters the primary dataset for all options selected in the filter. 
+#     priDataset = run_filter_query(p['priDatasetName'],'primary',p['priDataset'],configs,filterSelectionDic)
+
+#     # slice the data to limit the data returned. only for the spatial query.
+#     total_count = priDataset['data'].count()
+#     priDataset['data'] = infinite_filter(priDataset['data'],p['limit'],p['offset'])
+#     has_more = is_there_more_data(priDataset['data'],p['limit'])
+
+#     # if p['append_to'] == 'related':
+#     #     # print(p['prioffset'])
+#     #     priDataset['data'] = priDataset['data'][0: int(p['prioffset'])]
+#     #     pri_has_more = True
+#     # else:
+#     #     priDataset['data'] = infinite_filter(priDataset['data'],p['prilimit'],p['prioffset'])
+#     #     pri_has_more = is_there_more_data(priDataset['data'],p['prilimit'])
+
+#     # print(priDataset['data'])
+#     # p['isSpatialQuery']: if true then the aim is to return the spatial model to plot of the map
+#     # priDataset['count']: counts the number of features(rows) in the primary dataset. Not used here as even if there are 0 filters applied in the primary
+#     #       dataset, I still want to show the related data if selected 
+#     # p['relatedFilterOpen']): true if the related filter is open in the filter.
+#     # p['includeRelatedData']: has the box been checked in the filter to include the related data in the search.
+#     # p['append_to'] != 'related': only looking to add the next offset to the primary dataset or looking for all the data.
+#     # if (((p['isSpatialQuery'] and priDataset['count']>0) or p['relatedFilterOpen']) and p['includeRelatedData']):
+#     if ((p['isSpatialQuery'] or p['relatedFilterOpen']) and p['includeRelatedData']):
+#         # relDataset = p['relDataset'].filter(functools.reduce(lambda x, y: x | y, [Q(**{p['geomQuery']: getattr(geom, p['geomField'])}) for geom in priDataset['data']]))
+#         relDataset = p['relDataset'].filter(**{p['geomQuery']: priDataset['data']}).distinct()        
+#         relDataset = run_filter_query(p['relDatasetName'],'related',relDataset,configs,filterSelectionDic)
+#         # rel_total_count = relDataset['data'].count()
+
+#         # relDataset['data'] = infinite_filter(relDataset['data'],p['rellimit'],p['reloffset'])
+#         # rel_has_more = is_there_more_data(relDataset['data'],p['rellimit'])
+#     else:
+#         # if priDataset['count'] == 0: # dropped this as it resulted in an error when nothing except the datagroup were filtered for
+#         #     priDataset = {'data': {}}
+#         #     total_count = 0
+#         #     has_more = False
+#         relDataset = {'data': {}}
+#         # rel_total_count = 0
+
+#     # # clear the data that isn't required for adding data
+#     # if p['append_to'] == 'related':
+#     #     priDataset['data'] = {}
+#     # elif p['append_to'] == 'primary':
+#     #     relDataset['data'] = {}
+
+#     # not all the related point data is being accessed. it could be something to do with the related offset changing when it isn't supposed to.
+#     data = {
+#         'priDataset': priDataset['data'], 
+#         'relDataset': relDataset['data'], 
+#         'totalCount': total_count,
+#         'hasMore': has_more,
+#         }
+
+#     return data
+
+
+# def filter_data_checkbox_list(p):
+
+#     configs = get_json(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"configs","dataset_query_configs.json"))
+#     filterSelectionDic = p['filterSelectionDic']
+
+#     if not p['isSpatialQuery']:
+#         del filterSelectionDic[p['name']] # delete the key value pair. 
+
+#     # filters the primary dataset for all options selected in the filter. 
+#     priDataset = run_filter_query(p['priDatasetName'],'primary',p['priDataset'],configs,filterSelectionDic)
+
+#     # slice the data to limit the data returned. only for the spatial query.
+#     if p['isSpatialQuery']:
+#         pri_total_count = priDataset['data'].count()
+#         pri_has_more = is_there_more_data(priDataset['data'],p['limit'])
+#         priDataset['data'] = infinite_filter(priDataset['data'],p['limit'],p['offset'])
+
+#     # p['isSpatialQuery']: if true then the aim is to return the spatial model to plot of the map
+#     # priDataset['count']: counts the number of features(rows) in the preimary dataset. There is no point continuing if there is no data.
+#     # p['relatedFilterOpen']): true if the related filter is open in the filter.
+#     # p['includeRelatedData']: has the box been checked in the filter to include the related data in the search.
+#     if ((p['isSpatialQuery'] and priDataset['count']>0) or p['relatedFilterOpen']) and p['includeRelatedData']:
+#         # relDataset = p['relDataset'].filter(functools.reduce(lambda x, y: x | y, [Q(**{p['geomQuery']: getattr(geom, p['geomField'])}) for geom in priDataset['data']]))
+#         # relDataset = run_filter_query(p['relDatasetName'],'related',relDataset,configs,filterSelectionDic)
+#         relDataset = p['relDataset'].filter(**{p['geomQuery']: priDataset['data']}).distinct()        
+#         relDataset = run_filter_query(p['relDatasetName'],'related',relDataset,configs,filterSelectionDic)
+#         if p['isSpatialQuery']:
+#             rel_total_count = relDataset['data'].count()
+#             rel_has_more = is_there_more_data(relDataset['data'],p['limit'])
+#             relDataset['data'] = infinite_filter(relDataset['data'],p['limit'],p['offset'])
+#     else:
+#         if p['isSpatialQuery'] and priDataset['count'] == 0:
+#             priDataset = {'data': {}}
+#             if p['isSpatialQuery']:
+#                 pri_total_count = 0
+#                 pri_has_more = False
+#         relDataset = {'data': {}}
+#         if p['isSpatialQuery']:
+#             rel_total_count = 0
+#             rel_has_more = False
+            
+#     data = {
+#         'priDataset': priDataset['data'], 
+#         'relDataset': relDataset['data'],
+#         }
+    
+#     if p['isSpatialQuery']:
+#         data['priTotalCount'] = pri_total_count
+#         data['priHasMore'] = pri_has_more
+#         data['relTotalCount'] = rel_total_count
+#         data['relHasMore'] = rel_has_more
+
+#     return data
+
+
 # def filter_data(p):
 
-#     configs = getJSON(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"configs","dataset_query_configs.json"))
+#     configs = get_json(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"configs","dataset_query_configs.json"))
 #     filterSelectionDic = p['filterSelectionDic']
 
 #     if not p['isSpatialQuery']:
@@ -328,88 +503,4 @@ def filter_data_checkbox_list(p):
 #         data['relHasMore'] = rel_has_more
 
 #     return data
-
-
-# Get the extent of the primary dataset. This will allow me to zoom on submit.
-# Much easier to do it here than in leaflet.
-def get_extent(params,datasets):
-    # Union('geom'): causes an error if the dataset has been previously sliced
-    ce = params['current_extent']
-
-    # if params['append_to'] == 'related': # extent only changes when creating new data or appending to the primary dataset
-    #     extent = ce
-    # else:
-
-    # this will prevent an error if there is no data to get the extent from
-    # extent = {} if ce == None else ce
-    extent = {}
-    if datasets['priDataset'].count() != 0:
-        extent['NELng'], extent['NELat'], extent['SWLng'], extent['SWLat'] = datasets['priDataset'].aggregate(Extent('geom'))['geom__extent']
-
-    # if adding to existing data then the extent need to account for the existing data.
-    if ce:
-        poly_1 = Polygon(((extent['NELng'],extent['NELat']),(extent['NELng'],extent['SWLat']),(extent['SWLng'],extent['SWLat']),(extent['SWLng'],extent['NELat']),(extent['NELng'],extent['NELat'])))
-        poly_2 = Polygon(((ce['NELng'],ce['NELat']),(ce['NELng'],ce['SWLat']),(ce['SWLng'],ce['SWLat']),(ce['SWLng'],ce['NELat']),(ce['NELng'],ce['NELat'])))
-        extent['NELng'], extent['NELat'], extent['SWLng'], extent['SWLat'] = MultiPolygon(poly_1,poly_2).extent
-
-    return extent
-
-
-# get the data for the Title, site of company request. Firstly, check if the values are valid
-def getDetailData(data):
-    datagroup = data['datagroup']
-    value = data['value']
-
-    if not datagroup in ["Site ID", "Title ID", "Company Name"]:
-        msg = "NO_DATAGROUP"
-        data = []
-    else:
-        if datagroup in ["Site ID","Title ID"]:
-            if len(value) != 7:
-                msg = "INVALID_VALUE_LENGTH"
-                data = []
-            else:
-                dataset = "Occurrence" if datagroup == "Site ID" else "Tenement"
-                result = getSerializedCoreData(dataset,"ind",value)
-
-        elif datagroup == "Company Name":
-            result = getDataByCompany(value)
-            # print("hello")
-
-
-    return datagroup
-
-
-# def sites_dropdown_data():
-
-# def getDataByCompany(name):
-#     try:
-#         holder = Holder.objects.get(name=name)
-#         success = True
-#     except:
-#         success = False
-
-#     if success:
-#         # lst = []
-#         # for x in holder.name_tenholder.all():
-#         #     for y in x.holder_tenement.all()[0].occurrence.all():
-#         #         lst.append(y.ind)
-#         # print(len(lst))
-#         titles = holder.name_tenholder.holder_tenement.all()
-#         print(titles)
-        
-#         dic = {
-#             "name": name,
-#             "parents": [{"name": x.name.name, "percown": x.percown} for x in holder.child_holderrelation.all()],
-#             "subsidiaries": [{"name": x.child.name, "percown": x.percown} for x in holder.name_holderrelation.all()],
-#             "listed": [{"ticker": x.ticker, "exchange": x.exchange.code, "country": x.exchange.country} for x in holder.listed.all()],
-#             "companytype": holder.typ.original,
-#             "titlescount": len(holder.name_tenholder.all()),
-#         }
-#         print(dic)
-
-#     return "fail"
-
-
-
 

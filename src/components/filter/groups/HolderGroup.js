@@ -7,7 +7,8 @@ export default function HolderGroup() {
 
     const { areaStyle } = useSelector(state => state.filterGroup.groups.holder)
     
-    const checkboxGroupList = ['holderparent','holdertype','holdername']
+    const checkboxGroupList = ['holderparent','holdername']
+    // 'holdertype'
 
     const checkboxGroups = checkboxGroupList.map(group => {
         return (

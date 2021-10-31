@@ -6,7 +6,7 @@
     padding-bottom: 50px;
 
     .div-link {
-        margin-left: 40px;
+        // margin-left: 40px;
         cursor: pointer;
         color: $blue-14;
 
@@ -58,5 +58,25 @@
                 text-decoration: underline;
             }
         }
+    }
+}
+
+
+// format the youtube player area
+.yt-player-c1 {
+    overflow: hidden;
+    padding-bottom: 288px;
+    position: relative;
+    height: 0;
+    width: 512px;
+    margin-left: 40px;
+    margin-top: 20px;
+
+    iframe {
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        position: absolute;
     }
 }

@@ -33,8 +33,8 @@
         "typedetail": {
             "model": "TenType",
             "query": "typ_tenement__in",
-            "values": ["pk", "fname"],
-            "order_by": "fname"
+            "values": ["pk", "original"],
+            "order_by": "original"
         },
         "statussimple": {
             "model": "TenStatusSimp",
@@ -77,12 +77,6 @@
             "query": "name_parent__child__holder_tenement__in",
             "values": ["pk","name"],
             "order_by": "name"
-        },
-        "holdertype": {
-            "model": "HolderType",
-            "query": "typ_holder__holder_tenement__in",
-            "values": ["pk","original"],
-            "order_by": "original"
         },
         "holdername": {
             "model": "Holder",

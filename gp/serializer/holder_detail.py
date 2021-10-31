@@ -1,15 +1,15 @@
 from rest_framework import serializers
-from gp.models import Holder, HolderType, Listed, Parent, Tenement, Occurrence, State, Exchange, TenHolder
-
+from gp.models import Holder, Listed, Parent, Tenement, Occurrence, State, Exchange, TenHolder
+# HolderType
 
 # ##############################################################################################
 # Reading from db
 # ##############################################################################################
 
-class HolderTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = HolderType
-        fields = ["original"]
+# class HolderTypeSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = HolderType
+#         fields = ["original"]
 
 
 class ExchangeSerializer(serializers.ModelSerializer):
@@ -31,7 +31,7 @@ class ListedSimpleSerializer(serializers.ModelSerializer):
     exchange_name = serializers.SerializerMethodField(source='exchange')
 
     def get_exchange_id(self,obj):
-        return obj.exchange.code
+        return obj.exchange._id
 
     def get_exchange_name(self,obj):
         return obj.exchange.name
@@ -45,8 +45,8 @@ class ListedSimpleSerializer(serializers.ModelSerializer):
 class ChildSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(source='holder_name')
     _id = serializers.SerializerMethodField()
-    typ = serializers.SerializerMethodField()
-    typ_id = serializers.SerializerMethodField(source='typ') # provide id for dropdown in edit select
+    # typ = serializers.SerializerMethodField()
+    # typ_id = serializers.SerializerMethodField(source='typ') # provide id for dropdown in edit select
     listed = serializers.SerializerMethodField()
 
     def get_name(self,obj):
@@ -55,25 +55,25 @@ class ChildSerializer(serializers.ModelSerializer):
     def get__id(self,obj):
         return obj.name._id
 
-    def get_typ(self,obj):
-        return obj.name.typ.original
+    # def get_typ(self,obj):
+    #     return obj.name.typ.original
 
-    def get_typ_id(self,obj):
-        return obj.name.typ._id
+    # def get_typ_id(self,obj):
+    #     return obj.name.typ._id
 
     def get_listed(self,obj):
         return "Yes" if len(obj.name.listed.all()) != 0 else "No"
 
     class Meta:
         model = Parent
-        fields = ["_id","name","percown","typ","listed","typ_id"]
-
+        fields = ["_id","name","percown","listed"]
+        # "typ","typ_id"
 
 class ParentSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(source='holder_name')
     _id = serializers.SerializerMethodField()
-    typ = serializers.SerializerMethodField()
-    typ_id = serializers.SerializerMethodField(source='typ') # provide id for dropdown in edit select
+    # typ = serializers.SerializerMethodField()
+    # typ_id = serializers.SerializerMethodField(source='typ') # provide id for dropdown in edit select
     listed = serializers.SerializerMethodField()
 
     def get_name(self,obj):
@@ -82,23 +82,24 @@ class ParentSerializer(serializers.ModelSerializer):
     def get__id(self,obj):
         return obj.child._id
 
-    def get_typ(self,obj):
-        return obj.child.typ.original
+    # def get_typ(self,obj):
+    #     return obj.child.typ.original
 
-    def get_typ_id(self,obj):
-        return obj.child.typ._id
+    # def get_typ_id(self,obj):
+    #     return obj.child.typ._id
 
     def get_listed(self,obj):
         return "Yes" if len(obj.child.listed.all()) != 0 else "No"
 
     class Meta:
         model = Parent
-        fields = ["_id","name","percown","typ","listed","typ_id"]
+        fields = ["_id","name","percown","listed"]
+        # "typ","typ_id"
 
 
 class HolderDetailSerializer(serializers.ModelSerializer):
     holder_name = serializers.CharField(source='name')
-    company_type = HolderTypeSerializer(source='typ')
+    # company_type = HolderTypeSerializer(source='typ')
     listed = ListedSerializer(many=True, read_only=True)
     listed_simple = ListedSimpleSerializer(many=True, read_only=True, source='listed')
     parent_company = ChildSerializer(many=True, read_only=True, source='child_parent')
@@ -125,8 +126,8 @@ class HolderDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Holder
-        fields = ['holder_name','listed_simple','company_type','listed','subsidiaries','parent_company','title_count','site_count','states']
-
+        fields = ['holder_name','listed_simple','listed','subsidiaries','parent_company','title_count','site_count','states']
+# ,'company_type'
 
 
 # ##############################################################################################

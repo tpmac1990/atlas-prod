@@ -53,7 +53,7 @@ export const site_objs = {
             name: 'majmat', 
             endpoint: 'site-group', 
             model: 'Material', 
-            key: 'code', 
+            key: '_id', 
             label: 'name', 
             unique_grp: 'material', 
             styles: 'infinite-select-c1'
@@ -62,7 +62,7 @@ export const site_objs = {
             name: 'minmat', 
             endpoint: 'site-group', 
             model: 'Material', 
-            key: 'code', 
+            key: '_id', 
             label: 'name', 
             unique_grp: 'material', 
             styles: 'infinite-select-c1'
@@ -80,7 +80,7 @@ export const site_objs = {
             name: 'size', 
             endpoint: 'site-group', 
             model: 'OccSize', 
-            key: 'code', 
+            key: '_id', 
             label: 'name', 
             unique_grp: null, 
             styles: 'infinite-select-c1'
@@ -98,8 +98,8 @@ export const site_objs = {
             name: 'oid', 
             endpoint: 'site-group', 
             model: 'OccOriginalID', 
-            key: 'code', 
-            label: 'code', 
+            key: '_id', 
+            label: '_id', 
             unique_grp: null, 
             styles: 'infinite-select-c1'
         }
@@ -111,7 +111,7 @@ export const site_objs = {
             is_array: true 
         },
         oid: { 
-            field: 'code', 
+            field: '_id', 
             is_int: false, 
             is_array: true 
         },
@@ -269,7 +269,7 @@ export const holder_objs = {
                 edit_type: 'select',
                 default: 'ASX',
                 model: 'Exchange',
-                select_key: 'code',
+                select_key: '_id',
                 select_label: 'name',
                 lg_style: 'col-7',
                 sm_style: 'col-7'
@@ -295,7 +295,7 @@ export const title_objs = {
             endpoint: 'site-group', 
             model: 'TenType', 
             key: '_id', 
-            label: 'fname', 
+            label: 'original', 
             unique_grp: null, 
             styles: 'infinite-select-c1'
         },
@@ -312,8 +312,8 @@ export const title_objs = {
             name: 'oid', 
             endpoint: 'site-group', 
             model: 'TenOriginalID', 
-            key: 'code', 
-            label: 'code', 
+            key: '_id', 
+            label: '_id', 
             unique_grp: null, 
             styles: 'infinite-select-c1'
         },
@@ -343,7 +343,7 @@ export const title_objs = {
             ] 
         },
         oid: { 
-            field: 'code', 
+            field: '_id', 
             is_int: false, 
             is_array: true 
         },

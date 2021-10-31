@@ -10,6 +10,9 @@
     width: 400px;
     float: left;
     cursor: pointer;
+    // border-right: 2px solid white;
+    box-shadow: 3px 0 3px -1px #535353;
+    z-index: 5;
 
     #panel-subarea {
         position: relative;

@@ -1,0 +1,318 @@
+@import '../variables';
+
+// buttons
+.btn-auth-c1 {
+    position: relative;
+    width: 100%;
+    height: 35px;
+}
+.btn-social-c1 {
+    img {
+        position: absolute;
+        left: 3px;
+        top: 0;
+        height: 100%;
+    }
+}
+.btn-fb {
+    border: 1px solid $blue-fb-1;
+    background-color: $blue-fb-1;           
+
+    &:hover {
+        border-color: $blue-fb-2;
+        background-color: $blue-fb-2;
+    }
+}
+.btn-goog {
+    border: 1px solid $red-goog-1;
+    background-color: $red-goog-1;
+
+    img {
+        height: 83%;
+        top: 3px;
+        left: 4px;
+    }
+
+    &:hover {
+        border-color: $red-goog-2;
+        background-color: $red-goog-2;
+    }
+}
+
+// ----- OR ----- 
+.or-line-through {
+    display: flex;
+    align-items: center;
+    text-align: center; 
+    font-size: 1.0em;
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid $dark-6;
+    }
+
+    &:not(:empty)::before {
+        margin-right: 20px;
+    }
+    
+    &:not(:empty)::after {
+        margin-left: 20px;
+    }
+}
+
+
+// general layout of authenticate pages
+.auth-page {
+    height: calc(100vh - 60px);
+    background-color: $dark-4;
+    color: $dark-4;
+    overflow-y: auto;
+    border-top: 1px solid $light-2;
+    position: relative;
+
+    .auth-sub-area {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        background-color: $light-1;
+        color: $dark-6;
+        width: 400px;
+        padding: 30px 40px;
+        box-shadow: 0 0 100px 1px $dark-1;
+    }
+}
+
+// login, signup, email-signup page
+.asa-c1,
+.asa-c2 {
+
+    .btn-fb {
+        margin-bottom: 10px;
+    }
+    .btn-goog {
+        margin-bottom: 15px;
+    }
+    .btn-email {
+        margin: 10px 0 15px 0;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 1.6em;
+        font-family: 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .or-line-through {
+        margin-bottom: 5px;
+    }
+
+    p {
+        font-size: 0.8em;
+        text-align: center;
+        margin-bottom: 5px;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    form {    
+        div {
+            width: 100%;
+            margin-top: 20px;
+    
+            input {
+                width: 100%;
+                font-size: 0.9em;
+            }
+        }
+    }
+}
+
+// login, email-signup page
+.asa-c2 {
+    .btn-goog {
+        margin-bottom: 20px;
+    }
+}
+
+// avtivate page
+.asa-c3 { 
+    h1 {
+        font-size: 1.2em;
+        margin-bottom: 15px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+}
+
+
+
+
+
+
+
+
+// .user-details {
+//     height: calc(100vh - 60px);
+//     background-color: $dark-4;
+//     color: $dark-4;
+//     overflow-y: auto;
+//     border-top: 1px solid $light-2;
+
+//     .basic-form-area {
+//         position: relative;
+//         height: 100%;
+
+        
+//         .register-form,
+//         #signup-all,
+//         #login-all,
+//         #email-signup-form {
+//             position: absolute;
+//             left: 50%;
+//             top: 50%;
+//             transform: translate(-50%,-50%);
+//             background-color: $light-1;
+//             width: 400px;
+//             padding: 30px 40px;
+
+//             h3 {
+//                 text-align: center;
+//                 margin-bottom: 30px;
+//             }
+
+//             form {    
+//                 div {
+//                     width: 100%;
+//                     margin-top: 25px;
+
+//                     input {
+//                         width: 100%;
+//                         font-size: 0.9em;
+//                     }
+//                 }
+//             }
+
+//             p {
+//                 font-size: 0.8em;
+//                 text-align: center;
+//                 margin-bottom: 5px;
+//             }
+//         }
+//     }
+// }
+
+
+
+
+
+
+
+// // below is used in the contact section. should be able to delete whent he contact section is removed
+// #contact-groups {
+//     height: calc(100vh - 145px);
+
+//     h6 {
+//         margin-left: 120px;
+//     }
+
+//     .basic-form-area {
+//         position: relative;
+//         padding-top: 10px;
+//         padding-bottom: 10px;
+    
+//         .email-drop-area,
+//         .feedback-area,
+//         .contact-info-area {
+//             position: relative;
+//             left: 50%;
+//             transform: translate(-50%,0);
+//             background-color: $light-7;
+//             width: 400px;
+//             border-radius: 5px;
+//             box-shadow: 0 1px 3px $light-3;
+//             padding: 30px 40px;
+    
+//             h1 {
+//                 font-size: 2.4em;
+//             }
+    
+//             h2 {
+//                 font-size: 1.2em;
+//                 margin-bottom: 10px;
+//             }
+    
+//             form {
+//                 label {
+//                     width: 100%;
+//                     margin: 10px 0 0 0;
+//                 }
+    
+//                 input {
+//                     width: 100%;
+//                     padding-left: 10px;
+//                     height: 35px;
+//                 }
+    
+//                 button {
+//                     margin: 30px 20px 0 0;
+//                     width: 100px;
+//                     height: 35px;
+//                 }
+    
+//                 div {
+//                     display: inline-block;
+//                     padding: 3px 10px;
+//                     border-radius: 20px;
+//                     font-size: 0.8em;
+//                 }
+    
+//                 .error {
+//                     background-color: $danger-4;
+//                 }
+    
+//                 .success {
+//                     background-color: $success-2;
+//                 }
+//             }
+//         }
+    
+//         .contact-info-area {
+//             table tbody tr {
+//                 th, td {
+//                     border: none;
+//                 }
+//             }
+//         }
+    
+    
+//         .feedback-area {
+//             width: 500px;
+    
+//             form {
+    
+//                 label:first-child {
+//                     margin-top: 0;
+//                 }
+    
+//                 textarea {
+//                     width: 100%;
+//                     font-size: 0.8em;
+//                     padding: 5px 10px;
+//                 }
+    
+//                 span {
+//                     cursor: pointer;
+//                 }
+    
+//                 button {
+//                     margin: 10px 20px 0 0;
+//                 }
+//             }
+//         }
+//     }
+// }

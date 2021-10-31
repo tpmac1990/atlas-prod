@@ -63,6 +63,13 @@ export const resetApiOutcome = group => {
 
 
 export const postSiteUpdates = values => dispatch => {
+    // const config = {
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json',
+    //         'Authorization': 'JWT ' + localStorage.getItem('access')
+    //     }
+    // }; 
     const { id, dict, endpoint } = values
     axios
         .post(`/edit-${endpoint}/${id}/`, dict)
@@ -83,9 +90,16 @@ export const postSiteUpdates = values => dispatch => {
 
 
 export const getDropdownData = values => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'JWT ' + localStorage.getItem('access')
+        }
+    }; 
     const { model, key, label } = values
     axios
-        .get(`/dropdown-data/${model}/?key=${key}&label=${label}`)
+        .get(`/dropdown-data/${model}/?key=${key}&label=${label}`,config)
         .then(res => {
                 dispatch({
                     type: SET_DROPDOWN_DATA,
@@ -103,9 +117,16 @@ export const getDropdownData = values => dispatch => {
 
 // create a new holder. pass in the name and type
 export const createNewHolder = dict => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'JWT ' + localStorage.getItem('access')
+        }
+    }; 
     // const { name, type } = values
     axios
-        .post(`/create-holder/`,dict)
+        .post(`/create-holder/`,dict,config)
         .then(res => {
                 dispatch({
                     type: SET_DROPDOWN_DATA,

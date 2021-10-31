@@ -1,8 +1,18 @@
 # from rest_framework import viewsets, permissions 
-from rest_framework.views import APIView
+from rest_framework.views import APIView  # check some more of these out
 from django.http import HttpResponse
-from .functions import (validID, filter_data_checkbox_list, filter_data_map, getDataList, 
-                        get_extent, getTableData, is_there_more_data, infinite_filter, setParamsCheckboxList, setParamsMapData,
+from rest_framework import status  
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, AllowAny
+import json
+from django.apps import apps
+from rest_framework.parsers import JSONParser
+import time
+import sys
+
+
+from .functions import (is_id_valid, filter_data_checkbox_list, filter_data_map, get_data_list, 
+                        get_extent, get_table_data, is_there_more_data, infinite_filter, set_params_checkbox_list, set_params_map_data,
                         create_instance, copy_and_update_instance, multi_column_create_instance, add_changes_to_change_table,
                         set_instance_and_update, update_title_materials_and_record_changes, get_sites_locations)
 from .serializer import (TitlePopupSerializer, SitePopupSerializer, serialize_and_combine, 
@@ -13,14 +23,11 @@ from .serializer import (TitlePopupSerializer, SitePopupSerializer, serialize_an
                         TenementChangeSerializer, OccurrenceChangeSerializer, HolderChangeSerializer, HolderAndTypeSerializer,
                         OidWriteSerializer, OccNameWriteSerializer, OidWriteTitleSerializer, UserLogOnSerializer, SiteGeomSerializer,
                         SiteMoveSerializer)
-from rest_framework import status  
-from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
+# from django.views.decorators.csrf import csrf_exempt
+# from django.shortcuts import get_object_or_404
 from .models import Holder, Tenement, Occurrence, OccName, TenHolder, Parent
-import json
-from django.apps import apps
-from rest_framework.parsers import JSONParser
-import time
+
+
 
 def time_past(start,end):
     hours, rem = divmod(end-start, 3600)
@@ -33,13 +40,12 @@ class TestIDViewSet(APIView):
     def post(self, request):
         datasetName = request.data['filterDataset']
         key = request.data['id']
-        result = validID(key, datasetName)
+        result = is_id_valid(key, datasetName)
         return HttpResponse(result)
 
 
 class PopupViewSet(APIView):
-    ''' handles the data for the the popups when the user clicks on with a point or polygon 
-    '''
+    ''' handles the data for the the popups when the user clicks on with a point or polygon '''
 
     def get(self, request, pk): 
         dataset = request.GET.get('dataset')
@@ -52,26 +58,30 @@ class PopupViewSet(APIView):
 
 
 class SpatialQueryViewSet(APIView):
-    ''' queries the selected dataset for all the selected fields in the filter and returns the geospatial data to 
-        plot on the map 
-    '''
+    ''' queries the selected dataset for all the selected fields in the filter and returns the geospatial data to plot on the map '''
 
     def post(self, request):
-        params = setParamsMapData(request.data)
+        # func_start = time.time()
+        params = set_params_map_data(request.data)
         datasets = filter_data_map(params)
         datasets['extent'] = get_extent(params,datasets) # gets the extent of the primary dataset for zooming purposes.
         data = serialize_and_combine(params,datasets,request.data['offset'])
+        # print(time_past(func_start,time.time()))
         return Response(data)
 
 
 class FilterViewSet(APIView):
-
+    # permission_classes = [IsAuthenticated]
     def post(self, request): 
-        params = setParamsCheckboxList(request.data)
+        # func_start = time.time()
+        params = set_params_checkbox_list(request.data)
         dataset = filter_data_checkbox_list(params)
-        data = getDataList(params,dataset)
+        data = get_data_list(params,dataset)
+        # print(time_past(func_start,time.time()))
         return Response(data)
 
+# func_start = time.time()
+# print(time_past(func_start,time.time()))
 
 
 class HolderListViewSet(APIView):
@@ -147,7 +157,7 @@ class DataByIndexesViewSet(APIView):
     def post(self, request):
         datagroup = request.data['datagroup']
         try:
-            objs, has_more = getTableData(request.data)
+            objs, has_more = get_table_data(request.data)
             s = TitleTableSerializer(objs,many=True) if datagroup == 'Tenement' else SiteTableSerializer(objs,many=True)
             return Response({'data': s.data, 'has_more': has_more})
         except:
@@ -156,7 +166,7 @@ class DataByIndexesViewSet(APIView):
     # def get(self, request, pk=None):
     #     datagroup = request.GET.get('datagroup')
     #     try:
-    #         objs, has_more = getTableData(request)
+    #         objs, has_more = get_table_data(request)
     #         s = TitleTableSerializer(objs,many=True) if datagroup == 'Tenement' else SiteTableSerializer(objs,many=True)
     #         return Response({'data': s.data, 'has_more': has_more})
     #     except:
@@ -164,10 +174,10 @@ class DataByIndexesViewSet(APIView):
 
 
 class SiteGroupViewSet(APIView):
-    ''' gets the list of data to be displayed in the infinity dropdown components
-    '''
+    ''' gets the list of data to be displayed in the infinity dropdown components '''
 
     def get(self, request, pk=None):
+        # print('#'*30)
         # func_start = time.time()
 
         value = request.GET.get('value')
@@ -187,7 +197,7 @@ class SiteGroupViewSet(APIView):
         #     objs = objs.exclude(ind__icontains='#')
         # objs = objs.filter(**{'%s__icontains'%(label): value}).distinct().order_by(label)
         objs = objs.filter(**{'%s__icontains'%(label): value})
-
+        # func_start = time.time()
         # print(time_past(func_start,time.time()))
 
         if is_serverside:

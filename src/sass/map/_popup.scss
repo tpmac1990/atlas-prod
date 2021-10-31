@@ -1,27 +1,19 @@
 @import '../variables';
 
 
-.leaflet-popup {
-    
-    .leaflet-popup-content-wrapper {
-        background-color: $dark-2;
-        border-radius: 8px;
-
-        .leaflet-popup-content{
-            color: $light-3;
-            width: 300px;
-        }
-    }
-
-    .leaflet-popup-tip-container {
-        .leaflet-popup-tip {
-            background-color: $dark-2;
-        }
-    }
-
-}
-
-.polyPopup {
+// popup holding the title/site data on feature click
+.map-popup-c1 {
+    width: 350px;
+    border-radius: 5px;
+    z-index: 1000;
+    bottom: 25px;
+    position: absolute;
+    background-color: $dark-t1-4;
+    left: 50%;
+    transform: translate(-50%,0);
+    color: $light-2;
+    padding: 10px 15px;
+    box-shadow: 0 0 4px 1px $dark-t1-4;
 
     .popup-header {
         height: 30px;
@@ -43,6 +35,11 @@
                 margin-right: 10px;
             }
         }
+
+        .close-c5 {
+            left: 8px;
+            bottom: 5px;
+        }
     }
 
     hr {
@@ -61,7 +58,7 @@
                     text-align: left;
 
                     &:first-of-type{
-                        width: 30%;
+                        width: 32%;
                     }
 
                     &:last-of-type{
@@ -72,6 +69,79 @@
         }
     }
 }
+
+// // this used to format the in-map feature popup
+// .leaflet-popup {
+    
+//     .leaflet-popup-content-wrapper {
+//         background-color: $dark-2;
+//         border-radius: 8px;
+
+//         .leaflet-popup-content{
+//             color: $light-3;
+//             width: 300px;
+//         }
+//     }
+
+//     .leaflet-popup-tip-container {
+//         .leaflet-popup-tip {
+//             background-color: $dark-2;
+//         }
+//     }
+
+// }
+
+// .polyPopup {
+
+//     .popup-header {
+//         height: 30px;
+
+//         h4 {
+//             margin-bottom: 0; 
+//             float: left;
+//         } 
+    
+//         button {
+//             float: right;
+//             margin-left: 6px;
+//             margin-bottom: 5px;
+//             padding: 2px 3px;
+//             border-radius: 3px;
+//             font-size: 1.6em;
+
+//             &:first-of-type {
+//                 margin-right: 10px;
+//             }
+//         }
+//     }
+
+//     hr {
+//         background-color: $blue-3;
+//         margin: 3px 0 6px 0;
+//     }
+
+//     .popup-body {
+//         table {
+//             width: 100%;
+//             table-layout: fixed;
+
+//             tr {
+//                 td {
+//                     vertical-align: top;
+//                     text-align: left;
+
+//                     &:first-of-type{
+//                         width: 30%;
+//                     }
+
+//                     &:last-of-type{
+//                         white-space: nowrap;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
 
 // .id-tooltip {
 //     background-color: transparent;

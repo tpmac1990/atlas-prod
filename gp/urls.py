@@ -1,10 +1,18 @@
 from django.urls import path, re_path
 from django.views.generic import TemplateView
 from .views import *
-from django.contrib import admin
+# from django.contrib import admin
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
+
+    # re_path(r'^.*', TemplateView.as_view(template_name='index.html')), # this is causing the csrf error
+    re_path(r'^auth/(.*?)', TemplateView.as_view(template_name='index.html')),
+    re_path(r'^activate/(.*?)', TemplateView.as_view(template_name='index.html')),
+    # ^ match beginning of line
+    # . match anything except a new line
+    # * match zero or moter that occur in a line
+
     path('', TemplateView.as_view(template_name="index.html")),
     # path('404/', TemplateView.as_view(template_name="index.html")),
     # path('503/', TemplateView.as_view(template_name="index.html")),
@@ -25,6 +33,12 @@ urlpatterns = [
     path('instruction/demos/', TemplateView.as_view(template_name="index.html")),
     path('instruction/docs/', TemplateView.as_view(template_name="index.html")),
     path('table/', TemplateView.as_view(template_name="index.html")),
+    path('login/', TemplateView.as_view(template_name="index.html")),
+    path('register/', TemplateView.as_view(template_name="index.html")),
+    path('auth/users/', TemplateView.as_view(template_name='index.html')),
+
+    # path('temp/', TemplateView.as_view(template_name='index.html')),
+
     # re_path(r'^table/[^\/]+/$', TemplateView.as_view(template_name="index.html")),
 
     # path('detail/holder/9389', TemplateView.as_view(template_name="index.html")),
@@ -45,6 +59,7 @@ urlpatterns = [
     # r'^.*$' = accepts everything
     
     # re_path(r'detail/[^\/]+$', TemplateView.as_view(template_name="index.html")),
+    # path('poo/', PooView.as_view()),
 
     path('spatial-query/', SpatialQueryViewSet.as_view()),
     path('filter-data/', FilterViewSet.as_view()),

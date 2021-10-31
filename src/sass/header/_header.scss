@@ -7,7 +7,7 @@
     z-index: 5;
     background-color: $dark-3;
     border-bottom: 1px solid $dark-4;
-    box-shadow: 0 1px 5px $dark-4;
+    box-shadow: 0 1px 5px #696969;
     font-size: 0.8em;
 
     .burger {
@@ -89,6 +89,54 @@
         width: 160px;
         left: 50%;
         transform: translate(-50%, 0);
+    }
+
+    .user-ctrl,
+    .user-in {
+        float: right;
+        font-size: 2.6em;
+        color: $dark-7;
+        margin-top: 10px;
+        margin-right: 20px;
+        border: 2px solid $dark-7;
+        border-radius: 50%;
+
+        &:hover {
+            color: $dark-4;
+        }
+    }
+    // icon when user is logged in
+    .user-in {
+        border-color: #6EBD41;
+    }
+
+    
+    // dropdown that allows the user to login, logout, give feedback, etc
+    .user-header-dropdown {
+        position: absolute;
+        height: auto;
+        width: 200px;
+        right: 0;
+        background-color: $dark-3;
+        top: 60px;
+        padding: 15px 0;
+        font-size: 1.1em;
+        list-style-type: none;
+
+        li {
+            a {
+                display: block;
+                padding: 5px 0 5px 30px;
+                color: $light-2;
+                text-decoration: none;
+                width: 100%;
+
+                &:hover {
+                    color: $light-1;
+                    background-color: $dark-7;
+                }
+            }
+        }
     }
 }
 

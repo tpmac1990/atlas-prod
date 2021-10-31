@@ -6,17 +6,17 @@ from gp.models import State, Shore, LocalGovernment, GovernmentRegion, Geologica
 # ##############################################################################################
 
 class StateSerializer(serializers.ModelSerializer):
-    code = serializers.CharField(validators=[])
+    _id = serializers.CharField(validators=[])
 
     class Meta:
         model = State
-        fields = ['code','name']
+        fields = ['_id','name']
 
 
 class ShoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shore
-        fields = ['code','name']
+        fields = ['_id','name']
 
 
 class LocalGovSerializer(serializers.ModelSerializer):
@@ -59,11 +59,11 @@ class TitleHolderSerializer(serializers.ModelSerializer):
         fields = ["_id","percown","name"]
 
 class MaterialSerializer(serializers.ModelSerializer):
-    code = serializers.CharField(validators=[])
+    _id = serializers.CharField(validators=[])
 
     class Meta:
         model = Material
-        fields = ["code","name"]
+        fields = ["_id","name"]
 
 
 class TitleTypeSerializer(serializers.ModelSerializer):
@@ -80,7 +80,8 @@ class TitleTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TenType
-        fields = ["_id","fname","original","act","simple"]
+        fields = ["_id","original","act","simple"]
+        # original was fname
 
 
 class TitleStatusSerializer(serializers.ModelSerializer):
@@ -113,11 +114,11 @@ class SiteBasicsSerializer(serializers.ModelSerializer):
 
 
 class OidTitleSerializer(serializers.ModelSerializer):
-    code = serializers.CharField(validators=[])
+    _id = serializers.CharField(validators=[])
 
     class Meta:
         model = TenOriginalID
-        fields = ["code"]
+        fields = ["_id"]
 
 
 class TitleDetailSerializer(serializers.ModelSerializer):
@@ -175,5 +176,5 @@ class OidWriteTitleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TenOriginalID
-        fields = ["code","user_name"]
+        fields = ["_id","user_name"]
 

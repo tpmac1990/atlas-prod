@@ -26,8 +26,15 @@ export const setCreateSite = () => {
 
 
 export const createSite = latlng => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'JWT ' + localStorage.getItem('access')
+        }
+    }; 
     axios
-        .post('/create-site/',latlng)
+        .post('/create-site/',latlng,config)
         .then(res => {
                 // set the new coordinates in the data to change the location of the point in the map
                 dispatch({
@@ -49,8 +56,15 @@ export const createSite = latlng => dispatch => {
 }
 
 export const moveSite = values => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'JWT ' + localStorage.getItem('access')
+        }
+    }; 
     axios
-        .post('/move-site/',values)
+        .post('/move-site/',values,config)
         .then(res => {
                 dispatch({
                     type: UPDATE_SITE_COORDINATES,

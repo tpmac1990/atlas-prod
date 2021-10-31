@@ -84,8 +84,15 @@ export const resetFilterSelection = () => {
 }
 
 export const getBufferIDCentroid = values => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'JWT ' + localStorage.getItem('access')
+        }
+    }; 
     axios
-    .post("/test_id/", values)
+    .post("/test_id/", values,config)
     .then(res => {
             dispatch({
                 type: SET_ID_CENTROID,
@@ -133,9 +140,18 @@ export const updateActiveFilters = dict => {
 
 // actions to do with the geospatial map data
 export const storeSpatialData = values => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'JWT ' + localStorage.getItem('access')
+        }
+    }; 
     axios
-        .post("/spatial-query/", values)
+        .post("/spatial-query/", values,config)
         .then(res => {
+                // console.log(Date.now())
+                // console.log(JSON.stringify(res.data).length)
                 const { totalCount, priDataset, relDataset, hasMore } = res.data
                 // need reldata count. if reldata and pridata is > 1000 then throw warning. pridataset needs to include offset
                 if ( totalCount == 0 ){

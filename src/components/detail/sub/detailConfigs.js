@@ -7,64 +7,64 @@ export const holder_objs = {
         styles: "detail-sub-info-c1",
         lookup: "subsidiaries",
         header: "Subsidiaries",
-        table_headers: ["Name","% Held","Type","Listed"],
-        table_data: [["name"],["percown"],["typ"],["listed"]]
+        table_headers: ["Name","% Held","Listed"],
+        table_data: [["name"],["percown"],["listed"]]
     },
     OwnersDict: {
         styles: "detail-sub-info-c1",
         lookup: "parent_company",
         header: "Parent Companies",
-        table_headers: ["Name","% Held","Type","Listed"],
-        table_data: [["name"],["percown"],["typ"],["listed"]]
+        table_headers: ["Name","% Held","Listed"],
+        table_data: [["name"],["percown"],["listed"]]
     },
     TickerDict: {
         styles: "detail-sub-info-c1",
         lookup: "listed",
         header: "Listed Locations",
         table_headers: ["Ticker","Exchange Code","Exchange Name"],
-        table_data: [["ticker"],["exchange","code"],["exchange","name"]]
+        table_data: [["ticker"],["exchange","_id"],["exchange","name"]]
     },
     BasicDict: {
         header: "General Info",
         table_data: [
+            // { the holder type has been removed
+            //     th: "Holder/Company Type", 
+            //     td: ["company_type","original"], 
+            //     multi: null, 
+            //     format: null
+            // },
             {
-                th: "Holder/Company Type", 
-                td: ["company_type","original"], 
-                multi: null, 
-                format: null
-            },
-            {
-                th: "Is Listed", 
+                th: "Publicly Listed", 
                 td: ["listed"], 
                 multi: null, 
                 format: 'length_boolean'
             },
             {
-                th: "Number of Owners", 
+                th: "No. Owners", 
                 td: ["parent_company"], 
                 multi: null, 
                 format: 'length'
             },
             {
-                th: "Number of Subsidiaries", 
+                th: "No. of Subsidiaries", 
                 td: ["subsidiaries"], 
                 multi: null, 
                 format: 'length'
             },
             {
-                th: "Number of Titles", 
+                th: "No. of Titles", 
                 td: ["title_count"], 
                 multi: null, 
                 format: 'length'
             },
             {
-                th: "Number of Sites", 
+                th: "No. of Sites", 
                 td: ["site_count"], 
                 multi: null, 
                 format: 'length'
             },
             {
-                th: "States Holding Titles", 
+                th: "States", 
                 td: ["states"], 
                 multi: '', 
                 format: null
@@ -185,7 +185,7 @@ export const site_objs = {
             {
                 th: "ID's", 
                 td: ["oid"], 
-                multi: "code", 
+                multi: "_id", 
                 format: null
             },
         ]
@@ -198,19 +198,19 @@ export const title_objs = {
         header: "Dates",
         table_data: [
             {
-                th: "Lodge Date", 
+                th: "Lodge date", 
                 td: ["lodgedate"], 
                 multi: null, 
                 format: 'date'
             },
             {
-                th: "Start Date", 
+                th: "Start date", 
                 td: ["startdate"], 
                 multi: null, 
                 format: 'date'
             },
             {
-                th: "End Date", 
+                th: "End date", 
                 td: ["enddate"], 
                 multi: null, 
                 format: 'date'
@@ -315,7 +315,7 @@ export const title_objs = {
             {
                 th: "ID's", 
                 td: ["oid"], 
-                multi: "code", 
+                multi: "_id", 
                 format: null
             },
         ]

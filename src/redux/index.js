@@ -16,9 +16,11 @@ export { getInfinityDropdownData, setLoading, setSearch, setState, setSelection,
 export { setEditData, addEditData, removeEditData, addEditDictKey, postSiteUpdates, addEditDataHolder, updateEditCell, getDropdownData, 
         createNewHolder, resetApiOutcome, resetEditData } from './dataEdit/dataEditActions'
 export { getFilterCheckboxData, setCheckBoxListIsLoading, setCheckboxSearch, filterCheckBoxListClientSide, resetCheckBoxListOffset } from './checkBoxList/checkBoxListActions'
-export { getPopupData, setPopupTarget } from './mapPopup/mapPopupActions'
+export { getPopupData, setPopupTarget, setPopupStatus, setPreviousTarget, closeMapPopup } from './mapPopup/mapPopupActions'
 export { saveUserEmail, saveUserFeedback } from './userData/userDataActions'
 export { ActivateConfirmPopup, DeactivateConfirmPopup, isConfirmed, resetConfirmed } from './confirmPopup/confirmPopupActions'
 export { setMarkerLatLngs, createSite, moveSite, resetCreatePntState, triggerPntMove, toggleOffSiteMove, setCreateSite } from './editPoint/editPointActions'
 export { setScreenSize } from './sizeControl/sizeControlActions'
 export { setNewPathname } from './pathChange/pathChangeActions'
+export { signup, verify, login, logout, checkAuthenticated, load_user, reset_password, reset_password_confirm,
+        googleAuthenticate, facebookAuthenticate } from './authenticate/authenticateActions'

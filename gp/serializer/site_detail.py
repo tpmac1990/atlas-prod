@@ -7,19 +7,19 @@ from gp.models import State, TenType, Material, OccStatus, LocalGovernment, Gove
 # ##############################################################################################
 
 class StateSerializer(serializers.ModelSerializer):
-    code = serializers.CharField(validators=[])
+    _id = serializers.CharField(validators=[])
 
     class Meta:
         model = State
-        fields = ['code','name']
+        fields = ['_id','name']
 
 
 class MaterialSerializer(serializers.ModelSerializer):
-    code = serializers.CharField(validators=[])
+    _id = serializers.CharField(validators=[])
 
     class Meta:
         model = Material
-        fields = ["code","name"]
+        fields = ["_id","name"]
 
 
 class SiteTypeSerializer(serializers.ModelSerializer):
@@ -76,19 +76,19 @@ class OccNameSerializer(serializers.ModelSerializer):
 
 
 class SizeSerializer(serializers.ModelSerializer):
-    code = serializers.CharField(validators=[])
+    _id = serializers.CharField(validators=[])
 
     class Meta:
         model = OccSize
-        fields = ["code","name"]
+        fields = ["_id","name"]
 
 
 class OidSerializer(serializers.ModelSerializer):
-    code = serializers.CharField(validators=[])
+    _id = serializers.CharField(validators=[])
 
     class Meta:
         model = OccOriginalID
-        fields = ["code"]
+        fields = ["_id"]
 
 
 
@@ -160,7 +160,7 @@ class OidWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OccOriginalID
-        fields = ["code","user_name"]
+        fields = ["_id","user_name"]
 
 
 class OccNameWriteSerializer(serializers.ModelSerializer):

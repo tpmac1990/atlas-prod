@@ -7,7 +7,7 @@ import { closeAllGroups, storeSpatialData,
     resetFilterSelection, resetFilterGroupState, setFilterValues, 
     triggerElement, toggleFullScreenInactive, 
     resetMapDataOffset, setMapIsLoading, toggleFilterPanel, setPopupMessage, setMapNotLoading, setDataLimit,
-    updateActiveFilters, setMapBounds, toggleBounds } from '../../redux'
+    updateActiveFilters, setMapBounds, toggleBounds, closeMapPopup } from '../../redux'
 
 import { updateFilterList } from './filterLists'
 // import useViewportStyle from '../reusable/hooks/useViewportStyle'
@@ -89,12 +89,12 @@ function Panel () {
         let new_limit
         if (filterDataset === 'Tenement'){
             new_limit = !include 
-                        ? 400 
+                        ? 500
                         : rel_filters.length > 0
                             ? 250
                             : 100
         } else {
-            new_limit = include ? 400 : 500 
+            new_limit = include ? 300 : 400 
         }
         dispatch(setDataLimit(new_limit))
     },[filterDataset,include,rel_filters])
@@ -122,6 +122,8 @@ function Panel () {
                 dispatch(setMapIsLoading())
                 // if the screen is small then hide the filter to reveal the map
                 !is_large && dispatch(toggleFilterPanel())
+                // clear any map popup and highlight marker
+                dispatch(closeMapPopup())
             } else {
                 // dispatch(controlSelectionError())
                 dispatch(setPopupMessage({message: "Select 'Titles' or 'Sites' to begin filtering", type: 'warning', style: 'warning-map'}))
@@ -194,6 +196,8 @@ function Panel () {
         dispatch(setMapBounds(init_bounds))
         // update bounds unless they have been set to be kept
         dispatch(toggleBounds(true))
+        // clear any map popup and highlight marker
+        dispatch(closeMapPopup())
         // clear the drawn rectangle if it exists
         try {
             editHandlers.edit._modes.remove.handler.removeAllLayers()

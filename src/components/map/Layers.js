@@ -52,7 +52,7 @@ const Layers = () => {
     return (
         <Fragment>
             <LayersControl position="topright">
-                <BaseLayer checked name="Open Street Map">
+                <BaseLayer name="Open Street Map">
                     <TileLayer
                     attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -82,7 +82,7 @@ const Layers = () => {
                     url="https://mt0.google.com/vt/lyrs=p&hl=en&x={x}&y={y}&z={z}"
                     />
                 </BaseLayer>
-                <BaseLayer name="Google Hybrid Map">
+                <BaseLayer checked name="Google Hybrid Map">
                     <TileLayer
                     attribution='Copyright Google Maps'
                     url="https://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}"

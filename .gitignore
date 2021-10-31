@@ -1,5 +1,8 @@
 node_modules
 
+# IIS certificate for localhost
+.pem
+
 # secret information
 secrets.json
 

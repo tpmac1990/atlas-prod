@@ -17,7 +17,7 @@ class TitlePopupSerializer(serializers.ModelSerializer):
     oid = serializers.SerializerMethodField()
 
     def get_oid(self,obj):
-        return slice_long_string('; '.join([x.code for x in obj.oid.all()]))
+        return slice_long_string('; '.join([x._id for x in obj.oid.all()]))
 
     def get_holder(self,obj):
         return slice_long_string('; '.join([x.name for x in obj.holder.all()]))
@@ -26,7 +26,8 @@ class TitlePopupSerializer(serializers.ModelSerializer):
         return slice_long_string('; '.join([x.name for x in obj.majmat.all()]))
 
     def get_typ(self,obj):
-        return slice_long_string(obj.typ.fname)
+        return slice_long_string(obj.typ.original)
+        # original was fname
 
     def get_status(self,obj):
         return slice_long_string(obj.status.original)
@@ -48,7 +49,7 @@ class SitePopupSerializer(serializers.ModelSerializer):
     oid = serializers.SerializerMethodField()
 
     def get_oid(self,obj):
-        return slice_long_string('; '.join([x.code for x in obj.oid.all()]))
+        return slice_long_string('; '.join([x._id for x in obj.oid.all()]))
 
     def get_typdetail(self,obj):
         return slice_long_string('; '.join([x.original for x in obj.typ.all()]))

@@ -61,6 +61,8 @@ const TitleEdit = ({ match }) => {
         }
     },[title_result])
 
+    console.log(typeSelect)
+
     if ( value === null ){
         return null
     } else {

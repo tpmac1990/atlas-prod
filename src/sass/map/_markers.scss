@@ -6,17 +6,22 @@
     background-color: black;
 }
 
-.redmarker {
-    height: 10px;
-    width: 10px;
+// green is general site marker colour, red is the target site marker colour
+.redmarker,
+.greenmarker {
     background-color: red;
     border-radius: 50%;
-    border: 1px solid white;
+    border: 1.5px solid white;
 }
 
+.greenmarker {
+    background-color: #0EA800;
+}
+
+// actually blue, appears when moving or creating site
 .yellowmarker {
-    height: 12px;
-    width: 12px;
+    height: 14px;
+    width: 14px;
     border-radius: 50%;
     background-color: blue;
     border: 2px solid white;

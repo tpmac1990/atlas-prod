@@ -54,8 +54,15 @@ export const resetPopupTable = () => {
 //                                         `globalfilter=${dict.globalfilter}`)
 
 export const setData = dict => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'JWT ' + localStorage.getItem('access')
+        }
+    }; 
     axios
-        .post('/data-by-indexes/', dict)
+        .post('/data-by-indexes/', dict, config)
         .then(res => {
                 const { data, has_more } = res.data
                 dispatch({

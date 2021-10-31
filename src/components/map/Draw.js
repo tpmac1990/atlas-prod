@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FeatureGroup, Rectangle, Circle } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { divIcon } from 'leaflet'
-import { storeEditHandlers, setRectangleLatLngs, setMarkerLatLngs, toggleFilterPanel } from '../../redux'
+import { storeEditHandlers, setRectangleLatLngs, setMarkerLatLngs, toggleFilterPanel, toggleMapDrawButton } from '../../redux'
 import 'leaflet-draw';
 
 const Draw = () => {
@@ -12,6 +12,8 @@ const Draw = () => {
     const editRef = useRef(null)
 
     const dispatch = useDispatch()
+
+    const { is_large } = useSelector(state => state.sizeControl)
 
     const siteIcon = divIcon({
         className: '',
@@ -26,7 +28,9 @@ const Draw = () => {
             dispatch(setMarkerLatLngs(e.layer._latlng))
         } else {
             dispatch(setRectangleLatLngs(e.layer._bounds))
-            dispatch(toggleFilterPanel())
+            !is_large && dispatch(toggleFilterPanel())
+            // hide the draw button once the rectangle has been drawn on mobile
+            !is_large && dispatch(toggleMapDrawButton(false))
         }
 
         const drawnItems = editableFG.leafletElement._layers;

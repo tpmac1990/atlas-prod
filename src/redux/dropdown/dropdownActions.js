@@ -7,9 +7,16 @@ import axios from 'axios';
 // SET_SITE_GROUP_DATA: can work for any dataset. make more generic
 
 export const getInfinityDropdownData = (dict, endpoint) => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'JWT ' + localStorage.getItem('access')
+        }
+    }; 
     const { name,model,key,label,search,offset,limit,clientmax } = dict
     axios
-        .get(`/${endpoint}/?value=${search}&model=${model}&key=${key}&label=${label}&offset=${offset}&limit=${limit}&clientmax=${clientmax}`)
+        .get(`/${endpoint}/?value=${search}&model=${model}&key=${key}&label=${label}&offset=${offset}&limit=${limit}&clientmax=${clientmax}`,config)
         .then(res => {
                 dispatch({
                     type: SET_SITE_GROUP_DATA,

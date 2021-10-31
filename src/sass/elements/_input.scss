@@ -68,6 +68,31 @@
     }
 }
 
+.input-c5 {
+    position: relative;
+    margin-bottom: 10px;
+    
+    input {
+        padding-left: 50px;
+        border: 0;
+        border-bottom: 1px solid $light-3;
+
+        &:focus {
+            border-color: $blue-11;
+            outline: 0;
+        }
+    }
+
+    span {
+        position: absolute;
+        color: $light-6;
+    }
+
+    .active-user-icon {
+        color: $blue-11;
+    }
+}
+
 
 
 

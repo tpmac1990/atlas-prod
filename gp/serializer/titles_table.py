@@ -12,7 +12,8 @@ class TitleTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TenType
-        fields = ["fname","simple"]
+        fields = ["original","simple"]
+        # original was fname
 
 
 class TitleStatusSerializer(serializers.ModelSerializer):
@@ -41,7 +42,7 @@ class TitleTableSerializer(serializers.ModelSerializer):
     oid = serializers.SerializerMethodField()
 
     def get_oid(self,obj):
-        return '; '.join([x.code for x in obj.oid.all()])
+        return '; '.join([x._id for x in obj.oid.all()])
 
     def get_state(self,obj):
         return obj.state.name

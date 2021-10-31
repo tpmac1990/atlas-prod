@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useRef, useLayoutEffect } from 'react'
 import { Map, useMapEvents } from 'react-leaflet'
 import { useDispatch, useSelector } from 'react-redux'
 import { setMap, toggleFilterPanel, toggleMapDrawButton, setMapBounds, toggleBounds, preventBoundsUpdate, 
@@ -10,6 +10,7 @@ import Draw from './Draw'
 import AddSite from './addsite'
 import MapDataAdd from './MapDataAdd'
 import MobileDraw from './MobileDraw'
+import FeaturePopup from './FeaturePopup'
 
 
 function MapContent() {
@@ -128,12 +129,13 @@ function MapContent() {
 
 
   const MapToggle = () => {
+    // double_arrow
     return (
       filteropen 
       ? null
       : (
         <div className="open-filter-toggle" onClick={filterToggleHandler}>
-          <span className="material-icons">double_arrow</span>
+          <span className="material-icons">tune</span>
         </div>
       )
     )
@@ -152,6 +154,7 @@ function MapContent() {
             <AddSite />
             <MobileDraw />
             <MapToggle />
+            <FeaturePopup />
           </Map>  
         </div>
       </div>

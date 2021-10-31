@@ -4,8 +4,15 @@ import axios from 'axios';
 
 
 export const getHolderData = id => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'JWT ' + localStorage.getItem('access')
+        }
+    }; 
     axios
-        .get(`/detail-holder/${id}/`)
+        .get(`/detail-holder/${id}/`,config)
         .then(res => {
                 dispatch({
                     type: SET_HOLDER_DATA,
@@ -38,8 +45,15 @@ export const getHolderData = id => dispatch => {
 // }
 
 export const getSiteData = id => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'JWT ' + localStorage.getItem('access')
+        }
+    }; 
     axios
-        .get(`/detail-site/${id}/`)
+        .get(`/detail-site/${id}/`,config)
         .then(res => {
                 dispatch({
                     type: SET_SITE_DATA,
@@ -56,9 +70,17 @@ export const getSiteData = id => dispatch => {
 
 
 export const getTitleData = id => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'JWT ' + localStorage.getItem('access')
+        }
+    }; 
     axios
-        .get(`/detail-title/${id}/`)
+        .get(`/detail-title/${id}/`,config)
         .then(res => {
+                // console.log(res)
                 dispatch({
                     type: SET_TITLE_DATA,
                     payload: res.data

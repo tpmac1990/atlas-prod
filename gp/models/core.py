@@ -4,13 +4,13 @@ from django.contrib.gis.db import models
 # Tenement & Occurrence
 
 class State(models.Model):
-    code = models.CharField(max_length=5, primary_key=True)
+    _id = models.CharField(max_length=5, primary_key=True)
     name = models.CharField(max_length=40, blank=False, null=False)
 
 # ##################
 
 class Shore(models.Model):
-    code = models.CharField(max_length=3, primary_key=True)
+    _id = models.CharField(max_length=3, primary_key=True)
     name = models.CharField(max_length=30, blank=False, null=False)
 
 # ##################
@@ -21,7 +21,8 @@ class MaterialCategory(models.Model):
 
 # material_category m2m { _id, material_code, category_id}
 class Material(models.Model):
-    code = models.CharField(max_length=6, primary_key=True)
+    # code = models.CharField(max_length=6, primary_key=True)
+    _id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50, blank=False, null=False)
     category = models.ManyToManyField(MaterialCategory, related_name="category_material", blank=True)
 
@@ -94,7 +95,7 @@ class OccName(models.Model):
 # ##################
 
 class OccOriginalID(models.Model):
-    code = models.CharField(primary_key=True, max_length=20, blank=False, null=False)
+    _id = models.CharField(primary_key=True, max_length=20, blank=False, null=False)
     user_name = models.CharField(max_length=20, blank=False, null=False)
     valid_instance = models.BooleanField(default=False)
     date_created = models.DateField(auto_now=False, auto_now_add=True)
@@ -102,7 +103,7 @@ class OccOriginalID(models.Model):
 # ##################
 
 class OccSize(models.Model):
-    code = models.CharField(primary_key=True, max_length=3, blank=False, null=False)
+    _id = models.CharField(primary_key=True, max_length=3, blank=False, null=False)
     name = models.CharField(max_length=20, blank=False, null=False)
 
 
@@ -112,7 +113,8 @@ class OccSize(models.Model):
 # occurrence_oid m2m { _id, occid, oid_id}
 # occurrence_name m2m { _id, occid, name_id}
 class Occurrence(models.Model):
-    ind = models.CharField(max_length=14, blank=False, null=False, primary_key=True)
+    # ind = models.CharField(max_length=14, blank=False, null=False, primary_key=True)
+    ind = models.IntegerField(primary_key=True)
     status = models.ForeignKey(OccStatus, related_name="status_occurrence", on_delete=models.SET_NULL, blank=True, null=True)
     size = models.ForeignKey(OccSize, related_name="size_occurrence", on_delete=models.SET_NULL, blank=True, null=True, unique=False)
     state = models.ForeignKey(State, related_name="state_occurrence", on_delete=models.SET_NULL, blank=True, null=True)
@@ -132,15 +134,20 @@ class Occurrence(models.Model):
     date_modified = models.DateField(auto_now=True, auto_now_add=False)
     date_created = models.DateField(auto_now=False, auto_now_add=True)
 
-    def __str__(self):
-        return self.ind
+    # def __str__(self):
+    #     return self.ind
+
+
+# class OccGeom(models.Model):
+#     ind = models.OneToOneField(Occurrence,related_name='ind_geom',on_delete=models.CASCADE,primary_key=True)
+#     geom = models.PointField(srid=4202)
 
 
 # ###############################################################################
 # Tenement Only
 
 class TenAct(models.Model):
-    code = models.CharField(max_length=20, primary_key=True)
+    _id = models.CharField(max_length=20, primary_key=True)
     name = models.CharField(max_length=70, blank=False, null=False)
     state = models.CharField(max_length=10, blank=False, null=False)
     link = models.URLField(blank=True, null=True)
@@ -152,13 +159,13 @@ class TenTypeSimp(models.Model):
 
 class TenType(models.Model):
     _id = models.IntegerField(primary_key=True)
-    fname = models.CharField(max_length=70, blank=False, null=False)
-    original = models.CharField(max_length=50, blank=False, null=False)
+    original = models.CharField(max_length=70, blank=False, null=False) # this was fname
+    # original = models.CharField(max_length=50, blank=False, null=False)
     act = models.ForeignKey(TenAct, on_delete=models.SET_NULL, related_name="act_tentype", blank=True, null=True)
     simple = models.ForeignKey(TenTypeSimp, on_delete=models.SET_NULL, related_name="simple_tentype", blank=True, null=True)
 
     def natural_key(self):
-        return (self.fname)
+        return (self.original)
 
 
 # ##################
@@ -178,7 +185,7 @@ class TenStatus(models.Model):
 # ##################
 
 class TenOriginalID(models.Model):
-    code = models.CharField(primary_key=True, max_length=22, blank=False, null=False)
+    _id = models.CharField(primary_key=True, max_length=22, blank=False, null=False)
     user_name = models.CharField(max_length=20, blank=False, null=False)
     valid_instance = models.BooleanField(default=False)
     date_created = models.DateField(auto_now=False, auto_now_add=True)
@@ -186,7 +193,7 @@ class TenOriginalID(models.Model):
 # ##################
 
 class Exchange(models.Model):
-    code = models.CharField(primary_key=True, max_length=5)
+    _id = models.CharField(primary_key=True, max_length=5)
     name = models.CharField(max_length=50, blank=False, null=False)
     city = models.CharField(max_length=50, blank=False, null=False)
     country = models.CharField(max_length=50, blank=False, null=False)
@@ -199,17 +206,17 @@ class Listed(models.Model):
     valid_instance = models.BooleanField(default=False)
     date_created = models.DateField(auto_now=False, auto_now_add=True)
 
-class HolderType(models.Model):
-    _id = models.IntegerField(primary_key=True)
-    original = models.CharField(max_length=30, blank=False, null=False)
-    code = models.CharField(max_length=10, blank=True, null=True)
+# class HolderType(models.Model):
+#     _id = models.IntegerField(primary_key=True)
+#     original = models.CharField(max_length=30, blank=False, null=False)
+#     code = models.CharField(max_length=10, blank=True, null=True)
 
 
 # holder_listed m2m { _id, holder_id, listed_id } not sure about this!
 class Holder(models.Model):
     _id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=150, blank=False, null=False)
-    typ = models.ForeignKey(HolderType, on_delete=models.SET_NULL, related_name="typ_holder", blank=True, null=True)
+    # typ = models.ForeignKey(HolderType, on_delete=models.SET_NULL, related_name="typ_holder", blank=True, null=True)
     listed = models.ManyToManyField(Listed, related_name="listed_holder", blank=True)
     children = models.ManyToManyField('self', related_name="children_holder", through='Parent', blank=True, symmetrical=False)
     user_name = models.CharField(max_length=20, blank=False, null=False)
@@ -235,7 +242,8 @@ class Parent(models.Model):
 # tenement_govregion m2m { _id, tenid, govregion_id}
 # tenement_geoprovince m2m { _id, tenid, geoprovince_id}
 class Tenement(models.Model):
-    ind = models.CharField(max_length=16, primary_key=True)
+    # ind = models.CharField(max_length=16, primary_key=True)
+    ind = models.IntegerField(primary_key=True)
     typ = models.ForeignKey(TenType, on_delete=models.SET_NULL, related_name="typ_tenement", blank=True, null=True)
     status = models.ForeignKey(TenStatus, on_delete=models.SET_NULL, related_name="status_tenement", blank=True, null=True)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, related_name="state_tenement", blank=True, null=True)
@@ -256,8 +264,13 @@ class Tenement(models.Model):
     user_edit = models.BooleanField(default=False) 
     date_modified = models.DateField(auto_now=True, auto_now_add=False)
 
-    def __str__(self):
-        return self.ind
+    # def __str__(self):
+    #     return str(self.ind)
+
+
+# class TenGeom(models.Model):
+#     ind = models.OneToOneField(Tenement,related_name='ind_geom',on_delete=models.CASCADE,primary_key=True)
+#     geom = models.MultiPolygonField(srid=4202)
 
 # ################## 
 

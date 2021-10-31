@@ -28,7 +28,7 @@ class SiteTableSerializer(serializers.ModelSerializer):
     oid = serializers.SerializerMethodField()
 
     def get_oid(self,obj):
-        return '; '.join([x.code for x in obj.oid.all()])
+        return '; '.join([x._id for x in obj.oid.all()])
 
     def get_typdetail(self,obj):
         return '; '.join([x.original for x in obj.typ.all()])

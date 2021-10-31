@@ -1,70 +1,70 @@
 
 
-@media only screen and (max-width: 850px) {
+// @media only screen and (max-width: 850px) {
 
-    #contact-groups {
-        margin: 0 15px;
+//     #contact-groups {
+//         margin: 0 15px;
 
-        h6 {
-            margin-left: 20px;
-        }
+//         h6 {
+//             margin-left: 20px;
+//         }
 
-        .basic-form-area {
-            .email-drop-area,
-            .feedback-area {
-                width: calc(100% - 10px);
-            }
+//         .basic-form-area {
+//             .email-drop-area,
+//             .feedback-area {
+//                 width: calc(100% - 10px);
+//             }
 
-            // required to keep the email address in the box. this could be cleaner
-            .contact-info-area {
-                width: calc(100% - 10px);
-                padding: 30px 0;
+//             // required to keep the email address in the box. this could be cleaner
+//             .contact-info-area {
+//                 width: calc(100% - 10px);
+//                 padding: 30px 0;
 
-                h1, h2 {
-                    padding: 0 40px;
-                }
-                hr {
-                    margin-left: 20px;
-                    margin-right: 20px;
-                }
-            }
-        }
-    }
-
-}
-
-
-@media only screen and (max-height: 650px) {
-
-    .basic-form-area {
-        .email-drop-area,
-        .feedback-area,
-        .contact-info-area {
-            transform: translate(-50%,0);
-        }
-    }
-
-}
-
-
-// #contact-groups {
-//     .basic-form-area {
-//         .contact-info-area {
-//             padding: 30px 40px;
+//                 h1, h2 {
+//                     padding: 0 40px;
+//                 }
+//                 hr {
+//                     margin-left: 20px;
+//                     margin-right: 20px;
+//                 }
+//             }
 //         }
 //     }
+
 // }
 
 
-
-// @media only screen and (max-width: 850px) and (max-height: 450px) {
+// @media only screen and (max-height: 650px) {
 
 //     .basic-form-area {
 //         .email-drop-area,
 //         .feedback-area,
 //         .contact-info-area {
-//             width: calc(100% - 20%);
+//             transform: translate(-50%,0);
 //         }
 //     }
 
 // }
+
+
+// // #contact-groups {
+// //     .basic-form-area {
+// //         .contact-info-area {
+// //             padding: 30px 40px;
+// //         }
+// //     }
+// // }
+
+
+
+// // @media only screen and (max-width: 850px) and (max-height: 450px) {
+
+// //     .basic-form-area {
+// //         .email-drop-area,
+// //         .feedback-area,
+// //         .contact-info-area {
+// //             width: calc(100% - 20%);
+// //         }
+// //     }
+
+// // }

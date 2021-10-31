@@ -25,7 +25,7 @@ function DrawSubArea (props) {
             return;
         }
         if (!is_large && !filteropen){
-            // re-open the filter once the rectangle has been drawn
+            // re-open the filter once the rectangle has been drawn. Also handled in map/Draw.js
             dispatch(toggleFilterPanel())
             // hide the Map draw button once the rectangle has been drawn
             dispatch(toggleMapDrawButton(false))
