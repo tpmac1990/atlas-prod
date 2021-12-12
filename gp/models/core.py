@@ -215,7 +215,7 @@ class Listed(models.Model):
 # holder_listed m2m { _id, holder_id, listed_id } not sure about this!
 class Holder(models.Model):
     _id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=150, blank=False, null=False)
+    name = models.CharField(max_length=150, blank=False, null=False, unique=True)
     # typ = models.ForeignKey(HolderType, on_delete=models.SET_NULL, related_name="typ_holder", blank=True, null=True)
     listed = models.ManyToManyField(Listed, related_name="listed_holder", blank=True)
     children = models.ManyToManyField('self', related_name="children_holder", through='Parent', blank=True, symmetrical=False)
