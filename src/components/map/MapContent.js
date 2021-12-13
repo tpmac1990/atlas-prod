@@ -7,7 +7,7 @@ import { CoordinatesControl } from 'react-leaflet-coordinates'
 import Layers from './Layers'
 import Panel from '../filter/Panel'
 import Draw from './Draw'
-import AddSite from './addsite'
+import AddSite from './AddSite'
 import MapDataAdd from './MapDataAdd'
 import MobileDraw from './MobileDraw'
 import FeaturePopup from './FeaturePopup'
@@ -150,9 +150,11 @@ function MapContent() {
             <Layers center={center}/>
             <Draw />
             <CoordinatesControl position="bottomleft" />
-            <MapDataAdd />
-            <AddSite />
-            <MobileDraw />
+            <div id='map-btns'>
+              <MapDataAdd />
+              <AddSite />
+              <MobileDraw />
+            </div>
             <MapToggle />
             <FeaturePopup />
           </Map>  

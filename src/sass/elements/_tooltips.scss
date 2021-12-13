@@ -29,30 +29,18 @@
 }
 
 
-// add data
+// create site map button. hides arrow and places tooltip adjacent rather than below
+.create-site-tooltip,
 .add-data-tooltip {
-    top: 50px;
-    width: 200px !important;
-
-    div {
-        &:first-of-type{
-            margin-left: 15px;
-        }
-    }
-}
-
-// create site
-.create-site-tooltip {
-    top: 60px;
     width: 110px;
-    position: relative;
-    float: right;
-    right: 20px;
-
+    position: absolute;
+    right: 80px;
+    display: inline-block;
+    margin-top: 12px;
 
     div {
         &:first-of-type{
-            right: 15px;
+            display: none;
         }
     }
 }

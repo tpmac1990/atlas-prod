@@ -1,29 +1,104 @@
 @import '../variables';
 
+// hide map zoom control
+div.leaflet-control-zoom {
+    display: none;
+}
 
-.add-data-area {
-    z-index: 400;
+// layers map button
+.leaflet-control-layers:nth-child(1) {
+    background-color: $dark-3 !important;
+    border-radius: 50% !important;
+    border: 1px solid $dark-3;
+    width: 55px;
+    height: 55px;
+    top: 60px;
     position: relative;
-    left: 55px;
-    margin-top: 10px;
-    height: 48px;
-    width: 48px;
-    float: left;
+    box-shadow: 0px 0px 3px 2px $dark-1;
+
+    &:hover {
+        background-color: $dark-3 !important;
+        border-radius: 5px !important;
+        border: none !important;
+        box-shadow: 0px 0px 3px 2px $dark-2;
+        width: auto;
+        height: auto;
+        padding: 5px 20px 10px 20px;
+    }
+
+    a {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+}
+
+// layers options popup
+section.leaflet-control-layers-list {
+    width: 200px;
+    text-align: center;
+
+    label {
+        font-size: 1.3em;
+        padding: 9px 0;
+        margin: 0;
+        border-bottom: 1px solid $dark-4;
+        color: $light-3;
+
+        input[type="radio"] {
+            position: fixed;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        &:hover {
+            color: $light-1;
+            border-color: $blue-4;
+        }
+    }
+
+    // hides the sites/titles checkboxes
+    .leaflet-control-layers-overlays,
+    .leaflet-control-layers-separator {
+        display: none;
+    }
+}
+
+// add data, add site, toggle draw buttons on the map
+#map-btns {
+    position: relative;
+    z-index: 400;
+    float: right;
+    top: 126px;
+    padding-right: 10px;
 
     div {
-        height: 100%;
-        width: 100%;
-        display: inline-block;
-        position: relative;
 
         button {
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            color: $light-4;
+            background-color: $dark-3;
+            border-radius: 50%;
+            border: 1px solid $dark-3;
+            width: 55px;
+            height: 55px;
+            position: relative;
+            box-shadow: 0px 0px 3px 2px $dark-1;
+            margin-top: 12px;
+            color: $light-3;
 
-            &:hover {
-                color: $light-6;
+            span {
+                font-size: 2.4em;
+                top: 2px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+
+            &:hover,
+            &:active {
+                box-shadow: 0px 0px 3px 2px $light-3;
+                color: $light-1;
             }
         }
     }
@@ -31,44 +106,84 @@
 
 
 
-// styles the add/move site map button
-#create-site,
-#mobile-draw {
 
-    #create-site-btn,
-    #mobile-draw-btn {
-        height: 48px;
-        width: 48px;
-        z-index: 400;
-        position: relative;
-        float: right;
-        right: 70px;
-        top: 10px;
-        color: $light-4;
-        border-radius: 5px;
+
+// .add-data-area {
+//     // z-index: 400;
+//     position: relative;
+//     left: 55px;
+//     margin-top: 10px;
+//     height: 48px;
+//     width: 48px;
+//     float: left;
+
+//     div {
+//         height: 100%;
+//         width: 100%;
+//         display: inline-block;
+//         position: relative;
+
+//         button {
+//             height: 100%;
+//             width: 100%;
+//             position: absolute;
+//             color: $light-4;
+
+//             &:hover {
+//                 color: $light-6;
+//             }
+//         }
+//     }
+// }
+
+
+
+// // styles the add/move site map button
+// #create-site,
+// #mobile-draw {
+
+//     #create-site-btn,
+//     #mobile-draw-btn {
+//         height: 48px;
+//         width: 48px;
+//         z-index: 400;
+//         position: relative;
+//         float: right;
+//         right: 70px;
+//         top: 10px;
+//         color: $light-4;
+//         border-radius: 5px;
     
-        &:hover {
-            color: $light-6;
-        }
-    }
-}
+//         &:hover {
+//             color: $light-6;
+//         }
+//     }
+// }
 
-#mobile-draw {
-    #mobile-draw-btn {
-        float: none;
-        right: 38px;
-        top: 82px;
-    }
-}
+// #mobile-draw {
+//     #mobile-draw-btn {
+//         float: none;
+//         right: 38px;
+//         top: 82px;
+//     }
+// }
 
 
-.map-btn-icons {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    font-size: 2.6em;
-}
+// .map-btn-icons {
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%,-50%);
+//     font-size: 2.6em;
+// }
+
+
+
+
+
+
+
+
 
 
 // styles the tooltips of the map buttons.
