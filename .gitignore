@@ -3,6 +3,9 @@ node_modules
 # IIS certificate for localhost
 .pem
 
+# webpack static build files
+gp/static/
+
 # secret information
 secrets.json
 
