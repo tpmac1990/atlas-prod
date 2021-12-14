@@ -11,6 +11,7 @@ import AddSite from './AddSite'
 import MapDataAdd from './MapDataAdd'
 import MobileDraw from './MobileDraw'
 import FeaturePopup from './FeaturePopup'
+import FeatureCount from './FeatureCount'
 
 
 function MapContent() {
@@ -157,6 +158,7 @@ function MapContent() {
             </div>
             <MapToggle />
             <FeaturePopup />
+            <FeatureCount />
           </Map>  
         </div>
       </div>

@@ -38,6 +38,18 @@
             height: 100%;
             width: 100%;
             z-index: 1;
+
+            // presents the number of features displayed of the total number of features
+            #feature-count {
+                z-index: 400;
+                background-color: $dark-t1-3;
+                position: relative;
+                height: 23px;
+                width: 200px;
+                padding: 3px 25px;
+                color: $light-3;
+                border-bottom-right-radius: 4px;
+            }
         }
 
         .open-filter-toggle {

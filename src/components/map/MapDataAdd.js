@@ -46,11 +46,12 @@ const ButtonWithToolTip = () => {
             <button className='btn-c6' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={ClickHandler}>
                 <span className="material-icons map-btn-icons">add_circle</span>
             </button>
-            { show ? <ToolTip text={`Showing ${offset} of ${total_count}. Click to add another ${limit}.`} style='add-data-tooltip' /> : null }
+            { show ? <ToolTip text='Display more data' style='add-data-tooltip' /> : null }
         </div>
     )
 }
 
+// { show ? <ToolTip text={`Showing ${offset} of ${total_count}. Click to add another ${limit}.`} style='add-data-tooltip' /> : null }
 
 const MapDataAdd = () => {
 

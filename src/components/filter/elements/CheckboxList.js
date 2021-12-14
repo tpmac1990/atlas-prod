@@ -92,7 +92,7 @@ const CheckboxList = props => {
     return (
         dataRows
         ? (<div className={`${areaStyle} scrollbar-c1`} onScroll={handleScroll}>
-            <input className='input-c1 checkbox-filter' type='text' onChange={SearchHandler} value={search} placeholder='Filter' />
+            <input className='input-c1 checkbox-filter' type='text' onChange={SearchHandler} value={search} placeholder='Search' />
             {loaded 
             ? dataRows.map(row => {
                     return <FilterCheckbox key={row[0]} groupName={name} row={row}/>
