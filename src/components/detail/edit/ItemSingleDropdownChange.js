@@ -25,8 +25,6 @@ const ValidItemSingleDropdownChange = props => {
 
     const { data, values, dropdown_dict, header, datagroup } = props
 
-    console.log(data)
-
     const [ addVisible, setAddVisible ] = useState(false)
 
     const { name } = dropdown_dict

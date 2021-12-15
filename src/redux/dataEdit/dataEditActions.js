@@ -115,28 +115,28 @@ export const getDropdownData = values => dispatch => {
 }
 
 
-// create a new holder. pass in the name and type
-export const createNewHolder = dict => dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'JWT ' + localStorage.getItem('access')
-        }
-    }; 
-    // const { name, type } = values
-    axios
-        .post(`/create-holder/`,dict,config)
-        .then(res => {
-                dispatch({
-                    type: SET_DROPDOWN_DATA,
-                    payload: {data: res.data, model: model}
-                });
-            })
-        .catch(err => {
-            console.log(err)
-                // dispatch({
-                //     type: DETAIL_INCORRECT_COUNT,
-                // });
-            });
-}
+// // create a new holder. pass in the name and type
+// export const createNewHolder = dict => dispatch => {
+//     const config = {
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//             'Authorization': 'JWT ' + localStorage.getItem('access')
+//         }
+//     }; 
+//     // const { name, type } = values
+//     axios
+//         .post(`/create-holder/`,dict,config)
+//         .then(res => {
+//                 dispatch({
+//                     type: SET_DROPDOWN_DATA,
+//                     payload: {data: res.data, model: model}
+//                 });
+//             })
+//         .catch(err => {
+//             console.log(err)
+//                 // dispatch({
+//                 //     type: DETAIL_INCORRECT_COUNT,
+//                 // });
+//             });
+// }

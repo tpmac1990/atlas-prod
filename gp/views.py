@@ -20,7 +20,7 @@ from .serializer import (TitlePopupSerializer, SitePopupSerializer, serialize_an
                         TitleDetailSerializer, SiteDetailSerializer, OccNameSerializer, SiteWriteSerializer, OidSerializer,
                         OccurrenceChangeSerializer, TitleTableSerializer, SiteTableSerializer,
                         OidTitleSerializer, TitleUpdateSerializer, TenHolderWriteSerializer, ParentWriteSerializer, ChildWriteSerializer,
-                        TenementChangeSerializer, OccurrenceChangeSerializer, HolderChangeSerializer, HolderAndTypeSerializer,
+                        TenementChangeSerializer, OccurrenceChangeSerializer, HolderChangeSerializer, HolderWriteSerializer,
                         OidWriteSerializer, OccNameWriteSerializer, OidWriteTitleSerializer, UserLogOnSerializer, SiteGeomSerializer,
                         SiteMoveSerializer)
 # from django.views.decorators.csrf import csrf_exempt
@@ -254,19 +254,19 @@ class SiteGroupViewSet(APIView):
 #         return Response(result)
 
 
-class CreateHolderViewSet(APIView):
-    ''' create a new Holder instance. This is called from the Holder-detail component '''
+# class CreateHolderViewSet(APIView):
+#     ''' create a new Holder instance. This is called from the Holder-detail component '''
 
-    def post(self, request, pk=None):
-        request.data['_id'] = Holder.objects.latest('_id')._id + 1
-        request.data['user_name'] = 'user'
-        s = HolderAndTypeSerializer(data=request.data)
-        if s.is_valid():
-            new_entry = s.save()
-        else:
-            print(s.errors)
+#     def post(self, request, pk=None):
+#         request.data['_id'] = Holder.objects.latest('_id')._id + 1
+#         request.data['user_name'] = 'user'
+#         s = HolderAndTypeSerializer(data=request.data)
+#         if s.is_valid():
+#             new_entry = s.save()
+#         else:
+#             print(s.errors)
 
-        return Response('Is done')
+#         return Response('Is done')
 
 
 class EditSiteViewSet(APIView):
@@ -320,7 +320,7 @@ class EditHolderViewSet(APIView):
     def post(self, request, pk):
         data = request.data
         # creates necessary model instances
-        arr = [{ 'field': 'listed_simple', 'serializer': ListedHolderSerializer }]
+        arr = [{ 'field': 'listed_simple', 'serializer': ListedHolderSerializer },{ 'field': 'parent_company', 'serializer': HolderWriteSerializer },{ 'field': 'subsidiaries', 'serializer': HolderWriteSerializer }]
         data = create_instance(arr=arr, data=data)
         # set the listed tickers and update necessary fields on user change
         holder = Holder.objects.get(pk=pk)
@@ -332,7 +332,7 @@ class EditHolderViewSet(APIView):
         # data['add']['listed_simple'] = data['set']['listed_simple'] # could be improved. Required to apply the 'add' row to the change table
         field_dic = {'parent_company':'parentval', 'subsidiaries':'childval', 'listed_simple':'listedval'}
         add_changes_to_change_table(pk=pk,data=data,field_dic=field_dic,serializer=HolderChangeSerializer)
-
+    
         return Response(holder.name)
         # return Response('Saved Successfully as ')
 

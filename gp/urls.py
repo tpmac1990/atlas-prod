@@ -85,8 +85,8 @@ urlpatterns = [
     path('edit-title/<str:pk>/',EditTitleViewSet.as_view()),
     path('edit-holder/<str:pk>/',EditHolderViewSet.as_view()),
 
-    # creates a holder using a name and type. passed from the holder detail
-    path('create-holder/',CreateHolderViewSet.as_view()),
+    # # creates a holder using a name and type. passed from the holder detail
+    # path('create-holder/',CreateHolderViewSet.as_view()),
 
     path('create-feedback/',CreateFeedbackViewSet.as_view()),
     path('create-keep-posted/',CreateKeepPostedViewSet.as_view()),   

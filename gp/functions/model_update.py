@@ -38,21 +38,34 @@ def create_instance(arr,data):
     '''
     
     data_create = data['create']
+    data_multi = data['multi']
 
     for x in arr:
         model = x['serializer'].Meta.model
-        # x['field'] in data_create and
-        if len(data_create[x['field']]) > 0:
-            for dic in data_create[x['field']]:
+        field = x['field']
+        if len(data_create[field]) > 0:
+            for dic in data_create[field]:
+                # Other fields have defaults, thus don't need to be added here
                 if field_exists_in_model(model,'_id'): dic['_id'] = model.objects.latest('_id')._id + 1
                 if field_exists_in_model(model,'user_name'): dic['user_name'] = 'user'
-                # if field_exists_in_model(model,'valid_instance'): dic['valid_instance'] = False
-                # if field_exists_in_model(model,'date_created'): dic['date_created'] = datetime.now().date()
+
+                # for multi field entries such as Holder 'parent' & 'subsidiaries' where a holder can be created, this part assigns the new _id value to the 'multi' dic so its related values
+                #   can be assigned in a following step. the 'c_id' object is deleted after use as it is combined with a dic that is passed to a serializer. not deleteing will not cause any issues.
+                if 'c_id' in dic:
+                    # loop through each item in the data_multi group to find the group with the '#' id to replace
+                    for grp in data_multi[field]:
+                        created_id = dic['c_id']['id']
+                        label = dic['c_id']['label']
+                        if grp[label] == created_id:
+                            grp[label] = dic['_id']
+                    del dic['c_id']
+
                 s = x['serializer'](data=dic)
                 if s.is_valid():
                     new_entry = s.save()
-                    data['set'][x['field']].append(new_entry.pk)
-                    data['add'][x['field']].append(new_entry.pk)
+                    data['set'][field].append(new_entry.pk)
+                    data['add'][field].append(new_entry.pk)
+
                 else:
                     print(s.errors)
     return data

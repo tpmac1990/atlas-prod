@@ -222,12 +222,20 @@ class ChildWriteSerializer(serializers.ModelSerializer):
         return instance
 
 
-# used to add a new Holder name with type
-class HolderAndTypeSerializer(serializers.ModelSerializer):
+class HolderWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Holder
-        fields = ['_id','name','typ','user_name']
+        fields = ['_id','name','user_name']
+
+        
+
+# # used to add a new Holder name with type
+# class HolderAndTypeSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = Holder
+#         fields = ['_id','name','typ','user_name']
 
     # def create(self, validated_data):
     #     # validated_data['_id'] = Holder.objects.latest('pk').pk + 1

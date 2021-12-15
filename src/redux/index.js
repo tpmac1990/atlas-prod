@@ -14,7 +14,7 @@ export { getInfinityDropdownData, setLoading, setSearch, setState, setSelection,
         setDropdownVisibility, incrementCreatedId, hideAllDropdowns, setUniqueDropdownGroup, 
         addUniqueGroupValues, setUniqueMultiGroupError, removeUniqueGroupValue } from './dropdown/dropdownActions'
 export { setEditData, addEditData, removeEditData, addEditDictKey, postSiteUpdates, addEditDataHolder, updateEditCell, getDropdownData, 
-        createNewHolder, resetApiOutcome, resetEditData } from './dataEdit/dataEditActions'
+        resetApiOutcome, resetEditData } from './dataEdit/dataEditActions'
 export { getFilterCheckboxData, setCheckBoxListIsLoading, setCheckboxSearch, filterCheckBoxListClientSide, resetCheckBoxListOffset } from './checkBoxList/checkBoxListActions'
 export { getPopupData, setPopupTarget, setPopupStatus, setPreviousTarget, closeMapPopup } from './mapPopup/mapPopupActions'
 export { saveUserEmail, saveUserFeedback } from './userData/userDataActions'

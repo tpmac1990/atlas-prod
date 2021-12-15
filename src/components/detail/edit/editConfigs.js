@@ -188,6 +188,7 @@ export const holder_objs = {
     },
     columns: {
         parent_company: { 
+            field: 'name',
             is_int: true, 
             is_array: true, 
             multi: [
@@ -204,6 +205,7 @@ export const holder_objs = {
             ] 
         },
         subsidiaries: { 
+            field: 'name',
             is_int: true, 
             is_array: true, 
             multi: [

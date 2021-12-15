@@ -28,7 +28,7 @@ const SiteEdit = ({ match }) => {
     const { nameSelect, occTypeSelect, statusSelect, geoProvinceSelect, majorMaterialSelect, minorMaterialSelect, sizeSelect, oidSelect } = groups
 
     const { viewportStyle } = useViewportStyle();
-    const is_large = ['tv','desktop','laptop'].includes(viewportStyle)
+    const is_large = ['tv','desktop','laptop'].includes(viewportStyle)  
 
 
     // get the site data when the id changes

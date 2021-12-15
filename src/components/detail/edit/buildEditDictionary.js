@@ -12,19 +12,16 @@ const formatValue = (value,format) => {
 
 const buildMultiColumnDict = (multi,obj_id,id,field) => {
     var dict = {}
-    // console.log(field)
-    // console.log(multi)
     multi.forEach(line => {
-        // console.log(line)
         // if ( line.value === 'obj_id' ){
         //     dict[line.name] = formatValue(obj_id, line.format)
         if ( line.value === '_id' ){
-            dict[line.name] = formatValue(id, line.format)
+            // if id is a created id then pass that id across so it can be updated when its instance is created in the backend
+            dict[line.name] = id.toString().includes('#') ? id : formatValue(id, line.format)
         } else if ( line.value === 'in_multi' ){
             dict[line.name] = formatValue(field[line.name], line.format)
         } 
     })
-    // console.log(dict)
     return dict
 }
 
@@ -32,8 +29,7 @@ const buildMultiColumnDict = (multi,obj_id,id,field) => {
 
 // formats the form data ready for the post api call
 export const buildEditDictionary = (data_dict,orig_data,columns,obj_id) => {
-    // const columns = createFields()
-    // console.log()
+
     const dict = {set: {}, create: {}, add: {}, remove: {}, multi: {}, omulti: {}}
     var changes_made = false // if there are no changes then no need to call the api
     Object.keys(data_dict).forEach(sk => {
@@ -45,7 +41,6 @@ export const buildEditDictionary = (data_dict,orig_data,columns,obj_id) => {
         var remove_lst = []
         var set_lst = []
         Object.keys(field).forEach(fk => {
-            // console.log(field[fk])
             var { id, label, current, remove, add } = field[fk]
             // if 'id' contains a '#' then the label needs to be added to its appropriate model first to get an ID to relate to.
             const is_create = id.toString().includes('#')
@@ -102,7 +97,13 @@ export const buildEditDictionary = (data_dict,orig_data,columns,obj_id) => {
                         }
                     } else {
                         if ( is_create ){
-                            create_lst.push({exchange: field[fk].exchange, [col_field]: label}) // needs to made dynamic
+                            // c_id: created id - this field is only required here for creating a new value that also has multiple fields to record, it is deleted when its purpose has been served. Used for updating 'parent' & 'subsidiaries' in Holder edit
+                            //  id: the temp id is the id with a '#' prefix that shows that its related value needs to be created. the newly created id will replace this value in the 'multi' dic
+                            //  label: the key of the value that holds the id in the 'multi' dic that needs to be updated
+                            create_lst.push({[col_field]: label, 'c_id': { id: id, label: col_field}})
+                            // creats the 'multi' dic
+                            multi_lst.push(buildMultiColumnDict(multi,obj_id,id,field[fk]))
+                            // create_lst.push({exchange: field[fk].exchange, [col_field]: label}) // needs to made dynamic
                             // multi_lst.push(buildMultiColumnDict(multi,obj_id,id,field[fk]))
                         } else {
                             // if the value is current but has an update in one of the multiple columns then this will be triggered.

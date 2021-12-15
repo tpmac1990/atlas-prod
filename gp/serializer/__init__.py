@@ -1,7 +1,7 @@
 from .map_popups import TitlePopupSerializer, SitePopupSerializer
 from .geospatial import serialize_and_combine
 from .holder_detail import (HolderDetailSerializer, ListedHolderSerializer, ParentHolderSerializer, TenHolderWriteSerializer, 
-                            ParentWriteSerializer, ChildWriteSerializer, HolderAndTypeSerializer)
+                            ParentWriteSerializer, ChildWriteSerializer, HolderWriteSerializer)
 from .title_detail import TitleDetailSerializer, OidTitleSerializer, TitleUpdateSerializer, OidWriteTitleSerializer
 from .site_detail import SiteDetailSerializer, OccNameSerializer, SiteWriteSerializer, OidSerializer, OidWriteSerializer, OccNameWriteSerializer, SiteGeomSerializer, SiteMoveSerializer
 # from .changes import OccurrenceChangeSerializer, record_site_changes

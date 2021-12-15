@@ -222,7 +222,7 @@ class Holder(models.Model):
     user_name = models.CharField(max_length=20, blank=False, null=False)
     valid_relations = models.BooleanField(default=False)
     valid_instance = models.BooleanField(default=False)
-    user_edit = models.BooleanField(default=False) 
+    user_edit = models.BooleanField(default=True) 
     date_modified = models.DateField(auto_now=True, auto_now_add=False)
     date_created = models.DateField(auto_now=False, auto_now_add=True)
 
