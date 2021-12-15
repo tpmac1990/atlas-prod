@@ -1,4 +1,4 @@
-import { STORE_EDIT_HANDLER, TOGGLE_MAP_DRAW_BUTTON } from './leafletDrawType'
+import { STORE_EDIT_HANDLER, STORE_RECTANGLE_LAYER, FILTER_DRAW_TOGGLE, SET_DRAW_TRIGGER_SOURCE } from './leafletDrawType'
 
 export const storeEditHandlers = handler => {
     return {
@@ -7,9 +7,23 @@ export const storeEditHandlers = handler => {
     }
 }
 
-export const toggleMapDrawButton = action => {
+export const storeFilterRectangleLayer = layer => {
     return {
-        type: TOGGLE_MAP_DRAW_BUTTON,
+        type: STORE_RECTANGLE_LAYER,
+        payload: layer
+    }
+}
+
+export const toggleFilterDraw = action => {
+    return {
+        type: FILTER_DRAW_TOGGLE,
         payload: action
+    }
+}
+
+export const setDrawTriggerSource = source => {
+    return {
+        type: SET_DRAW_TRIGGER_SOURCE,
+        payload: source
     }
 }

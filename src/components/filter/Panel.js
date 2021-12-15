@@ -10,7 +10,6 @@ import { closeAllGroups, storeSpatialData,
     updateActiveFilters, setMapBounds, toggleBounds, closeMapPopup } from '../../redux'
 
 import { updateFilterList } from './filterLists'
-// import useViewportStyle from '../reusable/hooks/useViewportStyle'
 import Control from './Control'
 import RelatedData from './RelatedData'
 import FilterGroups from './FilterGroups'
@@ -112,7 +111,7 @@ function Panel () {
     },[input])
 
 
-    function submitHandler() {
+    const submitHandler = () => {
         // only submit if not loading and a Dataset has been selected (titles or sites)
         if ( !loading ){
             if ( filterDataset != '' ) {

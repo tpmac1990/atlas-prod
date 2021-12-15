@@ -13,13 +13,13 @@ export default function LatLngTextbox(props) {
     const coord = useSelector(state => state.filterSelection.input.rectangle)[name]
 
     function coordChangeHandler(e){
-        dispatch(setLatLngsManually({name: name, value: e.target.value}))
+        dispatch(setLatLngsManually({name: name, value: parseFloat(e.target.value)}))
     }
 
     return (
         <div className='input-group-c3'>
             <label>{title}</label>
-            <input type="number" name={name} value={coord} onChange={coordChangeHandler}/>
+            <input autoComplete="off" type="number" name={name} value={coord} onChange={coordChangeHandler}/>
         </div>        
     )
 }

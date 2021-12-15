@@ -3,7 +3,8 @@ import { FeatureGroup, Rectangle, Circle } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 import { useSelector, useDispatch } from 'react-redux'
 import { divIcon } from 'leaflet'
-import { storeEditHandlers, setRectangleLatLngs, setMarkerLatLngs, toggleFilterPanel, toggleMapDrawButton } from '../../redux'
+import { storeEditHandlers, setRectangleLatLngs, setMarkerLatLngs, toggleFilterPanel, storeFilterRectangleLayer, 
+            toggleFilterDraw, resetMapDataOffset, setMapIsLoading, closeMapPopup } from '../../redux'
 import 'leaflet-draw';
 
 const Draw = () => {
@@ -13,7 +14,9 @@ const Draw = () => {
 
     const dispatch = useDispatch()
 
-    const { is_large } = useSelector(state => state.sizeControl)
+    const { sizeControl, leafletDraw } = useSelector(state => state)
+    const { is_large } = sizeControl
+    const { filterDrawToggle, drawTrigger } = leafletDraw
 
     const siteIcon = divIcon({
         className: '',
@@ -27,10 +30,22 @@ const Draw = () => {
         if ( drawType == 'marker' ){
             dispatch(setMarkerLatLngs(e.layer._latlng))
         } else {
+            // store the layer of the drawn rectangle so it can be used to clear it later
+            dispatch(storeFilterRectangleLayer(e.layer))
+            // store the rectangles bounds
             dispatch(setRectangleLatLngs(e.layer._bounds))
-            !is_large && dispatch(toggleFilterPanel())
-            // hide the draw button once the rectangle has been drawn on mobile
-            !is_large && dispatch(toggleMapDrawButton(false))
+            !is_large && filterDrawToggle && dispatch(toggleFilterPanel())
+            // when in mobile view, when the draw function is toggled from the filter the filterDrawToggle state is turned to true which means the filter is re-opened after the draw is complete. This needs to be turned back to false  
+            !is_large && dispatch(toggleFilterDraw(false))
+            // if the draw function was accessed from the map then trigger a new search
+            if (drawTrigger == 'map'){
+                // Reseting the offset will result in a new set of data, not appending onto existing data
+                dispatch(resetMapDataOffset())
+                // set loading which will trigger the useEffect below that will fetch the geospatial data
+                dispatch(setMapIsLoading())
+                // clear any map popup and highlight marker
+                dispatch(closeMapPopup())
+            } 
         }
 
         const drawnItems = editableFG.leafletElement._layers;

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useLayoutEffect } from 'react'
-import { Map, useMapEvents } from 'react-leaflet'
+import { Map } from 'react-leaflet'
 import { useDispatch, useSelector } from 'react-redux'
-import { setMap, toggleFilterPanel, toggleMapDrawButton, setMapBounds, toggleBounds, preventBoundsUpdate, 
-          setInitialBounds, setDataBounds, setFilterBounds } from './../../redux'
+import { setMap, toggleFilterPanel, setMapBounds, toggleBounds, preventBoundsUpdate, 
+          setInitialBounds, setFilterBounds } from './../../redux'
 import { CoordinatesControl } from 'react-leaflet-coordinates'
 import Layers from './Layers'
 import Panel from '../filter/Panel'
@@ -26,7 +26,6 @@ function MapContent() {
 
   const { filterSelection, leafletDraw, sizeControl } = useSelector(state => state)
   const { map, filteropen, extent, occs, tens, bounds, tog_bounds, keep_bounds, init_bounds, filter_bounds } = filterSelection.map_data
-  const { mdb_active } = leafletDraw
   const { is_large } = sizeControl
   
   const mapRef = useRef()
@@ -71,8 +70,6 @@ function MapContent() {
 
 
   const filterToggleHandler = () => {
-    // if the map draw button is visible and the filter is toggled, then the button will be hidden again
-    mdb_active && dispatch(toggleMapDrawButton(false))
     // toggles the filter
     dispatch(toggleFilterPanel())
   }

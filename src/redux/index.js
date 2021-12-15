@@ -5,7 +5,7 @@ export { selectItem, unselectItem, setRectangleLatLngs, setLatLngsManually, setF
         resetMapDataOffset, toggleFilterPanel, setDataLimit, updateActiveFilters, setMapBounds, toggleBounds, 
         preventBoundsUpdate, setInitialBounds, setFilterBounds } from './filterSelection/filterSelectionActions'
 export { setFilterDataset, resetFilterControl } from './filterDirection/filterDirectionActions'
-export { storeEditHandlers, toggleMapDrawButton } from './leafletDraw/leafletDrawActions'
+export { storeEditHandlers, toggleFilterDraw, storeFilterRectangleLayer, setDrawTriggerSource } from './leafletDraw/leafletDrawActions'
 export { setPopupMessage, resetPopupMessage } from './messageHandler/messageHandlerActions'
 export { getHolderData, getSiteData, getTitleData } from './detailSelection/detailSelectionActions'
 export { setFilterValues, triggerElement, setData, isInfinityTable, clearData, resetPopupTable } from './popupTable/popupTableActions'

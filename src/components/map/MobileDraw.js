@@ -1,27 +1,30 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-// import useViewportStyle from '../reusable/hooks/useViewportStyle'
-import { setPopupMessage } from '../../redux'
+import { setPopupMessage, setDrawTriggerSource } from '../../redux'
 
 
 const MobileDraw = () => {
 
     const dispatch = useDispatch()
 
-    const { editHandlers, mdb_active } = useSelector(state => state.leafletDraw)
-    const { is_large } = useSelector(state => state.sizeControl)
-
-    // const { viewportStyle } = useViewportStyle();
-    // const is_large = ['tv','desktop','laptop'].includes(viewportStyle)
+    const { leafletDraw, filterDirection, sizeControl } = useSelector(state => state)
+    const { editHandlers, filterDrawToggle } = leafletDraw
+    const { filterDataset } = filterDirection
+    const { is_large } = sizeControl
 
     const drawHandler = () => {
+        // enable the draw functionality
         editHandlers.draw._modes.rectangle.handler.enable()
+        // records that the draw function was selected from the map and not the filter. Determines if a search is run automatically after the draw is complete
+        !filterDrawToggle && dispatch(setDrawTriggerSource('map'))
+        // display info tag
         !is_large && dispatch(setPopupMessage({message: "Press and drag to draw a rectangle", type: 'info', style: 'info-map'}))
     }
 
-    // return mdb_active ? <button id='mobile-draw' className='btn-c6' onClick={drawHandler}>Draw</button> : null
+
+    // the draw button will only become visible if a dataset has been selected
     return (
-        mdb_active 
+        filterDataset != '' 
         ? (
             <div id='mobile-draw'>
                 <button id='mobile-draw-btn' className='btn-c6' onClick={drawHandler}>

@@ -152,7 +152,9 @@ const filterSelectionReducer = ( state = initialState, action ) => {
                 input: { ...state.input,
                     rectangle: initialState.input.rectangle
                 },
-                map_infinity: initialState.map_infinity
+                map_infinity: { ...initialState.map_infinity,
+                    limit: state.map_infinity.limit,
+                }
             }
         case MANUAL_LATLNGS_CHANGE: 
             var { value, name} = action.payload
@@ -165,7 +167,9 @@ const filterSelectionReducer = ( state = initialState, action ) => {
                         [name]: value,
                     }
                 },
-                map_infinity: initialState.map_infinity
+                map_infinity: { ...initialState.map_infinity,
+                    limit: state.map_infinity.limit,
+                }
             }
         case SET_DATE_CHANGE: 
             var { name, date } = action.payload
@@ -176,7 +180,9 @@ const filterSelectionReducer = ( state = initialState, action ) => {
                 input: { ...state.input,
                     [name]: date,
                 },
-                map_infinity: initialState.map_infinity
+                map_infinity: { ...initialState.map_infinity,
+                    limit: state.map_infinity.limit,
+                }
             }
         case SET_BUFFER_ID:
             return {
@@ -188,7 +194,9 @@ const filterSelectionReducer = ( state = initialState, action ) => {
                         id: action.payload,
                     }
                 },
-                map_infinity: initialState.map_infinity
+                map_infinity: { ...initialState.map_infinity,
+                    limit: state.map_infinity.limit,
+                }
             }
         case SET_BUFFER_DISTANCE:
             return {
@@ -201,7 +209,9 @@ const filterSelectionReducer = ( state = initialState, action ) => {
                         valid: (state.input.buffer.valid_id && action.payload != "") ? true : false
                     }
                 },
-                map_infinity: initialState.map_infinity
+                map_infinity: { ...initialState.map_infinity,
+                    limit: state.map_infinity.limit,
+                }
             }
         case INCLUDE_RELATED_DATA:
             return {
