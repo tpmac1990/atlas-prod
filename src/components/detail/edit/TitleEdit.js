@@ -72,7 +72,7 @@ const TitleEdit = ({ match }) => {
                     <ItemSingleDropdownChange header='Title Type' datagroup='titles' values={value.typ} dropdown_dict={typeSelect} />
                     <ItemSingleDropdownChange header='Title Status' datagroup='titles' values={value.status} dropdown_dict={statusSelect} />
                     <ItemsManyDropdownAdd is_large={is_large} header='Geological Provinces' datagroup='titles' values={value.geoprovince} has_input={false} dropdown_dict={geoProvinceSelect} />
-                    <ItemsManyDropdownAddMulti is_large={is_large} header='Holders' datagroup='titles' values={value.holder} has_input={false} columns={holderMulti} dropdown_dict={holderSelect} />
+                    <ItemsManyDropdownAddMulti is_large={is_large} header='Holders' datagroup='titles' values={value.holder} has_input={true} columns={holderMulti} dropdown_dict={holderSelect} />
                     <ItemsManyDropdownAdd is_large={is_large} header="Title Related ID's" datagroup='titles' values={value.oid} has_input={true} dropdown_dict={oidSelect} />
                     <button type='submit' className='btn-c5 edit-submit-btn' onClick={FormHandler}>Submit</button>
                 </form>

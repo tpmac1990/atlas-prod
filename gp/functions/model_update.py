@@ -195,6 +195,7 @@ def multi_column_create_instance(arr,data,pk):
             if item == group['name']:
                 model = group['serializer'].Meta.model
                 name = group['name']
+                
                 if name in dic:
                     objs = model.objects.filter(**{dic[name]['query_1']: pk, dic[name]['query_2']: data_remove[item]}).delete()
                     # if objs.count() > 0 and dic[name]['record_changes']:
@@ -210,7 +211,6 @@ def multi_column_create_instance(arr,data,pk):
                 #             multi_changes.append({'action': 'ADD', 'field': name, 'pk': pk, 'name': getattr(obj, dic[name]['query_2'])._id, 'percown': obj.percown})
                 #             add_lst.append(getattr(obj, dic[name]['query_2'])._id)
                                     
-
                 for i in data_multi[item]:
                     if name in dic: 
                         i[dic[name]['pk']] = pk

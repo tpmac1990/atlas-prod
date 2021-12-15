@@ -295,9 +295,8 @@ class EditTitleViewSet(APIView):
 
     def post(self, request, pk):
         data = request.data
-        # print(data)
         # creates necessary model instances
-        arr = [{'field': 'oid', 'serializer': OidWriteTitleSerializer}]
+        arr = [{'field': 'oid', 'serializer': OidWriteTitleSerializer},{ 'field': 'holder', 'serializer': HolderWriteSerializer }]
         data = create_instance(arr=arr, data=data)
         # copy current instance, makes updates and saves with a temp # ind
         transfer_arr = ['geom','lodgedate','startdate','enddate','localgov','govregion','occurrence','shore','state']

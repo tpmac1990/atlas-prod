@@ -171,7 +171,6 @@ class TenHolderWriteSerializer(serializers.ModelSerializer):
         fields = ["percown","name","tenement"]
 
     def create(self, validated_data):
-        '''  '''
         name_obj = validated_data['name']
         tenement_obj = validated_data['tenement']
         obj = TenHolder.objects.filter(name=name_obj, tenement=tenement_obj)
@@ -228,7 +227,7 @@ class HolderWriteSerializer(serializers.ModelSerializer):
         model = Holder
         fields = ['_id','name','user_name']
 
-        
+
 
 # # used to add a new Holder name with type
 # class HolderAndTypeSerializer(serializers.ModelSerializer):

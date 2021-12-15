@@ -330,6 +330,7 @@ export const title_objs = {
     },
     columns: {
         holder: { 
+            field: 'name',
             is_int: true, 
             is_array: true, 
             multi: [

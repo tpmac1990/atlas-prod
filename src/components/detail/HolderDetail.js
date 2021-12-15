@@ -1,9 +1,9 @@
 import React, { useState, lazy, useEffect } from 'react'
-import { AsyncPaginate } from "react-select-async-paginate";
+// import { AsyncPaginate } from "react-select-async-paginate";
 import { Route, Link, useRouteMatch } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 
-import { getDropdownData, createNewHolder } from './../../redux';
+// import { getDropdownData, createNewHolder } from './../../redux';
 import SubHolderDetail from './sub/SubHolderDetail';
 import InfinitySelect from '../reusable/infinitySelect/InfinitySelect'
 import { useHistory } from "react-router-dom";
