@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setPopupMessage, setDrawTriggerSource } from '../../redux'
+import ToolTip from '../reusable/tooltip/ToolTip'
 
 
 const MobileDraw = () => {
@@ -24,12 +25,14 @@ const MobileDraw = () => {
 
     // the draw button will only become visible if a dataset has been selected
     return (
-        filterDataset != '' 
+        filterDataset != ''
         ? (
             <div id='mobile-draw'>
-                <button id='mobile-draw-btn' className='btn-c6' onClick={drawHandler}>
-                    <span className="material-icons map-btn-icons">draw</span>
-                </button>
+                <ToolTip styles='left-1' content='manually select an area'>
+                    <button id='mobile-draw-btn' className='btn-c6' onClick={drawHandler}>
+                        <span className="material-icons map-btn-icons">draw</span>
+                    </button>
+                </ToolTip>
             </div>
         ) 
         : null

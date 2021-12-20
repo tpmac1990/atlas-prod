@@ -24,3 +24,4 @@ export { setScreenSize } from './sizeControl/sizeControlActions'
 export { setNewPathname } from './pathChange/pathChangeActions'
 export { signup, verify, login, logout, checkAuthenticated, load_user, reset_password, reset_password_confirm,
         googleAuthenticate, facebookAuthenticate } from './authenticate/authenticateActions'
+export { togglePopup, setComment, retieveExistingRequest, submitDeleteRequest } from './deleteRequest/deleteRequestActions'

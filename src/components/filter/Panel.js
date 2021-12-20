@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from "react-router-dom";
 
@@ -13,34 +13,20 @@ import { updateFilterList } from './filterLists'
 import Control from './Control'
 import RelatedData from './RelatedData'
 import FilterGroups from './FilterGroups'
-import TooTip from '../reusable/tooltips/ToolTip'
+
+import ToolTip from '../reusable/tooltip/ToolTip'
 
 
 // The 'clear filter' & 'display data in table form' icon buttons at the top of the panel and their tooltips
-const IconBtn = props => {
+const IconBtn = ({ clickHandler, iconStyle, tooltip }) => {
 
-    const { clickHandler, iconStyle, tooltip } = props    
-
-    const [ show, setShow ] = useState(false)
-    const [ delayHandler, setDelayHandler ] = useState(null)
-
-    const handleMouseEnter = () => {
-        setDelayHandler(setTimeout(() => {
-            setShow(true)
-        }, 500))
-    }
-
-    const handleMouseLeave = () => {
-        clearTimeout(delayHandler)
-        setShow(false)
-    }
-
-    // only show the tooltip if on a large screen
+    // only show the tooltip when on a large screen
     return (
-        <div>
-            <span className="material-icons" onClick={clickHandler} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >{iconStyle}</span>
-            { show ? <TooTip text={tooltip} style='filter-header-tt' /> : null}
-        </div>
+        <ToolTip styles='bottom-right-1' content={tooltip}>
+            <div>
+                <span className="material-icons" onClick={clickHandler} >{iconStyle}</span>
+            </div>
+        </ToolTip>
     )
 }
 
@@ -54,9 +40,11 @@ const FilterToggle = () => {
     }
 
     return (
-        <div className='filter-toggle' onClick={filterToggleHandler}>
-            <span className="material-icons">double_arrow</span>
-        </div>
+        <ToolTip styles='bottom-left-1' content='hide filter'>
+            <div className='filter-toggle' onClick={filterToggleHandler} >
+                <span className="material-icons">double_arrow</span>
+            </div>
+        </ToolTip>
     )
 }
 
@@ -269,8 +257,8 @@ function Panel () {
                             <h1>Data Control</h1>
                         </div>
                         <div className='header-icons'>
-                            <IconBtn clickHandler={listHandler} iconStyle='list' tooltip='Display the map data in table form' />
-                            <IconBtn clickHandler={clearHandler} iconStyle='delete_sweep' tooltip='Reset Data Control' />
+                            <IconBtn clickHandler={listHandler} iconStyle='list' tooltip='display data in a table' />
+                            <IconBtn clickHandler={clearHandler} iconStyle='delete_sweep' tooltip='reset filter' />
                         </div>
                     </div>
                     { tableSelect
@@ -287,7 +275,9 @@ function Panel () {
                     <div id='panel-footer'>
                         <div id='related-data-toggle' className='checkbox-c4'>
                             <input checked={include} type='checkbox' id='selectRelatedData' onChange={AddRelatedHandler} />
-                            <label htmlFor='selectRelatedData'>Combine Related Data</label><br/>
+                            <ToolTip styles='top-left-1' content='include related data in your search'>
+                                <label htmlFor='selectRelatedData'>Combine Related Data</label><br/>
+                            </ToolTip>
                         </div>
                         <div id='footer-btns'>
                             <button className={include ? 'btn-c1 showEle' : 'btn-c1 hideEle'} onClick={RelationHandler}>Relations</button>

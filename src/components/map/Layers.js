@@ -2,50 +2,50 @@ import React, { Fragment, useEffect } from 'react'
 import { Marker, Popup, TileLayer, Circle, FeatureGroup, LayerGroup, LayersControl, Rectangle, GeoJSON, LeafletConsumer } from 'react-leaflet'
 import PointsLayer from './PointsLayer'
 import PolygonLayer from './PolygonLayer'
-import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux'
-import { triggerPntMove } from '../../redux'
-// import useViewportStyle from '../reusable/hooks/useViewportStyle'
-import { setPopupMessage } from '../../redux'
+// import { useHistory } from "react-router-dom";
+// import { useSelector, useDispatch } from 'react-redux'
+// import { triggerPntMove } from '../../redux'
+// // import useViewportStyle from '../reusable/hooks/useViewportStyle'
+// import { setPopupMessage } from '../../redux'
 
 
 const { BaseLayer, Overlay } = LayersControl
 
 const Layers = () => {
 
-    const dispatch = useDispatch()
-    const history = useHistory();
+    // const dispatch = useDispatch()
+    // const history = useHistory();
 
     // const { viewportStyle } = useViewportStyle();
     // const is_large = ['tv','desktop','laptop'].includes(viewportStyle)
 
-    const { is_large } = useSelector(state => state.sizeControl)
+    // const { is_large } = useSelector(state => state.sizeControl)
 
-    // DOM clickevent to navigate to the detail page from the popup button
-    useEffect(() => {
-        document.body.addEventListener('click', popupButtonHandler );
+    // // DOM clickevent to navigate to the detail page from the popup button
+    // useEffect(() => {
+    //     document.body.addEventListener('click', popupButtonHandler );
 
-        return function cleanup() {
-            window.removeEventListener('click', popupButtonHandler );
-        } 
-    },[]);
+    //     return function cleanup() {
+    //         window.removeEventListener('click', popupButtonHandler );
+    //     } 
+    // },[]);
 
-    // this handles the action to take when a button is clicked in the map feature popup
-    const popupButtonHandler = e => {
-        switch(e.target.id){
-            case 'more-data-btn':
-                history.push(`/detail/${e.target.value}`)
-                break;
+    // // this handles the action to take when a button is clicked in the map feature popup
+    // const popupButtonHandler = e => {
+    //     switch(e.target.id){
+    //         case 'more-data-btn':
+    //             history.push(`/detail/${e.target.value}`)
+    //             break;
             
-            case 'move-site-btn':
-                !is_large && dispatch(setPopupMessage({message: "Press where you want to move the site to", type: 'info', style: 'info-map'}))
-                dispatch(triggerPntMove(e.target.value))
-                break;
+    //         case 'move-site-btn':
+    //             !is_large && dispatch(setPopupMessage({message: "Press where you want to move the site to", type: 'info', style: 'info-map'}))
+    //             dispatch(triggerPntMove(e.target.value))
+    //             break;
 
-            case 'edit-data-btn':
-                history.push(`/detail/${e.target.value}`)
-        }
-    }
+    //         case 'edit-data-btn':
+    //             history.push(`/detail/${e.target.value}`)
+    //     }
+    // }
 
     // I got the google maps urls from: https://hatarilabs.com/ih-en/how-to-add-a-google-map-in-qgis-3-tutorial
 

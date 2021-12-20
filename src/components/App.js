@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import store from '../redux/store';
-import axios from 'axios';
 
 import Header from './header/header';
 import Loading from './loading/Loading';
@@ -14,8 +13,10 @@ import MapContent from './map/MapContent';
 import { PopupTable } from './popups/PopupTable';
 import { CoverInactive } from './popups/CoverInactive';
 import ConfirmBox from './reusable/confirm/ConfirmBox'
+import RequestDelete from './map/RequestDelete'
 import useViewportStyle from './reusable/hooks/useViewportStyle'
 import { setScreenSize, toggleFilterPanel, setNewPathname, resetPopupTable, setPopupMessage } from '../redux'
+
 
 // import Temp from './authentication/Login'
 
@@ -109,6 +110,8 @@ const SubApp = () => {
             <PopupTable />
             <CoverInactive /> 
             <ConfirmBox />
+            <RequestDelete />
+            {/* <ToolTip /> */}
             <Header />
             <Suspense fallback={<Loading />}>
                 <Switch>

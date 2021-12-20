@@ -122,10 +122,10 @@ class Occurrence(models.Model):
     govregion = models.ForeignKey(GovernmentRegion, related_name="govregion_occurrence", on_delete=models.SET_NULL, blank=True, null=True)
     geoprovince = models.ManyToManyField(GeologicalProvince, related_name="geoprovince_occurrence", blank=True,)
     typ = models.ManyToManyField(OccType, related_name="typ_occurrence", blank=True,)
-    oid = models.ManyToManyField(OccOriginalID, related_name="oid_occurrence", blank=True,)
-    name = models.ManyToManyField(OccName, related_name="name_occurrence", blank=True,)
-    majmat = models.ManyToManyField(Material, related_name="majmat_occurrence", blank=True,)
-    minmat = models.ManyToManyField(Material, related_name="minmat_occurrence", blank=True,)
+    oid = models.ManyToManyField(OccOriginalID, related_name="oid_occurrence", blank=True)
+    name = models.ManyToManyField(OccName, related_name="name_occurrence", blank=True)
+    majmat = models.ManyToManyField(Material, related_name="majmat_occurrence", blank=True)
+    minmat = models.ManyToManyField(Material, related_name="minmat_occurrence", blank=True)
     geom = models.PointField(srid=4202) 
     user_name = models.CharField(max_length=20, blank=False, null=False)
     valid_relations = models.BooleanField(default=False)
@@ -141,6 +141,32 @@ class Occurrence(models.Model):
 # class OccGeom(models.Model):
 #     ind = models.OneToOneField(Occurrence,related_name='ind_geom',on_delete=models.CASCADE,primary_key=True)
 #     geom = models.PointField(srid=4202)
+
+
+# will need to be converted to a m2m in the Occurrence model using this as a through model when the user model has been sorted
+class OccDeleteRequest(models.Model):
+    # ind = models.ForeignKey(Occurrence, related_name="ind_deleterequest", on_delete=models.CASCADE, blank=False, null=False)
+    ind = models.IntegerField(blank=False, null=False)
+    user_name = models.CharField(max_length=20, blank=False, null=False)
+    comment = models.TextField(blank=False)
+    reviewed = models.BooleanField(blank=True, default=False)
+    outcome = models.TextField(blank=True)
+    date_modified = models.DateField(auto_now=True, auto_now_add=False)
+    date_created = models.DateField(auto_now=False, auto_now_add=True)
+
+    # class Meta:
+    #     unique_together = ('ind', 'user_name')
+
+
+# class OccIssue(models.Model):
+#     ind = models.ForeignKey(Occurrence, related_name="ind_issue", on_delete=models.CASCADE, blank=False, null=False)
+#     user_name = models.CharField(max_length=20, blank=False, null=False)
+#     issue = models.TextField(blank=False)
+#     reviewed = models.BooleanField(default=False)
+#     outcome = models.TextField(blank=True)
+#     date_modified = models.DateField(auto_now=True, auto_now_add=False)
+#     date_created = models.DateField(auto_now=False, auto_now_add=True)
+
 
 
 # ###############################################################################
@@ -266,6 +292,16 @@ class Tenement(models.Model):
 
     # def __str__(self):
     #     return str(self.ind)
+
+# # make unique together
+# class TenIssue(models.Model):
+#     ind = models.ForeignKey(Tenement, related_name="ind_issue", on_delete=models.CASCADE, blank=False, null=False)
+#     user_name = models.CharField(max_length=20, blank=False, null=False)
+#     issue = models.TextField(blank=False)
+#     reviewed = models.BooleanField(default=False)
+#     outcome = models.TextField(blank=True)
+#     date_modified = models.DateField(auto_now=True, auto_now_add=False)
+#     date_created = models.DateField(auto_now=False, auto_now_add=True)
 
 
 # class TenGeom(models.Model):

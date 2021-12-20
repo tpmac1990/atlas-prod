@@ -1,0 +1,59 @@
+@import '../variables';
+
+
+#site-delete-request {
+    z-index: 9;
+    position: absolute;
+    width: 370px;
+    background-color: $dark-t1-4;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: $dark-4;
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0 1px 2px $dark-4;
+
+    .site-delete-request-header {
+        position: relative;
+        height: 35px;
+        border-bottom: 1px solid $blue-2;
+
+        h4 {
+            float: left;
+            font-size: 1.2em;
+            color: $light-2;
+            width: 90%;
+        }   
+
+        span {
+            bottom: 0;
+        }
+    }
+
+    form {
+        position: relative;
+        margin-top: 15px;
+
+        textarea {
+            width: 100%;
+            min-height: 70px;
+            max-height: 200px;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+            background-color: $dark-4;
+            color: $light-1;
+            font-size: 0.8em;
+        }
+
+        button {
+            float: right;
+            height: 35px;
+            width: 100px;
+            margin-bottom: 5px;
+            font-size: 1.0em;
+        }
+    }
+
+    
+}

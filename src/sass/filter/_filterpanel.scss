@@ -49,6 +49,7 @@
             .filter-toggle {
                 transform: scale(-1, 1);
                 width: 60px;
+                height: 30px;
                 background-color: $dark-7;
                 margin: 6px 0;
                 border-radius: 3px;
@@ -68,27 +69,31 @@
             .header-icons {
                 position: absolute;
                 right: 0;
-    
-                div {
-                    position: relative;
-                    display: inline-block;
-    
-                    span {
-                        color: $light-3;
-                        font-size: 1.3em;
-                        margin-left: 12px;
-                        margin-top: 6px;
-                        background-color: $dark-7;
-                        padding: 3px;
-                        border: 1px solid $dark-7;
-                        border-radius: 3px;
-                    }
-    
-                    // required to position the tooltip
+
+                .Tooltip-Wrapper {
+
                     div {
-                        position: absolute;
+                        // position: relative;
+                        display: inline-block;
+        
+                        span {
+                            color: $light-3;
+                            font-size: 1.3em;
+                            margin-left: 12px;
+                            margin-top: 6px;
+                            background-color: $dark-7;
+                            padding: 3px;
+                            border: 1px solid $dark-7;
+                            border-radius: 3px;
+                        }
+        
+                        // required to position the tooltip
+                        div {
+                            position: absolute;
+                        }
                     }
                 }
+    
             }
         }
 

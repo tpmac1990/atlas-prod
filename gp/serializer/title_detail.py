@@ -58,6 +58,7 @@ class TitleHolderSerializer(serializers.ModelSerializer):
         # fields = ["_id","percown","name","position","position_id"]
         fields = ["_id","percown","name"]
 
+
 class MaterialSerializer(serializers.ModelSerializer):
     _id = serializers.CharField(validators=[])
 
@@ -135,6 +136,7 @@ class TitleDetailSerializer(serializers.ModelSerializer):
     status = TitleStatusSerializer()
     occurrence = SiteBasicsSerializer(many=True, read_only=True)
     oid = OidTitleSerializer(many=True, read_only=True)
+    # comment = serializers.SerializerMethodField(source='ind_issue')
 
     # needs to be optimized
     def get_parents(self,obj):
@@ -142,9 +144,15 @@ class TitleDetailSerializer(serializers.ModelSerializer):
         parents = Parent.objects.filter(child__in=parent_ids)
         return [x.name.name for x in parents]
 
+    # def get_comment(self,obj):
+    #     comments = obj.ind_issue.all()
+    #     comment = comments.filter(ind=obj.ind,user_name='user').first()
+    #     return comment.issue if comment else ''
+
     class Meta:
         model = Tenement
         fields = ["ind","lodgedate","startdate","enddate","typ","status","state","shore","localgov","govregion","geoprovince","holder","parents","oid","occurrence","majmat","minmat"]
+        # "comment"
 
 # 1014859
 # http://127.0.0.1:8000/detail/title/1014859/

@@ -17,6 +17,7 @@ import userDataReducer from './userData/userDataReducer'
 import sizeControlReducer from './sizeControl/sizeControlReducer'
 import pathChangeReducer from './pathChange/pathChangeReducer'
 import authenticateReducer from './authenticate/authenticateReducer'
+import deleteRequestReducer from './deleteRequest/deleteRequestReducer'
 
 const rootReducer = combineReducers({
     filterGroup: filterGroupReducer,
@@ -36,7 +37,8 @@ const rootReducer = combineReducers({
     userData: userDataReducer,
     sizeControl: sizeControlReducer,
     pathChange: pathChangeReducer,
-    authenticate: authenticateReducer
+    authenticate: authenticateReducer,
+    deleteRequest: deleteRequestReducer
 })
 
 export default rootReducer

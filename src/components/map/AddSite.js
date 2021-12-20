@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { ActivateConfirmPopup, toggleFullScreenInactive, resetConfirmed, createSite, resetCreatePntState, 
             moveSite, setCreateSite, setPopupMessage, preventBoundsUpdate } from '../../redux'
 import { useHistory } from "react-router-dom";
-import ToolTip from '../reusable/tooltips/ToolTip'
-// import useViewportStyle from '../reusable/hooks/useViewportStyle'
+import ToolTip from '../reusable/tooltip/ToolTip'
 
 
 const AddSite = () => {
@@ -20,8 +19,6 @@ const AddSite = () => {
     const { latlng, site_ind, act } = editPoint
     const { is_large } = sizeControl
 
-    const [ show, setShow ] = useState(false)
-    const [ delayHandler, setDelayHandler ] = useState(null)
 
     const clickHandler = () => {
         !is_large && dispatch(setPopupMessage({message: "Press on map to create a new site", type: 'info', style: 'info-map'}))
@@ -72,26 +69,13 @@ const AddSite = () => {
         }
     },[site_ind])
 
-
-    const handleMouseEnter = () => {
-        // show the tooltip after a 500ms delay
-        setDelayHandler(setTimeout(() => {
-            setShow(true)
-        }, 500))
-    }
-
-    const handleMouseLeave = () => {
-        // Clears the timeout event so the tooltip will not show if the cursor has moved off the button
-        clearTimeout(delayHandler)
-        setShow(false)
-    }
-
     return (
         <div id='create-site'>
-            <button id='create-site-btn' className='btn-c6' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={clickHandler}>
-                <span className="material-icons map-btn-icons">add_location</span>
-            </button>
-            { show ? <ToolTip text='Create a new site' style='create-site-tooltip' /> : null }
+            <ToolTip styles='left-1' content='create a new site'>
+                <button id='create-site-btn' className='btn-c6' onClick={clickHandler}>
+                    <span className="material-icons map-btn-icons">add_location</span>
+                </button>
+            </ToolTip>
         </div>
     )
 }

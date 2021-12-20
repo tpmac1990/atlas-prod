@@ -7,6 +7,7 @@ import DetailTableC1 from './DetailTableC1';
 import SingleColumnTableC1 from './SingleColumnTableC1';
 import Loading from '../../loading/Loading';
 import { TitleComponent } from './TitleComponent';
+// import Comments from './Comments'
 import { title_objs } from './detailConfigs'
 
 
@@ -46,12 +47,14 @@ function SubTitleDetail({ match }){
                 <div className='list-table-btn-lng'>
                     <button className='btn-c5' name='sites' onClick={tableHandler} >Related Sites Table</button>
                 </div>
+                {/* <Comments value={value} /> */}
                 <SingleColumnTableC1 dict={DateDict} value={value} />
                 <SingleColumnTableC1 dict={LocationDict} value={value} />
                 <SingleColumnTableC1 dict={TypeDict} value={value} />
                 <SingleColumnTableC1 dict={StatusDict} value={value} />
                 <SingleColumnTableC1 dict={MaterialsDict} value={value} />
                 <SingleColumnTableC1 dict={AlternateSourceDict} value={value} />
+                <SingleColumnTableC1 dict={ParentsDict} value={value} />
                 <SingleColumnTableC1 dict={ParentsDict} value={value} />
                 <DetailTableC1 dict={HoldersDict} value={value} />
                 {/* <DetailTableC1 dict={RelatedSitesDict} value={value} /> this is not used */}

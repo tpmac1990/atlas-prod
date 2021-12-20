@@ -95,5 +95,7 @@ urlpatterns = [
 
     path('create-site/',CreateSiteViewSet.as_view()),
 
-    path('move-site/',MoveSiteViewSet.as_view())
+    path('move-site/',MoveSiteViewSet.as_view()),
+
+    path('delete-request/',SiteDeleteRequestViewSet.as_view())
 ]

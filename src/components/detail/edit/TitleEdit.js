@@ -8,6 +8,7 @@ import ItemsManyDropdownAddMulti from './ItemsManyDropdownAddMulti'
 import { buildEditDictionary } from './buildEditDictionary'
 import EditTitleComponent from './EditTitleComponent'
 import useViewportStyle from '../../reusable/hooks/useViewportStyle'
+// import GeneralIssues from './GeneralIssues'
 
 import { useHistory } from "react-router-dom";
 import { useRouteMatch } from "react-router-dom";
@@ -74,6 +75,7 @@ const TitleEdit = ({ match }) => {
                     <ItemsManyDropdownAdd is_large={is_large} header='Geological Provinces' datagroup='titles' values={value.geoprovince} has_input={false} dropdown_dict={geoProvinceSelect} />
                     <ItemsManyDropdownAddMulti is_large={is_large} header='Holders' datagroup='titles' values={value.holder} has_input={true} columns={holderMulti} dropdown_dict={holderSelect} />
                     <ItemsManyDropdownAdd is_large={is_large} header="Title Related ID's" datagroup='titles' values={value.oid} has_input={true} dropdown_dict={oidSelect} />
+                    {/* <GeneralIssues /> */}
                     <button type='submit' className='btn-c5 edit-submit-btn' onClick={FormHandler}>Submit</button>
                 </form>
             </div>

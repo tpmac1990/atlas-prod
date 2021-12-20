@@ -22,12 +22,12 @@ from .serializer import (TitlePopupSerializer, SitePopupSerializer, serialize_an
                         OidTitleSerializer, TitleUpdateSerializer, TenHolderWriteSerializer, ParentWriteSerializer, ChildWriteSerializer,
                         TenementChangeSerializer, OccurrenceChangeSerializer, HolderChangeSerializer, HolderWriteSerializer,
                         OidWriteSerializer, OccNameWriteSerializer, OidWriteTitleSerializer, UserLogOnSerializer, SiteGeomSerializer,
-                        SiteMoveSerializer)
+                        SiteMoveSerializer, SiteDeleteSerializer)
 # from django.views.decorators.csrf import csrf_exempt
 # from django.shortcuts import get_object_or_404
-from .models import Holder, Tenement, Occurrence, OccName, TenHolder, Parent
+from .models import Holder, Tenement, Occurrence, OccName, TenHolder, Parent, OccDeleteRequest
 
-
+# error codes: https://www.django-rest-framework.org/api-guide/status-codes/
 
 def time_past(start,end):
     hours, rem = divmod(end-start, 3600)
@@ -414,3 +414,28 @@ class MoveSiteViewSet(APIView):
             getattr(instance, x).set(data[x])
         
         return Response(pk)
+
+
+
+
+class SiteDeleteRequestViewSet(APIView):
+    ''' get: get the existing delete request for the target site if it exists for the given user when the form is displayed
+        post: update or create the instance for the users site delete request. If updated then 'reviewed' will be set to false, outcome will remain
+    '''
+
+    def get(self, request, pk=None):
+        ind = request.GET.get('ind')
+        user_name = request.GET.get('user_name')
+        obj = OccDeleteRequest.objects.filter(user_name=user_name,ind=ind).first()
+        msg = '' if not obj else obj.comment
+        return Response(msg)
+
+    def post(self, request, pk=None):
+        data = json.loads(request.body)
+        s = SiteDeleteSerializer(data=data)
+        if s.is_valid():
+            s.save()
+            return Response(status=status.HTTP_201_CREATED)
+        else:
+            print(s.errors)
+            return Response({'Error': s.errors}, status=status.HTTP_400_BAD_REQUEST)
