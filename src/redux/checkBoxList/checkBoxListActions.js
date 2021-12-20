@@ -16,6 +16,7 @@ export const getFilterCheckboxData = dict => dispatch => {
     axios
         .post("/filter-data/", dict, config)
         .then(res => {
+            console.log(res.data)
                 dispatch({
                     type: SET_CHECK_LIST_DATA,
                     payload: {name: name, data: res.data}

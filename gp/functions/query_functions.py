@@ -49,6 +49,7 @@ def get_data_list(p,datasets):
     
     # If name ends with related, then it needs to query the related dataset and therefore lookup the related model & query in the configs file.
     name = p['name']
+    # print(name)
     if name.endswith("related"):
         lookup_name = name.replace("related","") # remove "related" from the name to get the correct key to lookup
         query_group = configs[p['relDatasetName']][lookup_name]
@@ -70,10 +71,15 @@ def get_data_list(p,datasets):
     # objs = objs.distinct().order_by(order_by) # old and much slower way
     # rather than use the costly 'distinct' & 'order_by' inbuilt methods, join the filtered object with the object to return. This will return distinct values and use the order in the returned object table.
     #   the object is evaluated multiple times, so this increases performance by between 4-5 times
-    objs = apps.get_model('gp', query_group['model']).objects.filter(pk__in=objs)
-    has_more = is_there_more_data(objs,p['limit'])
-    objs = infinite_filter(objs,p['limit'],p['offset'])
-    vals = list(objs.values_list(*values))
+    if not name in ['changegroup']:
+        objs = apps.get_model('gp', query_group['model']).objects.filter(pk__in=objs)
+        has_more = is_there_more_data(objs,p['limit'])
+        objs = infinite_filter(objs,p['limit'],p['offset'])
+        vals = list(objs.values_list(*values))
+    else:
+        # this method is required for the change fields to get only the unique values
+        has_more = False
+        vals = list(objs.values_list(*values).distinct())
 
     if len(values) == 1:
         vals = [[x[0],x[0]] for x in vals]
