@@ -149,11 +149,11 @@
         }
 
         .detail-sub-info-c1 {
-            background-color: #f5f5f5;
-            box-shadow: 0 1px 4px $light-4;
+            background-color: #f8f8f8;
+            box-shadow: 0 1px 6px $light-4;
             padding: 20px 50px;
             margin: 0 60px;
-            border-radius: 5px;
+            border-radius: 4px;
             overflow-x: auto;
 
             table {
@@ -168,7 +168,6 @@
                     }
                     th {
                         color: $dark-4;
-                        // width: 300px;
                     }
                     td {
                         p {
