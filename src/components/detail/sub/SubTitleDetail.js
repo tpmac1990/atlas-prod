@@ -7,7 +7,7 @@ import DetailTableC1 from './DetailTableC1';
 import SingleColumnTableC1 from './SingleColumnTableC1';
 import Loading from '../../loading/Loading';
 import { TitleComponent } from './TitleComponent';
-// import Comments from './Comments'
+// import Comments from './Comments' will eventually implement this
 import { title_objs } from './detailConfigs'
 
 

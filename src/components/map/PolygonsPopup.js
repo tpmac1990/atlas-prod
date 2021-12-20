@@ -2,17 +2,33 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { formatDate } from '../formatting/formatting'
 import { closeMapPopup } from '../../redux'
+import { useHistory } from "react-router-dom";
 
 
 const PolygonsPopup = () => {
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const { typ, status, lodgedate, startdate, enddate, oid, holder, majmat, ind } = useSelector(state => state.mapPopup.data)
 
+    // handles the action to take when a button is clicked within the popup
+    const ButtonHandler = e => {
+        const { id, value } = e.target
+        switch(id){
+            case 'more-data-btn':
+                history.push(`/detail/${value}`)
+                break;
+
+            case 'edit-data-btn':
+                history.push(`/detail/${value}`)
+                break;
+        }
+    }
+
     return (
         <div className='map-popup-c1'>
-            <div className='popup-header'>
+            <div className='popup-header' onClick={ButtonHandler}>
                 <h4>{ind}</h4>
                 <div className='close-c5' onClick={() => dispatch(closeMapPopup())}><span>x</span></div>
                 <button id='edit-data-btn' value={`title/edit/${ind}`} className='material-icons btn-c7'>edit_note</button>

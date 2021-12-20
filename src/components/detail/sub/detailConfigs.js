@@ -27,12 +27,6 @@ export const holder_objs = {
     BasicDict: {
         header: "General Info",
         table_data: [
-            // { the holder type has been removed
-            //     th: "Holder/Company Type", 
-            //     td: ["company_type","original"], 
-            //     multi: null, 
-            //     format: null
-            // },
             {
                 th: "Publicly Listed", 
                 td: ["listed"], 
@@ -337,7 +331,7 @@ export const title_objs = {
     //     header: "Related Sites",
     //     table_headers: ["ID","Name","Type","Status"],
     //     table_data: [["ind"],["name"],["typ"],["status"]]
-    // },
+    // }, dropped this when I moved the related sites values to the interactive table
     HoldersDict: {
         styles: "detail-sub-info-c1",
         lookup: "holder",

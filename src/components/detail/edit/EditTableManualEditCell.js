@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
-import { addEditDataHolder, setEditData, removeEditData, addEditDictKey, updateEditCell } from '../../../redux'
-import InfinityInput from '../../reusable/infinityInput/InfinityInput'
+import { updateEditCell } from '../../../redux'
 
 
 const EditTableManualEditCell = props => {
