@@ -77,3 +77,12 @@
         }        
     }
 }
+
+
+// some narrower screens require the 'show columns filter' button to be hidden on protrait to prevent it from stepping down to a new line
+@media only screen and (max-width: 350px) {
+
+    #table-pg-main .greater-table-area-c1 .checkbox-c2 {
+        display: none;
+    }
+}
