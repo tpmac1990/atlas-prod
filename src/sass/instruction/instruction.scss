@@ -1,5 +1,10 @@
 @import '../variables';
 
+// positions the 'select one of the above options to begin' note
+#instruction-groups .sub-header-tip {
+    margin-left: 100px;
+}
+
 
 .instruction-group {
     margin: 20px 160px;

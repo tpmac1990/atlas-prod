@@ -22,7 +22,7 @@ function HomeInstruction() {
                 <li  className={ pathname.includes('docs') ? 'active-sub-field' : '' }><Link to={`${url}/docs`} name="docs" >Documentation</Link></li>
                 <li  className={ pathname.includes('demos') ? 'active-sub-field' : '' }><Link to={`${url}/demos`} name="demos" >Demonstrations</Link></li>
             </ul>   
-            <div id="contact-groups">
+            <div id="instruction-groups">
                 <Route path={`${path}/home`} component={SubHomeInstruction} />
                 <Route path={`${path}/docs`} component={Documentation} />
                 <Route path={`${path}/demos`} component={Demonstration} />
