@@ -10,7 +10,7 @@ const PolygonsPopup = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const { typ, status, lodgedate, startdate, enddate, oid, holder, majmat, ind } = useSelector(state => state.mapPopup.data)
+    const { typ, status, lodgedate, startdate, enddate, oid, holder, parent, majmat, ind } = useSelector(state => state.mapPopup.data)
 
     // handles the action to take when a button is clicked within the popup
     const ButtonHandler = e => {
@@ -44,6 +44,7 @@ const PolygonsPopup = () => {
                         <tr><td>Start Date</td><td>{formatDate(startdate)}</td></tr>
                         <tr><td>End Date</td><td>{formatDate(enddate)}</td></tr>
                         <tr><td>Related IDs</td><td>{oid}</td></tr>
+                        <tr><td>Parent</td><td>{parent}</td></tr>
                         <tr><td>Holder</td><td>{holder}</td></tr>
                         <tr><td>Major Materials</td><td>{majmat}</td></tr>
                     </tbody>

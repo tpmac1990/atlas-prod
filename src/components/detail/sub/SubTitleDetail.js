@@ -55,7 +55,6 @@ function SubTitleDetail({ match }){
                 <SingleColumnTableC1 dict={MaterialsDict} value={value} />
                 <SingleColumnTableC1 dict={AlternateSourceDict} value={value} />
                 <SingleColumnTableC1 dict={ParentsDict} value={value} />
-                <SingleColumnTableC1 dict={ParentsDict} value={value} />
                 <DetailTableC1 dict={HoldersDict} value={value} />
                 {/* <DetailTableC1 dict={RelatedSitesDict} value={value} /> this is not used */}
             </div>

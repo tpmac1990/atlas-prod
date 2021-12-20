@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from gp.models import Tenement, Occurrence
-# from .generic import TitleTypeASerializer, TitleStatusASerializer, SiteStatusASerializer
+from gp.models import Tenement, Occurrence, Parent
 
 def slice_long_string(string):
     if len(string) > 33:
@@ -11,6 +10,7 @@ def slice_long_string(string):
 
 class TitlePopupSerializer(serializers.ModelSerializer):
     holder = serializers.SerializerMethodField()
+    parent = serializers.SerializerMethodField()
     majmat = serializers.SerializerMethodField()
     typ = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
@@ -21,6 +21,10 @@ class TitlePopupSerializer(serializers.ModelSerializer):
 
     def get_holder(self,obj):
         return slice_long_string('; '.join([x.name for x in obj.holder.all()]))
+
+    def get_parent(self,obj):
+        parent_objs = Parent.objects.filter(child__in=obj.holder.all())
+        return slice_long_string('; '.join([x.name.name for x in parent_objs]))
 
     def get_majmat(self,obj):
         return slice_long_string('; '.join([x.name for x in obj.majmat.all()]))
@@ -35,7 +39,7 @@ class TitlePopupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tenement
-        fields = ["ind","lodgedate","startdate","enddate","typ","status","holder","oid","majmat"]
+        fields = ["ind","lodgedate","startdate","enddate","typ","status","holder","parent","oid","majmat"]
 
 
 
