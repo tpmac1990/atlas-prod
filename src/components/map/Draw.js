@@ -4,7 +4,7 @@ import { EditControl } from 'react-leaflet-draw';
 import { useSelector, useDispatch } from 'react-redux'
 import { divIcon } from 'leaflet'
 import { storeEditHandlers, setRectangleLatLngs, setMarkerLatLngs, toggleFilterPanel, storeFilterRectangleLayer, 
-            toggleFilterDraw, resetMapDataOffset, setMapIsLoading, closeMapPopup } from '../../redux'
+            toggleFilterDraw, resetMapDataOffset, setMapIsLoading, closeMapPopup, setDrawTriggerSource } from '../../redux'
 import 'leaflet-draw';
 
 const Draw = () => {
@@ -46,6 +46,7 @@ const Draw = () => {
                 // clear any map popup and highlight marker
                 dispatch(closeMapPopup())
             } 
+            drawTrigger == 'filter' && dispatch(setDrawTriggerSource(null))
         }
 
         const drawnItems = editableFG.leafletElement._layers;

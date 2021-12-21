@@ -37,6 +37,9 @@ const FilterToggle = () => {
     }
 
     return (
+        // <div className='filter-toggle' onClick={filterToggleHandler} >
+        //     <span className="material-icons">double_arrow</span>
+        // </div>
         <ToolTip styles='bottom-left-1' content='hide filter'>
             <div className='filter-toggle' onClick={filterToggleHandler} >
                 <span className="material-icons">double_arrow</span>

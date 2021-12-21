@@ -9,10 +9,11 @@ const MobileDraw = () => {
     const dispatch = useDispatch()
 
     const { leafletDraw, filterDirection, sizeControl } = useSelector(state => state)
-    const { editHandlers, filterDrawToggle } = leafletDraw
+    const { editHandlers, filterDrawToggle, drawTrigger } = leafletDraw
     const { filterDataset } = filterDirection
     const { is_large } = sizeControl
 
+    // the results of the draw are delt with in the map/Draw component
     const drawHandler = () => {
         // enable the draw functionality
         editHandlers.draw._modes.rectangle.handler.enable()
@@ -29,7 +30,8 @@ const MobileDraw = () => {
         ? (
             <div id='mobile-draw'>
                 <ToolTip styles='left-1' content='manually select an area'>
-                    <button id='mobile-draw-btn' className='btn-c6' onClick={drawHandler}>
+                    {/* highlight the 'draw' button in mobile view when it is triggered from the filter. This will help the user identify that they need to click it to start to draw */}
+                    <button id='mobile-draw-btn' className={`btn-c6 ${(drawTrigger == 'filter' && !is_large) ? 'mobile-draw-highlight' : ''}`} onClick={drawHandler}>
                         <span className="material-icons map-btn-icons">draw</span>
                     </button>
                 </ToolTip>
