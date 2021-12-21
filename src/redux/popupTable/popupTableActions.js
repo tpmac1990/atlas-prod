@@ -1,4 +1,4 @@
-import { SET_FILTER_VALUES, TRIGGER_ELEMENT, SET_DATA, IS_INFINITY_TABLE, CLEAR_DATA, RESET_POPUP_TABLE, TOGGLE_TABLE_DATASET } from './popupTableType'
+import { SET_FILTER_VALUES, TRIGGER_ELEMENT, SET_DATA, IS_INFINITY_TABLE, CLEAR_DATA, RESET_POPUP_TABLE, TOGGLE_TABLE_DATASET, ATTEMPT_TABLE_TOGGLE } from './popupTableType'
 import { TOGGLE_FULL_SCREEN_INACTIVE } from '../inactiveCover/inactiveCoverType'
 import axios from 'axios';
 
@@ -41,6 +41,13 @@ export const toggleTableDataset = is_active => {
     return {
         type: TOGGLE_TABLE_DATASET,
         payload: is_active
+    }
+}
+
+// toggle from panel or map buttons to call the triggerElement above from the ListView component
+export const attemptTableToggle = () => {
+    return {
+        type: ATTEMPT_TABLE_TOGGLE
     }
 }
 

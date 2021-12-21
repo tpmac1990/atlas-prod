@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from "react-router-dom";
 
-import { closeAllGroups, storeSpatialData, 
-    toggleRelatedFilter, includeRelatedData, resetFilterControl, 
-    resetFilterSelection, resetFilterGroupState, setFilterValues, 
-    triggerElement, resetMapDataOffset, setMapIsLoading, 
-    toggleFilterPanel, setPopupMessage, setMapNotLoading, setDataLimit,
-    updateActiveFilters, setMapBounds, toggleBounds, closeMapPopup, toggleTableDataset } from '../../redux'
+import { closeAllGroups, storeSpatialData, toggleRelatedFilter, includeRelatedData, resetFilterControl, 
+    resetFilterSelection, resetFilterGroupState, resetMapDataOffset, setMapIsLoading, toggleFilterPanel, 
+    setPopupMessage, setMapNotLoading, setDataLimit, updateActiveFilters, setMapBounds, toggleBounds, 
+    closeMapPopup, attemptTableToggle } from '../../redux'
 
 import { updateFilterList } from './filterLists'
 import Control from './Control'
@@ -57,14 +54,12 @@ function Panel () {
     const { map_data, related, input, map_infinity, last_group_changed, active_filters } = filterSelection
     const { primary: pri_filters, related: rel_filters } = active_filters
     const { offset, limit, loading } = map_infinity
-    const { filteropen, occs, tens, init_bounds } = map_data
+    const { filteropen, init_bounds } = map_data
     const { include, is_open } = related
     const { editHandlers } = leafletDraw
     const { is_large } = sizeControl
 
     const dispatch = useDispatch()
-
-    const history = useHistory();
 
     // calculate and set the data limit by determining the dataset and if related data is included
     // include: true if related data is also part of the search
@@ -189,35 +184,9 @@ function Panel () {
         }
     }
 
-    // Handles the events for dealing with listing the map results in a table
-    function listHandler() {
-        // Add the ind values from the map to the popupTable state
-        const dict = {titles: null, sites: null}
-        const groups = [[tens,'titles'],[occs,'sites']];
-        groups.forEach(group => {
-            if ( group[0].features.length !=0 ) {
-                var arr = group[0].features.map(row => {
-                    return row.properties.pk
-                })
-                dispatch(setFilterValues({ind_lst: arr, datagroup: group[1]}))
-                dict[group[1]] = arr.length != 0
-            }
-        })
-        // If there are ind vals for both titles and sites then display popup box to allow the user to select the data to view.
-        const btitle = dict.titles
-        const bsites = dict.sites
-        if ( !btitle && !bsites ){
-            // popup error message when no data has been selected
-            dispatch(setPopupMessage({message: "Your search has returned no data to display", type: 'warning', style: 'warning-map'}))
-        } else if ( btitle && bsites ){
-            // toggles the popup which allows the user to select the dataset to display in table form
-            dispatch(toggleTableDataset(true))
-        } else {
-            // if only one datagroup is on the map, then activate the incative page layer and show table
-            const datagroup = btitle ? 'titles' : 'sites'
-            dispatch(triggerElement(datagroup))
-            history.push('/table/')
-        }
+    // trigger the event in map/ListView. The table can be called from two places
+    const listHandler = () => {
+        dispatch(attemptTableToggle())
     }
 
 
