@@ -6,7 +6,9 @@ export const CoverInactive = () => {
 
     const { is_active } = useSelector(state => state.inactiveCover)
 
-    const styles = is_active ? 'inactive-pg showEle' : 'hideEle'
-
-    return <div className={ styles }></div>
+    return (
+        is_active 
+        ? <div className='inactive-pg'></div> 
+        : null
+    )
 }

@@ -44,6 +44,7 @@
 // @import 'userinput/signup_login';
 @import 'elements/scrollbar';
 @import 'error/errorpage';
+@import 'cover/inactive';
 
 
 
@@ -71,14 +72,6 @@ h3 {
 
 .showEleGrid {
     display: grid;
-}
-
-.inactive-pg {
-    position: absolute;
-    z-index: 9;
-    background-color: #00000080;
-    height: 100vh;
-    width: 100%;
 }
 
 

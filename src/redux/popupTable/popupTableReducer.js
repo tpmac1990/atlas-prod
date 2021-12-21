@@ -1,4 +1,4 @@
-import { SET_FILTER_VALUES, TRIGGER_ELEMENT, SET_DATA, IS_INFINITY_TABLE, CLEAR_DATA, RESET_POPUP_TABLE } from './popupTableType'
+import { SET_FILTER_VALUES, TRIGGER_ELEMENT, SET_DATA, IS_INFINITY_TABLE, CLEAR_DATA, RESET_POPUP_TABLE, TOGGLE_TABLE_DATASET } from './popupTableType'
 
 const tableState = {
     ind_lst: null,
@@ -13,8 +13,9 @@ const tableState = {
 // independent state for titles and sites is required
 const initialState = {
     active_group: 'sites', // can't be blank
+    both_available: false,
     titles: tableState,
-    sites: tableState
+    sites: tableState,
     // active_group: 'sites',
     // is_active: false,
     // titles: {
@@ -76,7 +77,11 @@ const popupTableReducer = ( state = initialState, action ) => {
         // case RESET_POPUP_TABLE:
         //     return initialState
             //
-
+        case TOGGLE_TABLE_DATASET:
+            return {
+                ... state,
+                both_available: action.payload
+            }
         case SET_FILTER_VALUES: 
             var { datagroup, ind_lst } = action.payload
             return {

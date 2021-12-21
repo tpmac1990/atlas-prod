@@ -10,10 +10,11 @@ import Header from './header/header';
 import Loading from './loading/Loading';
 import checkRequests from "./HOC/CheckRequests";
 import MapContent from './map/MapContent';
-import { PopupTable } from './popups/PopupTable';
-import { CoverInactive } from './popups/CoverInactive';
 import ConfirmBox from './reusable/confirm/ConfirmBox'
 import RequestDelete from './map/RequestDelete'
+import TableSelectPopup from './filter/TableSelectPopup'
+import { PopupTable } from './popups/PopupTable';
+import { CoverInactive } from './popups/CoverInactive';
 import useViewportStyle from './reusable/hooks/useViewportStyle'
 import { setScreenSize, toggleFilterPanel, setNewPathname, resetPopupTable, setPopupMessage } from '../redux'
 
@@ -105,13 +106,16 @@ const SubApp = () => {
         firstRender.current = false
     },[current_path])
 
+    // ConfirmBox: prompt to confirm an action
+    // RequestDelete: popup form for user to fill out the site delete request
+    // 
     return (
         <div className={style}>
             <PopupTable />
             <CoverInactive /> 
             <ConfirmBox />
             <RequestDelete />
-            {/* <ToolTip /> */}
+            <TableSelectPopup />
             <Header />
             <Suspense fallback={<Loading />}>
                 <Switch>

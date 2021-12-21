@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from "react-router-dom";
 
 import { closeAllGroups, storeSpatialData, 
     toggleRelatedFilter, includeRelatedData, resetFilterControl, 
     resetFilterSelection, resetFilterGroupState, setFilterValues, 
-    triggerElement, toggleFullScreenInactive, 
-    resetMapDataOffset, setMapIsLoading, toggleFilterPanel, setPopupMessage, setMapNotLoading, setDataLimit,
-    updateActiveFilters, setMapBounds, toggleBounds, closeMapPopup } from '../../redux'
+    triggerElement, resetMapDataOffset, setMapIsLoading, 
+    toggleFilterPanel, setPopupMessage, setMapNotLoading, setDataLimit,
+    updateActiveFilters, setMapBounds, toggleBounds, closeMapPopup, toggleTableDataset } from '../../redux'
 
 import { updateFilterList } from './filterLists'
 import Control from './Control'
@@ -61,9 +61,6 @@ function Panel () {
     const { include, is_open } = related
     const { editHandlers } = leafletDraw
     const { is_large } = sizeControl
-
-
-    const [tableSelect, setTableSelect] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -213,9 +210,8 @@ function Panel () {
             // popup error message when no data has been selected
             dispatch(setPopupMessage({message: "Your search has returned no data to display", type: 'warning', style: 'warning-map'}))
         } else if ( btitle && bsites ){
-            // makes page inactive before activating the table select popup
-            dispatch(toggleFullScreenInactive(true))
-            setTableSelect(true)
+            // toggles the popup which allows the user to select the dataset to display in table form
+            dispatch(toggleTableDataset(true))
         } else {
             // if only one datagroup is on the map, then activate the incative page layer and show table
             const datagroup = btitle ? 'titles' : 'sites'
@@ -224,27 +220,6 @@ function Panel () {
         }
     }
 
-    // The popup that displays when there is both title and site data on the map which gives you the choice of which dataset to show
-    const TableSelectPopup = () => {
-
-        const tableClickHandler = e => {
-            // turn off inactive cover when the table choice box is clicked, also turn off if it is closed below
-            dispatch(toggleFullScreenInactive(false))
-            dispatch(triggerElement(e.target.name))
-            history.push('/table/')
-        }
-
-        return (
-            <div className='popup-c1'>
-                <div className='close-c2' onClick={() => {setTableSelect(false);dispatch(toggleFullScreenInactive(false))}}><span>x</span></div>
-                <div>
-                    <p>Select the dataset to display in the table</p>
-                    <button className='btn-c5' name='titles' onClick={tableClickHandler}>Titles</button>
-                    <button className='btn-c5' name='sites' onClick={tableClickHandler}>Sites</button>
-                </div>
-            </div>
-        )
-    }
 
     return (
         filteropen
@@ -261,9 +236,6 @@ function Panel () {
                             <IconBtn clickHandler={clearHandler} iconStyle='delete_sweep' tooltip='reset filter' />
                         </div>
                     </div>
-                    { tableSelect
-                    ? <TableSelectPopup />
-                    : null}
                     <hr/>
                     <div id="filter-area">
                         <RelatedData />

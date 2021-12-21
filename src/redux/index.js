@@ -8,7 +8,7 @@ export { setFilterDataset, resetFilterControl } from './filterDirection/filterDi
 export { storeEditHandlers, toggleFilterDraw, storeFilterRectangleLayer, setDrawTriggerSource } from './leafletDraw/leafletDrawActions'
 export { setPopupMessage, resetPopupMessage } from './messageHandler/messageHandlerActions'
 export { getHolderData, getSiteData, getTitleData } from './detailSelection/detailSelectionActions'
-export { setFilterValues, triggerElement, setData, isInfinityTable, clearData, resetPopupTable } from './popupTable/popupTableActions'
+export { setFilterValues, triggerElement, setData, isInfinityTable, clearData, resetPopupTable, toggleTableDataset } from './popupTable/popupTableActions'
 export { toggleFullScreenInactive } from './inactiveCover/inactiveCoverActions'
 export { getInfinityDropdownData, setLoading, setSearch, setState, setSelection, resetOffset, 
         setDropdownVisibility, incrementCreatedId, hideAllDropdowns, setUniqueDropdownGroup, 
