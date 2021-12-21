@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setFilterDataset, resetFilterGroupState, resetFilterSelection } from '../../redux/'
+import { setFilterDataset, resetFilterGroupState, resetFilterSelection, closeMapPopup } from '../../redux/'
 import BasicSelect from '../reusable/basicSelect/BasicSelect'
 
 
@@ -10,13 +10,10 @@ function Control() {
 
     const{ filterDataset } = useSelector(state => state.filterDirection)
 
-    const combinedHandler = () => {
+    const datasetHandler = datasetName => {
         dispatch(resetFilterGroupState())
         dispatch(resetFilterSelection())
-    }
-
-    const datasetHandler = datasetName => {
-        combinedHandler()
+        dispatch(closeMapPopup())
         dispatch(setFilterDataset(datasetName))
     }
 
@@ -39,7 +36,16 @@ function Control() {
         </div>
     )
 
-    // ribbon checkbox previously used. Was not intuitive enough, users didn't assume to click it
+}
+
+export default Control
+
+    // const combinedHandler = () => {
+    //     dispatch(resetFilterGroupState())
+    //     dispatch(resetFilterSelection())
+    // }
+
+// ribbon checkbox previously used. Was not intuitive enough, users didn't assume to click it
     // return (
     //     <div id='ctrl-bar'>
     //         <div className='radiobar-c1 radiobar-s1'>
@@ -50,7 +56,3 @@ function Control() {
     //         </div>
     //     </div>
     // )
-
-}
-
-export default Control
