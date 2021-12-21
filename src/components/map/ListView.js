@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import { setPopupMessage, attemptTableToggle, setFilterValues, triggerElement, toggleTableDataset } from '../../redux'
 import ToolTip from '../reusable/tooltip/ToolTip'
 
+// this is the map button that toggles the table hodling the data displayed on the map
+// the table toggle button in the panel is also dealt with here
 const ListView = () => {
 
     const dispatch = useDispatch()
@@ -12,7 +14,10 @@ const ListView = () => {
     const { filterDirection, popupTable, filterSelection } = useSelector(state => state)
     const { filterDataset } = filterDirection
     const { attempt } = popupTable
-    const { occs, tens } = filterSelection.map_data
+    const { map_data, map_infinity } = filterSelection
+    const { occs, tens } = map_data
+    const { total_count } = map_infinity
+
 
     const firstRender = useRef(true)
     useEffect(() => {
@@ -48,17 +53,17 @@ const ListView = () => {
             dispatch(triggerElement(datagroup))
             history.push('/table/')
         }
-
     },[attempt])
 
 
-    // Handles the events for dealing with listing the map results in a table
+    // trigger the event in map/ListView. The table can be called from two places
     const listHandler = () => {
         dispatch(attemptTableToggle())
     }
 
+    // only show if data exists to present in the table
     return (
-        filterDataset != ''
+        total_count
         ? (
             <div id='mobile-draw'>
                 <ToolTip styles='left-1' content='list view'>

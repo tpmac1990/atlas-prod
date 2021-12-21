@@ -53,7 +53,7 @@ function Panel () {
     const { filterDataset } = useSelector(state => state.filterDirection)
     const { map_data, related, input, map_infinity, last_group_changed, active_filters } = filterSelection
     const { primary: pri_filters, related: rel_filters } = active_filters
-    const { offset, limit, loading } = map_infinity
+    const { offset, limit, loading, total_count } = map_infinity
     const { filteropen, init_bounds } = map_data
     const { include, is_open } = related
     const { editHandlers } = leafletDraw
@@ -189,7 +189,7 @@ function Panel () {
         dispatch(attemptTableToggle())
     }
 
-
+    // if !total_count then there is no data, therefore don't display the listview button
     return (
         filteropen
         ? (
@@ -201,7 +201,7 @@ function Panel () {
                             <h1>Data Control</h1>
                         </div>
                         <div className='header-icons'>
-                            <IconBtn clickHandler={listHandler} iconStyle='list' tooltip='display data in a table' />
+                            {!total_count ? null : <IconBtn clickHandler={listHandler} iconStyle='list' tooltip='display data in a table' />}
                             <IconBtn clickHandler={clearHandler} iconStyle='delete_sweep' tooltip='reset filter' />
                         </div>
                     </div>

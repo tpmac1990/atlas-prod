@@ -13,11 +13,15 @@ const AddSite = () => {
 
     const firstRender = useRef(true);
     
-    const { leafletDraw, editPoint, confirmPopup, sizeControl } = useSelector(state => state)
+    const { filterDirection, filterSelection, leafletDraw, editPoint, confirmPopup, sizeControl } = useSelector(state => state)
     const { visible, name, confirmed } = confirmPopup
     const { editHandlers } = leafletDraw
     const { latlng, site_ind, act } = editPoint
     const { is_large } = sizeControl
+    const { filterDataset } = filterDirection
+    const { map_infinity, related } = filterSelection
+    const { total_count } = map_infinity
+    const { include } = related
 
 
     const clickHandler = () => {
@@ -69,14 +73,17 @@ const AddSite = () => {
         }
     },[site_ind])
 
+    // show if data is available, selected dataset is occurrence or if it is inlcuded as a related dataset
     return (
-        <div id='create-site'>
+        ((filterDataset == 'Occurrence' || include) && total_count > 0)
+        ? (<div id='create-site'>
             <ToolTip styles='left-1' content='create a new site'>
                 <button id='create-site-btn' className='btn-c6' onClick={clickHandler}>
                     <span className="material-icons map-btn-icons">add_location</span>
                 </button>
             </ToolTip>
-        </div>
+        </div>)
+        : null
     )
 }
 
