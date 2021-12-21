@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from "react-router-dom";
 
 import { closeMapPopup, setPopupMessage, triggerPntMove, togglePopup } from '../../redux'
+import PopupBtnWithTooltip from './PopupBtnWithTooltip'
 
 
 const PointsPopup = () => {
@@ -44,10 +45,10 @@ const PointsPopup = () => {
             <div className='popup-header' onClick={ButtonHandler}>
                 <h4>{ind}</h4>
                 <div className='close-c5' onClick={() => dispatch(closeMapPopup())}><span>x</span></div>
-                <button id='edit-data-btn' value={`site/edit/${ind}`} className='material-icons btn-c7'>edit_note</button>
-                <button id='more-data-btn' value={`site/${ind}`} className='material-icons btn-c7'>read_more</button>
-                <button id='move-site-btn' value={ind} className='material-icons btn-c7'>edit_location_alt</button>
-                <button id='delete-site-btn' value={ind} className='material-icons btn-c7'>clear</button>
+                <PopupBtnWithTooltip content='go to edit page' id='edit-data-btn' value={`site/edit/${ind}`} icon='edit_note' />
+                <PopupBtnWithTooltip content='go to detail page' id='more-data-btn' value={`site/${ind}`} icon='read_more' />
+                <PopupBtnWithTooltip content='adjust the site position' id='move-site-btn' value={ind} icon='edit_location_alt' />
+                <PopupBtnWithTooltip content='submit a site delete request' id='delete-site-btn' value={ind} icon='clear' />
             </div>
             <hr/>
             <div className='popup-body'>

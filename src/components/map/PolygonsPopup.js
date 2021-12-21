@@ -4,6 +4,8 @@ import { formatDate } from '../formatting/formatting'
 import { closeMapPopup } from '../../redux'
 import { useHistory } from "react-router-dom";
 
+import PopupBtnWithTooltip from './PopupBtnWithTooltip'
+
 
 const PolygonsPopup = () => {
 
@@ -26,13 +28,14 @@ const PolygonsPopup = () => {
         }
     }
 
+
     return (
         <div className='map-popup-c1'>
             <div className='popup-header' onClick={ButtonHandler}>
                 <h4>{ind}</h4>
                 <div className='close-c5' onClick={() => dispatch(closeMapPopup())}><span>x</span></div>
-                <button id='edit-data-btn' value={`title/edit/${ind}`} className='material-icons btn-c7'>edit_note</button>
-                <button id='more-data-btn' value={`title/${ind}`} className='material-icons btn-c7'>read_more</button>
+                <PopupBtnWithTooltip content='go to edit page' id='edit-data-btn' value={`title/edit/${ind}`} icon='edit_note' />
+                <PopupBtnWithTooltip content='go to detail page' id='more-data-btn' value={`title/${ind}`} icon='read_more' />
             </div>
             <hr/>
             <div className='popup-body'>

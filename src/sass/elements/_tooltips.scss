@@ -10,6 +10,7 @@
         border-radius: 4px;
         padding: 8px 12px;
         background: $light-2;
+        color: $dark-2;
         font-size: 12px;
         line-height: 1;
         z-index: 1000;
@@ -33,6 +34,11 @@
     .left-1 {
         right: 80px;
         top: 25px;
+    }
+
+    .top-right-1 {
+        transform: translateX(-50%);
+        bottom: calc(100% + 12px);
     }
 }
 

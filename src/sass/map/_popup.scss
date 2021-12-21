@@ -22,19 +22,19 @@
             margin-bottom: 0; 
             float: left;
         } 
-    
-        button {
-            float: right;
-            margin-left: 6px;
-            margin-bottom: 5px;
-            padding: 2px 3px;
-            border-radius: 3px;
-            font-size: 1.6em;
 
-            &:first-of-type {
-                margin-right: 10px;
+        .Tooltip-Wrapper {
+            float: right;
+            width: 32px;
+
+            button {
+                margin-bottom: 5px;
+                padding: 2px 3px;
+                border-radius: 3px;
+                font-size: 1.6em;
             }
         }
+    
 
         .close-c5 {
             left: 8px;
