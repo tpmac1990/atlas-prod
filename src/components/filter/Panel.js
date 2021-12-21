@@ -245,12 +245,12 @@ function Panel () {
                         </div>
                     </div>
                     <div id='panel-footer'>
-                        <div id='related-data-toggle' className='checkbox-c4'>
-                            <input checked={include} type='checkbox' id='selectRelatedData' onChange={AddRelatedHandler} />
-                            <ToolTip styles='top-left-1' content='include related data in your search'>
+                        <ToolTip styles='top-left-1' content='include related data in your search'>
+                            <div id='related-data-toggle' className='checkbox-c4'>
+                                <input checked={include} type='checkbox' id='selectRelatedData' onChange={AddRelatedHandler} />
                                 <label htmlFor='selectRelatedData'>Combine Related Data</label><br/>
-                            </ToolTip>
-                        </div>
+                            </div>
+                        </ToolTip>
                         <div id='footer-btns'>
                             <button className={include ? 'btn-c1 showEle' : 'btn-c1 hideEle'} onClick={RelationHandler}>Relations</button>
                             <button id='filter-submit-btn' className='btn-c1' onClick={submitHandler}>Submit</button>
