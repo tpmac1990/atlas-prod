@@ -13,7 +13,7 @@ const AddSite = () => {
 
     const firstRender = useRef(true);
     
-    const { filterDirection, filterSelection, leafletDraw, editPoint, confirmPopup, sizeControl } = useSelector(state => state)
+    const { filterDirection, filterSelection, leafletDraw, editPoint, confirmPopup, sizeControl, authenticate } = useSelector(state => state)
     const { visible, name, confirmed } = confirmPopup
     const { editHandlers } = leafletDraw
     const { latlng, site_ind, act } = editPoint
@@ -22,9 +22,14 @@ const AddSite = () => {
     const { map_infinity, related } = filterSelection
     const { total_count } = map_infinity
     const { include } = related
+    const { isAuthenticated } = authenticate
 
 
     const clickHandler = () => {
+        if (!isAuthenticated){
+            dispatch(setPopupMessage({message: 'Log in to enable this feature', type: 'warning', style: 'warning-map'}))
+            return
+        }
         !is_large && dispatch(setPopupMessage({message: "Press on map to create a new site", type: 'info', style: 'info-map'}))
         editHandlers.draw._modes.marker.handler.enable()
         dispatch(setCreateSite())

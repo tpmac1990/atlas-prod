@@ -13,10 +13,15 @@ const PointsPopup = () => {
 
     const { typdetail, status, name, oid, majmat, ind, size } = useSelector(state => state.mapPopup.data)
     const { is_large } = useSelector(state => state.sizeControl)
+    const { isAuthenticated } = useSelector(state => state.authenticate)
 
     // handles the action to take when a button is clicked within the popup
     const ButtonHandler = e => {
         const { id, value } = e.target
+        if (!isAuthenticated){
+            dispatch(setPopupMessage({message: 'Log in to enable this feature', type: 'warning', style: 'warning-map'}))
+            return
+        }
         switch(id){
             case 'more-data-btn':
                 history.push(`/detail/${value}`)

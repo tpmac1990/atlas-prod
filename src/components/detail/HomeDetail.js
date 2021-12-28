@@ -1,5 +1,7 @@
-import React, { lazy, Fragment } from 'react'
+import React, { lazy } from 'react'
 import { Route, Link, useRouteMatch, useLocation } from "react-router-dom";
+
+import AuthenticationCheck from '../authentication/AuthenticationCheck'
 
 
 const TitleDetail = lazy(() => import('./TitleDetail'));
@@ -19,7 +21,7 @@ function HomeDetail() {
 
     // use the pathname to determine which sub-group to underline
     return (
-        <Fragment>
+        <AuthenticationCheck msg='Log in required to view detailed information'>
             <ul className="sub-header-c1">
                 <li className={ pathname.includes('title') ? 'active-sub-field' : '' }><Link to={`${url}/title`} name="title" >Title</Link></li>
                 <li className={ pathname.includes('site') ? 'active-sub-field' : '' }><Link to={`${url}/site`} name="site" >Site</Link></li>
@@ -31,7 +33,7 @@ function HomeDetail() {
                 <Route path={`${path}/site`} component={SiteDetail} />
                 <Route path={`${path}/holder`} component={HolderDetail} />
             </div>
-        </Fragment>
+        </AuthenticationCheck>
     )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { formatDate } from '../formatting/formatting'
-import { closeMapPopup } from '../../redux'
+import { closeMapPopup, setPopupMessage } from '../../redux'
 import { useHistory } from "react-router-dom";
 
 import PopupBtnWithTooltip from './PopupBtnWithTooltip'
@@ -13,10 +13,15 @@ const PolygonsPopup = () => {
     const history = useHistory()
 
     const { typ, status, lodgedate, startdate, enddate, oid, holder, parent, majmat, ind } = useSelector(state => state.mapPopup.data)
+    const { isAuthenticated } = useSelector(state => state.authenticate)
 
     // handles the action to take when a button is clicked within the popup
     const ButtonHandler = e => {
         const { id, value } = e.target
+        if (!isAuthenticated){
+            dispatch(setPopupMessage({message: 'Log in to enable this feature', type: 'warning', style: 'warning-map'}))
+            return
+        }
         switch(id){
             case 'more-data-btn':
                 history.push(`/detail/${value}`)

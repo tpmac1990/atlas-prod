@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { storeSpatialData, setMapIsLoading } from '../../redux'
+import { storeSpatialData, setMapIsLoading, setPopupMessage } from '../../redux'
 import ToolTip from '../reusable/tooltip/ToolTip'
 
 
@@ -8,12 +8,17 @@ const ButtonWithToolTip = () => {
 
     const dispatch = useDispatch()
 
-    const { filterSelection, filterDirection } = useSelector(state => state)
+    const { filterSelection, filterDirection, authenticate } = useSelector(state => state)
     const { filterDataset } = filterDirection
     const { map_data, related, input, map_infinity } = filterSelection
+    const { isAuthenticated } = authenticate
 
     const ClickHandler = e => {
         const { offset, limit, loading } = map_infinity
+        if (!isAuthenticated){
+            dispatch(setPopupMessage({message: 'Log in to enable this feature', type: 'warning', style: 'warning-map'}))
+            return
+        }
         if ( !loading ){
             const name = filterDataset === 'Tenement' ? 'tens' : 'occs'
             dispatch(setMapIsLoading())
