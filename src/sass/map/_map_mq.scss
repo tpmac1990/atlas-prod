@@ -11,6 +11,9 @@
         .mapWithFilter {
             width: 0;
         }
+        #map-area #map-layers #feature-count {
+            width: 100%;
+        }
     }
 
     #coorindate-control {

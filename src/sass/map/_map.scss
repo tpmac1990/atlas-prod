@@ -6,6 +6,14 @@
     background-color: #ffffff70 !important;
 }
 
+// the lat/lng display at the bottom left of the map
+#coorindate-control {
+    border-radius: 0 !important;
+    border-top-right-radius: 3px !important;
+    background-color: $dark-t1-3 !important;
+    color: $light-3 !important;
+}
+
 
 #map-wrapper {
     height: calc(100vh - 60px);

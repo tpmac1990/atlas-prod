@@ -1,6 +1,7 @@
 @import '../variables';
 
-
+// leaflet-control-layers-scrollbar: scroll bar for the layers list
+.leaflet-control-layers-scrollbar,
 .scrollbar-c1 {
     /* width */
     &::-webkit-scrollbar {
