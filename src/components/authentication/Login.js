@@ -59,7 +59,7 @@ const Login = () => {
         return <Redirect to='/' />
     }
 
-
+    // the message bar displayed when the login credentials are incorrect is managed in /authenticateActions.js
     return (
         <div className="auth-page">
             <div className="auth-sub-area asa-c2">

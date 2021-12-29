@@ -3,7 +3,7 @@ from rest_framework.views import APIView  # check some more of these out
 from django.http import HttpResponse
 from rest_framework import status  
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 import json
 from django.apps import apps
 from rest_framework.parsers import JSONParser
@@ -37,6 +37,8 @@ def time_past(start,end):
 
 class TestIDViewSet(APIView):
 
+    permission_classes = [AllowAny]
+
     def post(self, request):
         datasetName = request.data['filterDataset']
         key = request.data['id']
@@ -46,6 +48,8 @@ class TestIDViewSet(APIView):
 
 class PopupViewSet(APIView):
     ''' handles the data for the the popups when the user clicks on with a point or polygon '''
+
+    permission_classes = [AllowAny]
 
     def get(self, request, pk): 
         dataset = request.GET.get('dataset')
@@ -60,6 +64,8 @@ class PopupViewSet(APIView):
 class SpatialQueryViewSet(APIView):
     ''' queries the selected dataset for all the selected fields in the filter and returns the geospatial data to plot on the map '''
 
+    permission_classes = [AllowAny]
+
     def post(self, request):
         # func_start = time.time()
         params = set_params_map_data(request.data)
@@ -71,7 +77,9 @@ class SpatialQueryViewSet(APIView):
 
 
 class FilterViewSet(APIView):
-    # permission_classes = [IsAuthenticated]
+
+    permission_classes = [AllowAny]
+
     def post(self, request): 
         # func_start = time.time()
         params = set_params_checkbox_list(request.data)
@@ -85,6 +93,9 @@ class FilterViewSet(APIView):
 
 
 class HolderListViewSet(APIView):
+
+    permission_classes = [AllowAny]
+
     def get(self, request): 
         holder = Holder.objects.all()
         serializer = HolderListSerializer(holder,many=True)
@@ -92,6 +103,8 @@ class HolderListViewSet(APIView):
 
 
 class DetailHolderViewSet(APIView):
+
+    permission_classes = [AllowAny]
 
     def get(self, request, pk):
         try:
@@ -104,6 +117,8 @@ class DetailHolderViewSet(APIView):
 
 class DetailTitleViewSet(APIView):
 
+    permission_classes = [AllowAny]
+
     def get(self, request, pk):
         try:
             title = Tenement.objects.get(pk=pk)
@@ -115,6 +130,8 @@ class DetailTitleViewSet(APIView):
 
 class DetailSiteViewSet(APIView):
 
+    permission_classes = [AllowAny]
+
     def get(self, request, pk):
         try:
             site = Occurrence.objects.get(ind=pk)
@@ -125,6 +142,8 @@ class DetailSiteViewSet(APIView):
 
 
 class DropdownDataViewSet(APIView):
+
+    permission_classes = [AllowAny]
 
     def get(self, request, pk):
         try:
@@ -154,6 +173,9 @@ class DataByIndexesViewSet(APIView):
         which the dataset is filtered for. Passing is a list of 'ind' values allows me to create a table from either the 'Holder' detail view
         or from the data displayed on the map.
     ''' 
+
+    permission_classes = [AllowAny]
+
     def post(self, request):
         datagroup = request.data['datagroup']
         try:
@@ -175,6 +197,8 @@ class DataByIndexesViewSet(APIView):
 
 class SiteGroupViewSet(APIView):
     ''' gets the list of data to be displayed in the infinity dropdown components '''
+
+    permission_classes = [AllowAny]
 
     def get(self, request, pk=None):
         # print('#'*30)
@@ -272,6 +296,8 @@ class SiteGroupViewSet(APIView):
 class EditSiteViewSet(APIView):
     ''' manages the editing of data for the site dataset '''
 
+    permission_classes = [AllowAny]
+
     def post(self, request, pk):
         data = request.data
         # creates necessary model instances. returning data to make code more verbose
@@ -292,6 +318,8 @@ class EditSiteViewSet(APIView):
 
 class EditTitleViewSet(APIView):
     ''' manages the editing of data for the title dataset '''
+
+    permission_classes = [AllowAny]
 
     def post(self, request, pk):
         data = request.data
@@ -315,6 +343,8 @@ class EditTitleViewSet(APIView):
 
 class EditHolderViewSet(APIView):
     ''' manages the editing of data for a title holder '''
+
+    permission_classes = [AllowAny]
 
     def post(self, request, pk):
         data = request.data
@@ -345,6 +375,8 @@ class EditHolderViewSet(APIView):
 
 class CreateFeedbackViewSet(APIView):
 
+    permission_classes = [AllowAny]
+
     def post(self, request, pk=None):
         data = request.data
         s = FeedbackSerializer(data=data)
@@ -353,6 +385,8 @@ class CreateFeedbackViewSet(APIView):
         return Response('Feedback Saved Successfully as')
 
 class CreateKeepPostedViewSet(APIView):
+
+    permission_classes = [AllowAny]
 
     def post(self, request, pk=None):
         data = request.data
@@ -364,6 +398,8 @@ class CreateKeepPostedViewSet(APIView):
 
 class SaveIPViewSet(APIView):
     # ip = x_forwarded_for.split(',')[-1].strip()
+
+    permission_classes = [AllowAny]
 
     def post(self, request, pk=None):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -379,6 +415,8 @@ class CreateSiteViewSet(APIView):
     ''' creates a new site/Occurrence using the point created on the frontend and then find the spatially related locations including the geoprovince, state, 
         local government, government region and tenements. The ind value is created by adding one to the latest occurrence ind value.   
     '''
+
+    permission_classes = [AllowAny]
 
     def post(self, request, pk=None):
         latlng = request.data
@@ -398,6 +436,8 @@ class MoveSiteViewSet(APIView):
     ''' Move an existing site/Occurrence by clicking on the edit point btn in the map feature popup. The move will maintain the same ind value and update the 
         locaion fields, but The occurrence_tenement and geoprovince fields may need to be updated when the rest of the data is updated to account for user changes.   
     '''
+
+    permission_classes = [AllowAny]
 
     def post(self, request, pk=None):
         latlng = request.data['latlng']
@@ -422,6 +462,8 @@ class SiteDeleteRequestViewSet(APIView):
     ''' get: get the existing delete request for the target site if it exists for the given user when the form is displayed
         post: update or create the instance for the users site delete request. If updated then 'reviewed' will be set to false, outcome will remain
     '''
+
+    permission_classes = [AllowAny]
 
     def get(self, request, pk=None):
         ind = request.GET.get('ind')

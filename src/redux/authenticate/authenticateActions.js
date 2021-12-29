@@ -2,6 +2,7 @@ import { LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED_SUCCESS, USER_LOADED_FAIL, AUTHE
     PASSWORD_RESET_SUCCESS, PASSWORD_RESET_FAIL, PASSWORD_RESET_CONFIRM_SUCCESS, PASSWORD_RESET_CONFIRM_FAIL, 
     SIGNUP_SUCCESS, SIGNUP_FAIL, ACTIVATION_SUCCESS, ACTIVATION_FAIL, GOOGLE_AUTH_SUCCESS, GOOGLE_AUTH_FAIL, 
     FACEBOOK_AUTH_SUCCESS, FACEBOOK_AUTH_FAIL, LOGOUT } from './authenticateType'
+import { SET_POPUP_MESSAGE } from '../messageHandler/messageHandlerType'
 import axios from 'axios'
 
 
@@ -145,6 +146,10 @@ export const login = (email, password) => dispatch => {
         .catch(err => {
                 dispatch({
                     type: LOGIN_FAIL
+                })
+                dispatch({
+                    type: SET_POPUP_MESSAGE,
+                    payload: {message: 'Sorry, your username or password was incorrect', type: 'error', style: 'error-map'}
                 })
             })
 };

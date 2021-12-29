@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Redirect } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -12,7 +12,8 @@ const AuthenticationCheck = ({children, msg}) => {
     const { isAuthenticated } = useSelector(state => state.authenticate)
 
     if (isAuthenticated){
-        return {children}
+        // render the requested component
+        return <Fragment>{children}</Fragment>
     } else {
         // display error message
         dispatch(setPopupMessage({message: msg, type: 'error', style: 'error-map'}))

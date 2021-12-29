@@ -4,14 +4,13 @@ import axios from 'axios'
 
 // get data for checkbox lists
 export const getFilterCheckboxData = dict => dispatch => {
-
     const config = {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'JWT ' + localStorage.getItem('access')
+            'token': localStorage.getItem('access')
         }
-    }; 
+    };
     const { name } = dict
     axios
         .post("/filter-data/", dict, config)

@@ -12,13 +12,15 @@ export default function MessageBar() {
 
     // if trigger is true then show the message bar with the message passed in
     useEffect(() => {
-        if ( trigger ){
-            setVisibilty(true)
-            setTimeout(() => {
-                setVisibilty(false)
-                dispatch(resetPopupMessage())
-            }, 4000)
-        }
+        if ( !trigger ) return;
+        setVisibilty(true)
+        let timer = setTimeout(() => {
+            setVisibilty(false)
+            dispatch(resetPopupMessage())
+        }, 4000)
+        return () => {
+            clearTimeout(timer);
+        };
     },[trigger])
 
     // hide the message bar & reset the state of the message bar so it will work again if the same button is clicked again

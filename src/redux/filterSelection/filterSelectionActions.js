@@ -88,7 +88,7 @@ export const getBufferIDCentroid = values => dispatch => {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'JWT ' + localStorage.getItem('access')
+            'token': localStorage.getItem('access')
         }
     }; 
     axios
@@ -144,9 +144,10 @@ export const storeSpatialData = values => dispatch => {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'JWT ' + localStorage.getItem('access')
+            'token': localStorage.getItem('access')
         }
     }; 
+
     axios
         .post("/spatial-query/", values,config)
         .then(res => {

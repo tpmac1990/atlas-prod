@@ -30,9 +30,9 @@ export const createSite = latlng => dispatch => {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'JWT ' + localStorage.getItem('access')
+            'token': localStorage.getItem('access')
         }
-    }; 
+    };
     axios
         .post('/create-site/',latlng,config)
         .then(res => {
@@ -60,9 +60,9 @@ export const moveSite = values => dispatch => {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'JWT ' + localStorage.getItem('access')
+            'token': localStorage.getItem('access')
         }
-    }; 
+    };
     axios
         .post('/move-site/',values,config)
         .then(res => {

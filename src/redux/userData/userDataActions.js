@@ -3,8 +3,15 @@ import axios from 'axios'
 
 
 export const saveUserEmail = values => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'token': localStorage.getItem('access')
+        }
+    };
     axios
-        .post("/create-keep-posted/", values)
+        .post("/create-keep-posted/", values, config)
         .then(res => {
                 dispatch({
                     type: SET_POPUP_MESSAGE,
@@ -22,8 +29,15 @@ export const saveUserEmail = values => dispatch => {
 
 
 export const saveUserFeedback = values => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'token': localStorage.getItem('access')
+        }
+    };
     axios
-        .post("/create-feedback/", values)
+        .post("/create-feedback/", values, config)
         .then(res => {
                 dispatch({
                     type: SET_POPUP_MESSAGE,

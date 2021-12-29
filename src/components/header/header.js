@@ -85,7 +85,7 @@ function header() {
                 : null
             }
             <img src={logo} />
-            <span className={`material-icons ${user ? 'user-in' : 'user-ctrl'}`} onClick={userClickHandler}>account_circle</span>
+            <span className={`material-icons ${isAuthenticated ? 'user-in' : 'user-ctrl'}`} onClick={userClickHandler}>account_circle</span>
             {
                 showUserList
                 ? (

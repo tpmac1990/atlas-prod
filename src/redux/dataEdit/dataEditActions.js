@@ -63,16 +63,16 @@ export const resetApiOutcome = group => {
 
 
 export const postSiteUpdates = values => dispatch => {
-    // const config = {
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Accept': 'application/json',
-    //         'Authorization': 'JWT ' + localStorage.getItem('access')
-    //     }
-    // }; 
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'token': localStorage.getItem('access')
+        }
+    };
     const { id, dict, endpoint } = values
     axios
-        .post(`/edit-${endpoint}/${id}/`, dict)
+        .post(`/edit-${endpoint}/${id}/`, dict, config)
         .then(res => {
             dispatch({
                 type: SET_API_OUTCOME_SUCCESS,
@@ -99,7 +99,7 @@ export const getDropdownData = values => dispatch => {
     }; 
     const { model, key, label } = values
     axios
-        .get(`/dropdown-data/${model}/?key=${key}&label=${label}`,config)
+        .get(`/dropdown-data/${model}/?key=${key}&label=${label}`, config)
         .then(res => {
                 dispatch({
                     type: SET_DROPDOWN_DATA,

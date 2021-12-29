@@ -205,16 +205,18 @@ STATICFILES_DIRS = (
 # Responsible for serving static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
 # sets the authentication systems for the rest framework
 REST_FRAMEWORK = {
     # all views will require the user to be authenticated by default
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
+        # 'rest_framework.permissions.IsAuthenticated'
     ],
-    # # Use JWT for authentication
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    # ),
+    # Use JWT for authentication
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
 
     # 'rest_framework.permissions.IsAuthenticated'

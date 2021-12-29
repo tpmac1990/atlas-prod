@@ -72,9 +72,9 @@ export const setData = dict => dispatch => {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'JWT ' + localStorage.getItem('access')
+            'token': localStorage.getItem('access')
         }
-    }; 
+    };
     axios
         .post('/data-by-indexes/', dict, config)
         .then(res => {

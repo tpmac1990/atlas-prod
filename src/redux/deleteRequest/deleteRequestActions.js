@@ -18,9 +18,16 @@ export const setComment = comment => {
 
 
 export const retieveExistingRequest = ({user_name,ind}) => dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'JWT ' + localStorage.getItem('access')
+        }
+    }; 
 
     axios
-        .get(`/delete-request/?user_name=${user_name}&ind=${ind}`)
+        .get(`/delete-request/?user_name=${user_name}&ind=${ind}`, config)
         .then(res => {
             dispatch({
                 type: SET_INITIAL_COMMENT,
@@ -35,10 +42,18 @@ export const retieveExistingRequest = ({user_name,ind}) => dispatch => {
 
 export const submitDeleteRequest = ({user_name,ind,comment}) => dispatch => {
 
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'token': localStorage.getItem('access')
+        }
+    };
+
     const body = JSON.stringify({user_name, ind, comment});
 
     axios
-        .post(`/delete-request/`, body)
+        .post(`/delete-request/`, body, config)
         .then(res => {
             dispatch({
                 type: TOGGLE_POPUP,
