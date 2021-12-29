@@ -6,15 +6,16 @@ const UserInput = ({ icon, type, placeholder, name, style, value, handler }) => 
     return (
         <div className={style}>
             <span className="material-icons active-user-icon">{icon}</span>
-            <input 
-                autoComplete="new-password" 
+            <input  
                 type={type} 
                 placeholder={placeholder} 
                 value={value} 
                 name={name}
-                onChange={e => handler(e)} />
+                onChange={handler} />
         </div>
     )
 }
 
 export default UserInput;
+
+// autoComplete="new-password"

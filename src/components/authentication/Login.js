@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
@@ -54,6 +54,7 @@ const Login = () => {
         }
     };
 
+
     // redirect to home if the user is already logged in
     if (isAuthenticated) {
         return <Redirect to='/' />
@@ -73,8 +74,8 @@ const Login = () => {
                     Log in with Google
                 </button>
                 <div className='or-line-through'>OR</div>
-                <form onSubmit={e => onSubmit(e)}>
-                    <UserInput style='input-c5' icon='person' type='text' name='email' placeholder='Email' value={email} handler={onChange}/>
+                <form onSubmit={onSubmit}>
+                    <UserInput style='input-c5' icon='email' type='text' name='email' placeholder='Email' value={email} handler={onChange}/>
                     <UserInput style='input-c5' icon='lock' type='password' name='password' placeholder='Password' value={password} handler={onChange}/>
                     <button className='btn-c5 btn-auth-c1 btn-email' type='submit'>Log In</button>
                 </form>
