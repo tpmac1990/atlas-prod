@@ -117,7 +117,7 @@ const SubApp = () => {
             <RequestDelete />
             <TableSelectPopup />
             <Header />
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<Loading pathname={pathname} />}>
                 <Switch>
                     <Route exact path="/" component={MapContent} />
                     {/* <Route exact path="/temp" component={Temp} /> */}

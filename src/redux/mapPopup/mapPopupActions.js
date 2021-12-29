@@ -7,14 +7,13 @@ export const getPopupData = dict => dispatch => {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'JWT ' + localStorage.getItem('access')
+            'token': localStorage.getItem('access')
         }
     }; 
     const { pk, dataset } = dict
     axios
     .get(`/map-popup/${pk}/?dataset=${dataset}`,config)
     .then(res => {
-        console.log(res.data)
             dispatch({
                 type: SET_MAP_POPUP_DATA,
                 payload: {data: res.data, dataset: dataset}

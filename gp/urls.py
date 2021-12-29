@@ -34,7 +34,10 @@ urlpatterns = [
     path('instruction/docs/', TemplateView.as_view(template_name="index.html")),
     path('table/', TemplateView.as_view(template_name="index.html")),
     path('login/', TemplateView.as_view(template_name="index.html")),
+    path('signup/', TemplateView.as_view(template_name="index.html")),
     path('register/', TemplateView.as_view(template_name="index.html")),
+    path('reset-password/', TemplateView.as_view(template_name="index.html")),
+    path('email-signup/', TemplateView.as_view(template_name="index.html")),
     path('auth/users/', TemplateView.as_view(template_name='index.html')),
 
     # path('temp/', TemplateView.as_view(template_name='index.html')),
