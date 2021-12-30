@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[19],{134:function(e,a,t){"use strict";t.r(a);var c=t(0),n=t.n(c);a.default=function(){return n.a.createElement("div",{className:"auth-page"},n.a.createElement("div",{className:"auth-sub-area asa-c3"},n.a.createElement("h1",{className:"text-center"},"Check your email to complete account verification")))}}}]);
