@@ -20,8 +20,12 @@ const Feedback = () => {
 
     const submitHandler = e => {
         e.preventDefault()
-        if ( !email.includes('@') || email === '' || name === '' || !clickRate || feedback === '' ) {
+        if ( email === '' || name === '' || !clickRate || feedback === '' ) {
             dispatch(setPopupMessage({message: "All fields are required", type: 'error', style: 'error-fixed-user'}))
+            return;
+        }
+        if ( !email.includes('@') ){
+            dispatch(setPopupMessage({message: "Incorrect email", type: 'error', style: 'error-fixed-user'}))
             return;
         }
         // if the user is not logged in, but the email matches a registered user then their user id will be applied in the backend
