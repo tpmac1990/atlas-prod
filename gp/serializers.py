@@ -2,15 +2,15 @@ from rest_framework import serializers
 from .models import *
 
 
-class KeepPostedSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = KeepPosted
-        fields = ["first_name","last_name","email"]
+# class KeepPostedSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = KeepPosted
+#         fields = ["first_name","last_name","email"]
 
-class FeedbackSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Feedback
-        fields = ["name","email","feedback","rating"]
+# class FeedbackSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Feedback
+#         fields = ["name","email","feedback","rating"]
 
 
 class TenHolderSerializer(serializers.ModelSerializer):

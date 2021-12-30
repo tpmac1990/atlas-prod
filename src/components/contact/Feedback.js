@@ -1,28 +1,32 @@
 import React, { useState } from 'react'
+import { useHistory } from "react-router-dom";
 import StarRating from '../reusable/rating/StarRating'
 import { setPopupMessage, saveUserFeedback } from '../../redux'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import ToolTip from '../reusable/tooltip/ToolTip'
 
 const Feedback = () => {
 
     const dispatch = useDispatch()
+    const history = useHistory();
 
     const [ name, setName ] = useState('')
     const [ email, setEmail ] = useState('')
     const [ feedback, setFeedback ] = useState('')
     const [ clickRate, setClickRate ] = useState(null)
 
+    const { user } = useSelector(state => state.authenticate)
+
     const submitHandler = e => {
         e.preventDefault()
-        if ( !email.includes('@') && email !== '' ) {
-            dispatch(setPopupMessage({message: "Please enter a valid email", type: 'error', style: 'error-fixed-user'}))
-        } else if ( !clickRate ) {
-            dispatch(setPopupMessage({message: "Please leave a rating", type: 'error', style: 'error-fixed-user'}))
-        } else {
-            dispatch(saveUserFeedback({name: name,email: email,feedback: feedback,rating: clickRate}))
+        if ( !email.includes('@') || email === '' || name === '' || !clickRate || feedback === '' ) {
+            dispatch(setPopupMessage({message: "All fields are required", type: 'error', style: 'error-fixed-user'}))
+            return;
         }
+        // if the user is not logged in, but the email matches a registered user then their user id will be applied in the backend
+        dispatch(saveUserFeedback({name: name,email: email,feedback: feedback,rating: clickRate,user: user ? user.id : null}))
+        history.push('/')
     }
 
     return (

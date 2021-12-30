@@ -22,10 +22,10 @@ from .serializer import (TitlePopupSerializer, SitePopupSerializer, serialize_an
                         OidTitleSerializer, TitleUpdateSerializer, TenHolderWriteSerializer, ParentWriteSerializer, ChildWriteSerializer,
                         TenementChangeSerializer, OccurrenceChangeSerializer, HolderChangeSerializer, HolderWriteSerializer,
                         OidWriteSerializer, OccNameWriteSerializer, OidWriteTitleSerializer, UserLogOnSerializer, SiteGeomSerializer,
-                        SiteMoveSerializer, SiteDeleteSerializer)
+                        SiteMoveSerializer, SiteDeleteSerializer, FeedbackSerializer)
 # from django.views.decorators.csrf import csrf_exempt
 # from django.shortcuts import get_object_or_404
-from .models import Holder, Tenement, Occurrence, OccName, TenHolder, Parent, OccDeleteRequest
+from .models import Holder, Tenement, Occurrence, OccName, TenHolder, Parent, OccDeleteRequest, UserAccount
 
 # error codes: https://www.django-rest-framework.org/api-guide/status-codes/
 
@@ -379,9 +379,18 @@ class CreateFeedbackViewSet(APIView):
 
     def post(self, request, pk=None):
         data = request.data
+        if not data['user']:
+            # if the user is not logged in then check if their email is registered to an account and apply the user id if true
+            try:
+                data['user'] = UserAccount.objects.get(email=data['email']).id
+            except:
+                # the email provided does not match any existing users so leave as none
+                pass
         s = FeedbackSerializer(data=data)
         if s.is_valid():
             s.save()
+        else:
+            print(s.errors)
         return Response('Feedback Saved Successfully as')
 
 class CreateKeepPostedViewSet(APIView):

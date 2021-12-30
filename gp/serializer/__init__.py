@@ -11,3 +11,4 @@ from .changes import TenementChangeSerializer, OccurrenceChangeSerializer, Holde
 from .user_details import UserLogOnSerializer
 from .user_account import *
 from .site_delete import SiteDeleteSerializer
+from .feedback import FeedbackSerializer

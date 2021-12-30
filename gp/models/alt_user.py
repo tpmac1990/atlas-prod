@@ -7,6 +7,7 @@ class Feedback(models.Model):
     feedback = models.TextField(blank=True, null=True)
     rating = models.IntegerField(blank=False, null=False)
     read = models.BooleanField(default=False)
+    user = models.IntegerField(null=True)
     
 
 class KeepPosted(models.Model):
