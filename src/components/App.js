@@ -154,6 +154,13 @@ const SubAppWithCheckRequests = checkRequests(SubApp)
 
 
 const App = () => {
+
+    // redirect to https when accessing the http path. only in production
+    let url = window.location.href
+    if ( url.startsWith('http://www.gplore.com') ){
+        window.location.href = 'https://www.gplore.com' + window.location.pathname
+    }
+
     return(
         <Provider store={store}>
             <Router>
