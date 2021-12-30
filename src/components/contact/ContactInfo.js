@@ -3,10 +3,10 @@ import React from 'react'
 const ContactInfo = () => {
 
     return (
-        <div className="basic-form-area">
-            <div className='contact-info-area'>
-                <h1>Contact Info</h1>
-                <h2>Get in touch, stay in touch</h2>
+        <div className="contact-form-area">
+            <div>
+                <h2>Contact Info</h2>
+                <h5>Get in touch, stay in touch</h5>
                 <hr />
                 <table className='table'>
                     <tbody>

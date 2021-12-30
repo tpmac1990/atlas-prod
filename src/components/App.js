@@ -24,12 +24,14 @@ import { setScreenSize, toggleFilterPanel, setNewPathname, resetPopupTable, setP
 
 // const MapContent = lazy(() => import('./map/MapContent'));
 const Attribution = lazy(() => import('./attributions/Attribution'));
+const Feedback = lazy(() => import('./contact/Feedback'));
+const ContactInfo = lazy(() => import('./contact/ContactInfo'));
 const HomeInstruction = lazy(() => import('./instructions/HomeInstruction'));
 const HomeDetail = lazy (() => import('./detail/HomeDetail'))
 const Page400 = lazy (() => import('./errors/Page400'))
 const Page404 = lazy (() => import('./errors/Page404'))
 const Page503 = lazy (() => import('./errors/Page503'))
-const ContactHome = lazy (() => import('./contact/ContactHome'))
+// const ContactHome = lazy (() => import('./contact/ContactHome'))
 const DataTable = lazy (() => import('./tables/DataTable'))
 const Login = lazy (() => import('./authentication/Login'))
 const Signup = lazy (() => import('./authentication/Signup'))
@@ -122,9 +124,11 @@ const SubApp = () => {
                     <Route exact path="/" component={MapContent} />
                     {/* <Route exact path="/temp" component={Temp} /> */}
                     <Route exact path="/attribution" component={Attribution} />
+                    <Route exact path="/feedback" component={Feedback} />
+                    <Route exact path="/contact" component={ContactInfo} />
                     <Route path="/instruction" component={HomeInstruction} />
                     <Route path="/detail" component={HomeDetail} />
-                    <Route path="/contact" component={ContactHome} />
+                    {/* <Route path="/contact" component={ContactHome} /> */}
                     <Route path="/table" component={DataTable} />
 
                     <Route path="/login" component={Login} />

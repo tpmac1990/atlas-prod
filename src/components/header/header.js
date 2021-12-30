@@ -76,10 +76,9 @@ function header() {
                 ? (
                     <ul className={navLinksStyle} ref={navRef} onClick={MenuDropdownHandler}>
                         <li><Link to="/attribution">Attribution</Link></li>
-                        <li><Link to="/instruction/home">Instructions</Link></li>
+                        <li><Link to="/instruction/home">Manual</Link></li>
                         <li><Link to="/">Map</Link></li>
                         <li><Link to="/detail/home">Detail</Link></li>
-                        <li><Link to="/contact/home">Contact</Link></li>
                     </ul>
                 )
                 : null
@@ -91,7 +90,9 @@ function header() {
                 ? (
                     <ul className='user-header-dropdown' ref={authRef} onClick={userClickHandler}>
                         <li>{ isAuthenticated ? <Link to="/" onClick={logoutHandler}>Log out</Link> : <Link to="/login">Log in</Link> }</li>
-                        <li><Link to="/contact/home">Contact</Link></li>
+                        <li><Link to="/contact">Contact</Link></li>
+                        <li><Link to="/feedback">Feedback</Link></li>
+                        <li><Link to="/attribution">Attribution</Link></li>
                     </ul>
                 )
                 : null

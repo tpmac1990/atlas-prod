@@ -40,6 +40,13 @@
         transform: translateX(-50%);
         bottom: calc(100% + 12px);
     }
+
+    .contact-tooltip {
+        width: auto;
+        left: 50%;
+        transform: translateY(50%);
+        background: $light-1;
+        bottom: 50%;
+    }
+
 }
-
-
