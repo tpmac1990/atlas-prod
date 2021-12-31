@@ -45,9 +45,14 @@ INSTALLED_APPS = [
     'gp',
     'social_django',
     'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
-    'sslserver' # required to run ssl localhost
+    'rest_framework_simplejwt.token_blacklist'
 ]
+
+# only required for localhost
+if DEBUG:
+    INSTALLED_APPS += [
+        'sslserver'
+    ]
 
 
 MIDDLEWARE = [
