@@ -223,6 +223,9 @@ REST_FRAMEWORK = {
     ),
 }
 
+# use the UserAccount model for managing users by default
+AUTH_USER_MODEL = 'gp.UserAccount'
+
     # 'rest_framework.permissions.IsAuthenticated'
     # 'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny'],
     # 'DEFAULT_AUTHENTICATION_CLASSES:': ('rest_framework_simplejwt.authentication.JWTAuthentication',)
@@ -286,5 +289,3 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'email, first_name, last_name'
 }
 
-# use the UserAccount model for managing users by default
-AUTH_USER_MODEL = 'gp.UserAccount'
