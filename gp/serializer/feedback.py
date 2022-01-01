@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from gp.models import Feedback, UserAccount
+from gp.models import Feedback, User
 
 
 class FeedbackSerializer(serializers.ModelSerializer):

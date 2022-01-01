@@ -25,7 +25,7 @@ from .serializer import (TitlePopupSerializer, SitePopupSerializer, serialize_an
                         SiteMoveSerializer, SiteDeleteSerializer, FeedbackSerializer)
 # from django.views.decorators.csrf import csrf_exempt
 # from django.shortcuts import get_object_or_404
-from .models import Holder, Tenement, Occurrence, OccName, TenHolder, Parent, OccDeleteRequest, UserAccount
+from .models import Holder, Tenement, Occurrence, OccName, TenHolder, Parent, OccDeleteRequest, User
 
 # error codes: https://www.django-rest-framework.org/api-guide/status-codes/
 
@@ -382,7 +382,7 @@ class CreateFeedbackViewSet(APIView):
         if not data['user']:
             # if the user is not logged in then check if their email is registered to an account and apply the user id if true
             try:
-                data['user'] = UserAccount.objects.get(email=data['email']).id
+                data['user'] = User.objects.get(email=data['email']).id
             except:
                 # the email provided does not match any existing users so leave as none
                 pass

@@ -287,4 +287,4 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 }
 
 # use the UserAccount model for managing users by default
-AUTH_USER_MODEL = 'gp.UserAccount'
+AUTH_USER_MODEL = 'gp.User'
