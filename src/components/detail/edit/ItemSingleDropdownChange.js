@@ -89,7 +89,7 @@ const ValidItemSingleDropdownChange = props => {
     return (
         <>
             <h5>{header}</h5>
-            <div className='edit-table-c1'>
+            <div id={header.replace(' ','').toLowerCase()} className='edit-table-c1'>
                 <table className='table'>
                     <tbody>
                         { Object.keys(data).map(row => {

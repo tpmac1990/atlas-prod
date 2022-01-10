@@ -11,7 +11,8 @@ export const getInfinityDropdownData = (dict, endpoint) => dispatch => {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'JWT ' + localStorage.getItem('access')
+            // 'Authorization': 'JWT ' + localStorage.getItem('access')
+            'token': localStorage.getItem('access')
         }
     }; 
     const { name,model,key,label,search,offset,limit,clientmax } = dict

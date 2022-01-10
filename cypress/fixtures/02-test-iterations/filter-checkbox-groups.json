@@ -1,0 +1,70 @@
+{
+    "groups": [
+        {
+            "datasets": ["Tenement","Occurrence"],
+            "filter" : "primary",
+            "group": "location", 
+            "subgrp": ["ausstate","region","local","province"]
+        },
+        {
+            "datasets": ["Tenement","Occurrence"],
+            "filter" : "primary",
+            "group": "type", 
+            "subgrp": ["typesimple","typedetail"]
+        },
+        {
+            "datasets": ["Tenement","Occurrence"],
+            "filter" : "primary",
+            "group": "status", 
+            "subgrp": ["statussimple","statusdetail"]
+        },
+        {
+            "datasets": ["Occurrence"],
+            "filter" : "primary",
+            "group": "name", 
+            "subgrp": ["occurrencename"]
+        },
+        {
+            "datasets": ["Tenement","Occurrence"],
+            "filter" : "primary",
+            "group": "id", 
+            "subgrp": ["givenids","newids"]
+        },
+        {
+            "datasets": ["Tenement","Occurrence"],
+            "filter" : "primary",
+            "group": "material", 
+            "subgrp": ["materialcategory","materialname"]
+        },
+        {
+            "datasets": ["Tenement"],
+            "filter" : "primary",
+            "group": "holder", 
+            "subgrp": ["holderparent","holdername"]
+        },
+        {
+            "datasets": ["Tenement","Occurrence"],
+            "filter" : "primary",
+            "group": "changeupdate", 
+            "subgrp": ["changegroup"]
+        },
+        {
+            "datasets": ["Tenement","Occurrence"],
+            "filter" : "related",
+            "group": "typerelated", 
+            "subgrp": ["typesimplerelated","typedetailrelated"]
+        },
+        {
+            "datasets": ["Tenement","Occurrence"],
+            "filter" : "related",
+            "group": "statusrelated", 
+            "subgrp": ["statussimplerelated","statusdetailrelated"]
+        },
+        {
+            "datasets": ["Tenement","Occurrence"],
+            "filter" : "related",
+            "group": "materialrelated", 
+            "subgrp": ["materialcategoryrelated","materialnamerelated"]
+        }
+    ]
+}

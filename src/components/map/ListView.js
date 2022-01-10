@@ -65,9 +65,9 @@ const ListView = () => {
     return (
         total_count
         ? (
-            <div id='mobile-draw'>
+            <div id='map-list-view'>
                 <ToolTip styles='left-1' content='list view'>
-                    <button id='mobile-draw-btn' className='btn-c6' onClick={listHandler}>
+                    <button id='map-list-view-btn' className='btn-c6' onClick={listHandler}>
                         <span className="material-icons map-btn-icons">list</span>
                     </button>
                 </ToolTip>

@@ -53,7 +53,7 @@ const Signup = () => {
                 </button>
                 <div className='or-line-through'>OR</div>
                 <button className='btn-auth-c1 btn-c5 btn-email' onClick={() => history.push('/email-signup')} >Sign up with Email</button>
-                <p>Already have an account? <Link to='/login'>Login</Link></p>
+                <p>Already have an account? <Link to='/login'>Log in</Link></p>
             </div>
         </div>
     )

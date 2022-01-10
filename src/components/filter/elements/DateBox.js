@@ -29,9 +29,9 @@ function DateBox(props) {
         <div className='input-group-c5'>
             <label className='title'>{display}</label>
             <div>
-                <input type='date' required value={fromDate} onChange={fromHandler} />
+                <input type='date' name={`from${name}`} required value={fromDate} onChange={fromHandler} />
                 <span>-</span>
-                <input type='date' required value={toDate} onChange={toHandler} />
+                <input type='date' name={`to${name}`} required value={toDate} onChange={toHandler} />
             </div>
         </div>     
     )

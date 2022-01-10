@@ -96,20 +96,22 @@ function Panel () {
 
     const submitHandler = () => {
         // only submit if not loading and a Dataset has been selected (titles or sites)
-        if ( !loading ){
-            if ( filterDataset != '' ) {
-                // Reseting the offset will result in a new set of data, not appending onto existing data
-                dispatch(resetMapDataOffset())
-                // set loading which will trigger the useEffect below that will fetch the geospatial data
-                dispatch(setMapIsLoading())
-                // if the screen is small then hide the filter to reveal the map
-                !is_large && dispatch(toggleFilterPanel())
-                // clear any map popup and highlight marker
-                dispatch(closeMapPopup())
-            } else {
-                // dispatch(controlSelectionError())
-                dispatch(setPopupMessage({message: "Select 'Titles' or 'Sites' to begin filtering", type: 'warning', style: 'warning-map'}))
-            }
+        if (loading ){
+            return;
+        }
+
+        if ( filterDataset != '' ) {
+            // Reseting the offset will result in a new set of data, not appending onto existing data
+            dispatch(resetMapDataOffset())
+            // set loading which will trigger the useEffect below that will fetch the geospatial data
+            dispatch(setMapIsLoading())
+            // if the screen is small then hide the filter to reveal the map
+            !is_large && dispatch(toggleFilterPanel())
+            // clear any map popup and highlight marker
+            dispatch(closeMapPopup())
+        } else {
+            // dispatch(controlSelectionError())
+            dispatch(setPopupMessage({message: "Select 'Titles' or 'Sites' to begin filtering", type: 'warning', style: 'warning-map'}))
         }
     }
 

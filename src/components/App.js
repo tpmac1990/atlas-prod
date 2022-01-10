@@ -16,7 +16,8 @@ import TableSelectPopup from './filter/TableSelectPopup'
 import { PopupTable } from './popups/PopupTable';
 import { CoverInactive } from './popups/CoverInactive';
 import useViewportStyle from './reusable/hooks/useViewportStyle'
-import { setScreenSize, toggleFilterPanel, setNewPathname, resetPopupTable, setPopupMessage } from '../redux'
+import { setScreenSize, toggleFilterPanel, setNewPathname, resetPopupTable, setPopupMessage, navigateToPath } from '../redux'
+import { useHistory } from "react-router-dom";
 
 
 // import Temp from './authentication/Login'
@@ -48,6 +49,7 @@ const Facebook = lazy (() => import('./authentication/Facebook'))
 const SubApp = () => {
 
     const dispatch = useDispatch()
+    let history = useHistory();
 
     const { pathname } = useLocation();
 
@@ -55,7 +57,7 @@ const SubApp = () => {
 
     const { popupTable, pathChange, authenticate } = useSelector(state => state)
     const { is_active } = popupTable
-    const { current_path, previous_path } = pathChange
+    const { current_path, previous_path, nav_path } = pathChange
     const { user } = authenticate
 
     const style = is_active ? 'no-overflow' : ''
@@ -100,6 +102,12 @@ const SubApp = () => {
         dispatch(setNewPathname(pathname))
     },[pathname])
 
+    // navigate to new path when 'navigateToPath' is dispatched
+    useEffect(() => {
+        if ( firstRender.current ) return;
+        history.push(nav_path)
+    },[nav_path])
+
     // reset the table state when leaving the page so it's refreshed for its next use
     useEffect(() => {
         if ( previous_path === '/table/' ){
@@ -107,6 +115,11 @@ const SubApp = () => {
         }
         firstRender.current = false
     },[current_path])
+
+    // useEffect(() => { // this was just used for testing
+    //     dispatch(navigateToPath('/detail/home'))
+    // },[])
+
 
     // ConfirmBox: prompt to confirm an action
     // RequestDelete: popup form for user to fill out the site delete request
@@ -161,6 +174,12 @@ const App = () => {
         window.location.href = 'https://www.gplore.com' + window.location.pathname
     }
 
+    // expose store when run in Cypress. the docs say to use window.store but this failed
+    // https://www.cypress.io/blog/2018/11/14/testing-redux-store/#access-redux-store
+    if (window.Cypress) {
+        window.Cypress.store = store
+    }
+
     return(
         <Provider store={store}>
             <Router>
@@ -168,7 +187,13 @@ const App = () => {
             </Router>
         </Provider>
     )
+
+    
 }
 
 
 ReactDOM.render(<App />,document.getElementById('app'));
+
+
+
+

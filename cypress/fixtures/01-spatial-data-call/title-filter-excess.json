@@ -1,0 +1,53 @@
+{
+    "description": "loads 500 of 664 titles only. excess titles to add. used to pass in to 'storeSpatialData' action",
+    "object": {
+        "current_extent": null,
+        "dataset": "Tenement",
+        "input": {
+            "additionfromdate": "",
+            "additiontodate": "",
+            "ausstate": ["NSW"],
+            "buffer": {"Lat": "", "Lng": "", "radius": "", "id": "", "valid_id": false, "valid": false},
+            "changefromdate": "",
+            "changegroup": [],
+            "changetodate": "",
+            "endfromdate": "",
+            "endtodate": "",
+            "givenids": [],
+            "holdername": [],
+            "holderparent": [],
+            "holdertype": [],
+            "inactivefromdate": "",
+            "inactivetodate": "",
+            "local": [],
+            "lodgefromdate": "",
+            "lodgetodate": "",
+            "materialcategory": [],
+            "materialcategoryrelated": [],
+            "materialname": ["136"],
+            "materialnamerelated": [],
+            "newids": [],
+            "occurrencename": [],
+            "province": [],
+            "rectangle": {"NELat": "", "NELng": "", "SWLat": "", "SWLng": ""},
+            "region": [],
+            "startfromdate": "",
+            "starttodate": "",
+            "statusdetail": [],
+            "statusdetailrelated": [],
+            "statussimple": [],
+            "statussimplerelated": [],
+            "typedetail": [],
+            "typedetailrelated": [],
+            "typesimple": [],
+            "typesimplerelated": []
+        },
+        "limit": 500,
+        "name": "tens",
+        "offset": 0,
+        "related": {
+            "include": false,
+            "is_open": false
+        }
+    }
+}

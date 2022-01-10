@@ -34,7 +34,7 @@ function DrawSubArea (props) {
         <div id="buffer-sub-area" className={areaStyle}>
             <div className='input-group-c2'>
                 <label>Gplore ID</label>
-                <input type='text' className={idBorderStyle} value={bufferid} onChange={changeHandler} /><br/>
+                <input type='text' name='id' className={idBorderStyle} value={bufferid} onChange={changeHandler} /><br/>
             </div>
             <div className='sub-details-c1'>
                 <p>{`Lng: ${bufferLng}`}</p>
@@ -42,7 +42,7 @@ function DrawSubArea (props) {
             </div>
             <div className='input-group-c2'>
                 <label>Radius (km)</label>
-                <input className='no-number-btns' type='number' value={bufferdistance} onChange={bufferChangeHandler} />
+                <input name='radius' className='no-number-btns' type='number' value={bufferdistance} onChange={bufferChangeHandler} />
             </div>
         </div>
     )

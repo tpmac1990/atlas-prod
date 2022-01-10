@@ -1,0 +1,6 @@
+{
+    "viewports": [
+        {"alias": "pixel-2-xl", "height": 823, "width": 411},
+        {"alias": "dell-xps-13", "height": 1080, "width": 1920}
+    ]
+}

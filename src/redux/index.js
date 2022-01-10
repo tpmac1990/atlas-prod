@@ -21,7 +21,7 @@ export { saveUserEmail, saveUserFeedback } from './userData/userDataActions'
 export { ActivateConfirmPopup, DeactivateConfirmPopup, isConfirmed, resetConfirmed } from './confirmPopup/confirmPopupActions'
 export { setMarkerLatLngs, createSite, moveSite, resetCreatePntState, triggerPntMove, toggleOffSiteMove, setCreateSite } from './editPoint/editPointActions'
 export { setScreenSize } from './sizeControl/sizeControlActions'
-export { setNewPathname } from './pathChange/pathChangeActions'
+export { setNewPathname, navigateToPath } from './pathChange/pathChangeActions'
 export { signup, verify, login, logout, checkAuthenticated, load_user, reset_password, reset_password_confirm,
         googleAuthenticate, facebookAuthenticate } from './authenticate/authenticateActions'
 export { togglePopup, setComment, retieveExistingRequest, submitDeleteRequest } from './deleteRequest/deleteRequestActions'

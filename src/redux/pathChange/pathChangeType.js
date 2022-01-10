@@ -1,1 +1,2 @@
 export const SET_NEW_PATH = 'SET_NEW_PATH'
+export const NAVIGATE_TO_PATH = 'NAVIGATE_TO_PATH'
